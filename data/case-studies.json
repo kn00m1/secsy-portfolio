@@ -1,0 +1,25 @@
+{
+  "caseStudies": [
+    {
+      "id": "meta-phishing-investigation",
+      "title": "Meta Business Suite Phishing Campaign",
+      "date": "2026-02-15",
+      "type": "Threat Intelligence",
+      "status": "Investigation Complete",
+      "summary": "Identified and investigated a sophisticated phishing campaign impersonating Meta Business Suite. Performed full infrastructure analysis, MITRE ATT&CK mapping, and initiated takedown procedures.",
+      "highlights": [
+        "Domain registered just 17 days prior — rapid deployment pattern",
+        "Cloudflare + Next.js infrastructure mimicking legitimate Meta services",
+        "Multi-stage credential harvesting targeting business account admins",
+        "Full MITRE ATT&CK mapping across Reconnaissance, Resource Development, Initial Access, and Collection tactics"
+      ],
+      "tags": ["Phishing", "Threat Intel", "MITRE ATT&CK", "Takedown", "OSINT"],
+      "mitreTactics": [
+        "Reconnaissance",
+        "Resource Development",
+        "Initial Access",
+        "Collection"
+      ]
+    }
+  ]
+}

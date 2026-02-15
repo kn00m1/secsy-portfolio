@@ -1,0 +1,34 @@
+{
+  "activity": [
+    {
+      "date": "2026-02-15",
+      "type": "infrastructure",
+      "title": "Portfolio Dashboard Deployed",
+      "description": "Launched security.failsafesolutions.org — live activity feed, portfolio, and outreach platform."
+    },
+    {
+      "date": "2026-02-15",
+      "type": "hardening",
+      "title": "VPS Security Hardening",
+      "description": "Completed comprehensive VPS hardening: SSH key-only auth, fail2ban, UFW, kernel parameters, unattended upgrades. Lynis audit clean."
+    },
+    {
+      "date": "2026-02-15",
+      "type": "investigation",
+      "title": "Meta Phishing Takedown Initiated",
+      "description": "Completed investigation of Meta Business Suite phishing campaign. MITRE ATT&CK mapped. Takedown reports submitted."
+    },
+    {
+      "date": "2026-02-15",
+      "type": "assessment",
+      "title": "Juice Shop Assessment Complete",
+      "description": "Comprehensive security assessment: 30+ findings across OWASP Top 10 categories. 26/110 challenges solved with full documentation."
+    },
+    {
+      "date": "2026-02-15",
+      "type": "setup",
+      "title": "Security Research Lab Established",
+      "description": "Configured Kali Linux VPS with full security toolchain: 25+ tools across reconnaissance, scanning, exploitation, and reporting categories."
+    }
+  ]
+}

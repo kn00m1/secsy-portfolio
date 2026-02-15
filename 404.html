@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 | SecSy</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <style>
+    .page-404 {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-xl);
+    }
+    .error-code {
+      font-family: var(--font-mono);
+      font-size: 6rem;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: var(--space-md);
+      text-shadow: 0 0 40px var(--green-glow);
+    }
+    .error-message {
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-xl);
+    }
+    .error-sub {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: var(--space-xl);
+    }
+  </style>
+</head>
+<body>
+  <div class="page-404">
+    <div>
+      <div class="error-code">404</div>
+      <div class="error-message">Vulnerability not found... or is it?</div>
+      <div class="error-sub">The resource you're looking for doesn't exist. But that's exactly what a hidden endpoint would want you to think.</div>
+      <div class="terminal-block" style="display:inline-block;text-align:left;margin-bottom:var(--space-xl)">
+        <div class="terminal-header">
+          <span class="terminal-dot red"></span>
+          <span class="terminal-dot yellow"></span>
+          <span class="terminal-dot green"></span>
+        </div>
+        <div class="terminal-line"><span class="prompt">secsy@kali</span>:<span class="cmd">~</span>$ <span class="cmd">curl -s target/hidden-endpoint</span></div>
+        <div class="terminal-line"><span class="output">HTTP/1.1 404 Not Found</span></div>
+        <div class="terminal-line"><span class="output">[*] Adding to wordlist for further fuzzing...</span></div>
+      </div>
+      <br>
+      <a href="/" class="btn btn-primary">Return to Base</a>
+    </div>
+  </div>
+</body>
+</html>

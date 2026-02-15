@@ -1,0 +1,28 @@
+{
+  "toolCategories": [
+    {
+      "category": "Asset Discovery",
+      "tools": ["subfinder", "amass", "alterx", "asnmap", "uncover"]
+    },
+    {
+      "category": "DNS & HTTP Probing",
+      "tools": ["dnsx", "shuffledns", "httpx", "gowitness"]
+    },
+    {
+      "category": "Content Discovery",
+      "tools": ["ffuf", "feroxbuster", "katana", "gospider"]
+    },
+    {
+      "category": "URL & Parameter Mining",
+      "tools": ["gau", "waybackurls", "arjun", "qsreplace"]
+    },
+    {
+      "category": "Vulnerability Scanning",
+      "tools": ["nuclei", "dalfox", "sqlmap", "nikto"]
+    },
+    {
+      "category": "Analysis & Utilities",
+      "tools": ["jsluice", "trufflehog", "interactsh", "anew", "curl"]
+    }
+  ]
+}

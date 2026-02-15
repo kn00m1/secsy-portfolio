@@ -1,0 +1,36 @@
+{
+  "summary": {
+    "totalFindings": 30,
+    "criticalFindings": 5,
+    "highFindings": 9,
+    "mediumFindings": 7,
+    "lowFindings": 9,
+    "engagements": 2,
+    "caseStudies": 1,
+    "toolsUsed": 25,
+    "challengesSolved": 26
+  },
+  "severityBreakdown": [
+    { "label": "Critical", "count": 5, "color": "#ef4444" },
+    { "label": "High", "count": 9, "color": "#f97316" },
+    { "label": "Medium", "count": 7, "color": "#f59e0b" },
+    { "label": "Low", "count": 9, "color": "#22c55e" }
+  ],
+  "vulnCategories": [
+    { "name": "Injection (SQLi/NoSQLi/XSS)", "count": 8 },
+    { "name": "Broken Access Control", "count": 6 },
+    { "name": "Security Misconfiguration", "count": 5 },
+    { "name": "Sensitive Data Exposure", "count": 4 },
+    { "name": "Broken Authentication", "count": 3 },
+    { "name": "SSRF / CSRF", "count": 2 },
+    { "name": "Cryptographic Failures", "count": 2 }
+  ],
+  "skills": [
+    { "name": "Web Application Testing", "level": 85 },
+    { "name": "API Security Assessment", "level": 80 },
+    { "name": "Reconnaissance & OSINT", "level": 90 },
+    { "name": "Infrastructure Hardening", "level": 75 },
+    { "name": "Threat Intelligence", "level": 80 },
+    { "name": "Report Writing", "level": 85 }
+  ]
+}

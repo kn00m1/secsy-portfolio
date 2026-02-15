@@ -1,0 +1,52 @@
+{
+  "services": [
+    {
+      "id": "webapp-audit",
+      "icon": "shield-check",
+      "title": "Web Application Audit",
+      "description": "Comprehensive security assessment of web applications covering OWASP Top 10, business logic flaws, API security, and authentication flows.",
+      "capabilities": [
+        "OWASP Top 10 coverage",
+        "API & GraphQL testing",
+        "Authentication & session management",
+        "Business logic vulnerability analysis"
+      ]
+    },
+    {
+      "id": "threat-intel",
+      "icon": "search",
+      "title": "Threat Intelligence",
+      "description": "Proactive threat hunting, phishing campaign analysis, MITRE ATT&CK mapping, and actionable intelligence reporting.",
+      "capabilities": [
+        "Phishing campaign investigation",
+        "MITRE ATT&CK mapping",
+        "Infrastructure analysis",
+        "Takedown coordination"
+      ]
+    },
+    {
+      "id": "recon",
+      "icon": "radar",
+      "title": "Reconnaissance & OSINT",
+      "description": "Deep asset discovery, subdomain enumeration, attack surface mapping, and continuous monitoring for exposure detection.",
+      "capabilities": [
+        "Subdomain enumeration & DNS analysis",
+        "Attack surface mapping",
+        "Exposed credential monitoring",
+        "Historical URL & JS analysis"
+      ]
+    },
+    {
+      "id": "infra-hardening",
+      "icon": "lock",
+      "title": "Infrastructure Hardening",
+      "description": "Server and network security hardening with defense-in-depth strategy, compliance checking, and continuous audit validation.",
+      "capabilities": [
+        "Linux server hardening",
+        "Firewall & access control",
+        "Kernel security parameters",
+        "Compliance & audit validation"
+      ]
+    }
+  ]
+}

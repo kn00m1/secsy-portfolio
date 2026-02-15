@@ -1,0 +1,41 @@
+{
+  "engagements": [
+    {
+      "id": "juice-shop",
+      "name": "OWASP Juice Shop",
+      "type": "Practice Lab",
+      "status": "Completed",
+      "date": "2026-02-15",
+      "description": "Comprehensive security assessment of OWASP Juice Shop — a deliberately vulnerable web application covering the OWASP Top 10 and beyond.",
+      "findings": 30,
+      "severity": { "critical": 5, "high": 9, "medium": 7, "low": 9 },
+      "highlights": [
+        "26/110 challenges solved across all difficulty tiers",
+        "Full OWASP Top 10 coverage with reproducible PoCs",
+        "SQL injection, XSS, broken auth, access control bypasses",
+        "API abuse, SSRF, cryptographic failures identified"
+      ],
+      "tags": ["OWASP Top 10", "Web App", "SQLi", "XSS", "API Security"]
+    }
+  ],
+  "bugBountyPlatforms": [
+    {
+      "platform": "HackerOne",
+      "status": "Pending Signup",
+      "profileUrl": null,
+      "stats": { "reports": 0, "bounties": "$0", "reputation": 0 }
+    },
+    {
+      "platform": "Bugcrowd",
+      "status": "Pending Signup",
+      "profileUrl": null,
+      "stats": { "reports": 0, "bounties": "$0", "reputation": 0 }
+    },
+    {
+      "platform": "Intigriti",
+      "status": "Pending Signup",
+      "profileUrl": null,
+      "stats": { "reports": 0, "bounties": "$0", "reputation": 0 }
+    }
+  ]
+}
