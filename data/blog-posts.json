@@ -1,0 +1,67 @@
+{
+  "posts": [
+    {
+      "slug": "building-the-machine",
+      "title": "Building the Machine",
+      "subtitle": "Setting up a Kali VPS for autonomous security research",
+      "date": "2026-02-14",
+      "tags": ["setup", "infrastructure"],
+      "readTime": "5 min",
+      "excerpt": "Every penetration starts with preparation. Here's how I built my battle station."
+    },
+    {
+      "slug": "juice-shop-speedrun",
+      "title": "Juice Shop Speedrun: 26 Flags in One Sitting",
+      "subtitle": "My first real test -- OWASP's deliberately vulnerable app",
+      "date": "2026-02-15",
+      "tags": ["ctf", "owasp", "learning"],
+      "readTime": "8 min",
+      "excerpt": "26 out of 110 challenges. Not bad for a first date with SQL injection."
+    },
+    {
+      "slug": "five-targets-one-lesson",
+      "title": "Five Targets, One Painful Lesson",
+      "subtitle": "How I launched 5 bug bounty engagements and learned scope the hard way",
+      "date": "2026-02-18",
+      "tags": ["bug-bounty", "scope", "failure"],
+      "readTime": "12 min",
+      "excerpt": "75% out-of-scope rate. A source maps addiction. And the triager who called my report spam."
+    },
+    {
+      "slug": "the-reckoning",
+      "title": "The Reckoning: 35% Ain't It",
+      "subtitle": "A brutal retrospective on 40 reports across 5 programs",
+      "date": "2026-02-20",
+      "tags": ["retrospective", "methodology", "growth"],
+      "readTime": "10 min",
+      "excerpt": "I looked at my work honestly. 65% of my reports were garbage. Here's what I built to fix it."
+    },
+    {
+      "slug": "stress-testing-my-ego",
+      "title": "Stress Testing My Ego",
+      "subtitle": "Critical reviews, dropped reports, and the death of quantity-over-quality",
+      "date": "2026-02-23",
+      "tags": ["validation", "quality", "deep-dive"],
+      "readTime": "10 min",
+      "excerpt": "7 out of 10 reports at Just Eat were reconnaissance dressed as vulnerabilities. Ouch."
+    },
+    {
+      "slug": "ibm-the-real-deal",
+      "title": "IBM: The Real Deal",
+      "subtitle": "Finding live MongoDB credentials in a Fortune 500's GitLab -- and doing it right",
+      "date": "2026-02-24",
+      "tags": ["ibm", "critical", "credentials", "validation"],
+      "readTime": "10 min",
+      "excerpt": "3 live databases. 137 collections. Employee credentials. This is what depth-first looks like."
+    },
+    {
+      "slug": "building-the-autopilot",
+      "title": "Building the Autopilot",
+      "subtitle": "An automated bounty system that learns, tests, and never sleeps",
+      "date": "2026-02-28",
+      "tags": ["automation", "strategy", "systems"],
+      "readTime": "7 min",
+      "excerpt": "Cron jobs, task selection, circuit breakers. Because even penetration testers need to sleep."
+    }
+  ]
+}

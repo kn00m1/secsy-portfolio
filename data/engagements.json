@@ -1,6 +1,108 @@
 {
   "engagements": [
     {
+      "id": "ibm",
+      "name": "IBM VDP",
+      "type": "VDP",
+      "status": "Submitted",
+      "date": "2026-02-24",
+      "description": "Vulnerability disclosure program targeting IBM's massive infrastructure. Deep recon across 37K subdomains led to critical credential exposure and unauthenticated API access findings.",
+      "findings": 3,
+      "severity": { "critical": 1, "high": 1, "medium": 0, "low": 1 },
+      "highlights": [
+        "CRITICAL: Live MongoDB + Watson credentials exposed via GitLab",
+        "HIGH: Unauthenticated session CRUD on B2B Catalog API",
+        "37K subdomains enumerated, 700 live hosts probed",
+        "Threat model with 9 hypotheses — 2 confirmed with full PoC"
+      ],
+      "tags": ["HackerOne", "VDP", "Credentials", "API Security"]
+    },
+    {
+      "id": "superdrug",
+      "name": "Superdrug",
+      "type": "Bug Bounty",
+      "status": "Submitted",
+      "date": "2026-02-19",
+      "description": "Intigriti bug bounty program for UK healthcare retailer. Discovered exposed Swagger documentation, source maps, registration bypass, UAT environment access, and hardcoded API credentials.",
+      "findings": 5,
+      "severity": { "critical": 0, "high": 1, "medium": 4, "low": 0 },
+      "highlights": [
+        "HIGH: Healthcare API Swagger exposure with sensitive endpoints",
+        "MED: Registration reCAPTCHA validation order bypass",
+        "MED: UAT healthcare environment publicly accessible",
+        "Best scope discipline — 0 out-of-scope reports"
+      ],
+      "tags": ["Intigriti", "Healthcare", "API", "Web App"]
+    },
+    {
+      "id": "deriv",
+      "name": "Deriv",
+      "type": "Bug Bounty",
+      "status": "On Hold",
+      "date": "2026-02-19",
+      "description": "HackerOne program for fintech trading platform. OAuth redirect chain discovered, source maps submission duplicated. Authenticated testing needed for IDOR opportunities worth up to $5,000.",
+      "findings": 12,
+      "severity": { "critical": 0, "high": 0, "medium": 0, "low": 2 },
+      "highlights": [
+        "OAuth redirect_uri chain discovered (potential token theft)",
+        "Source maps report: DUPLICATE — someone found it first",
+        "Policy stress test: 9 of 12 reports dropped after review",
+        "IDOR params identified via source maps — untested (needs account)"
+      ],
+      "tags": ["HackerOne", "Fintech", "OAuth", "IDOR"]
+    },
+    {
+      "id": "capitalcom",
+      "name": "Capital.com",
+      "type": "Bug Bounty",
+      "status": "Active",
+      "date": "2026-02-19",
+      "description": "Intigriti program for trading platform. Comprehensive recon with OpenAPI spec extraction. 8 configuration-level reports ready. Blocked from authenticated testing by geo-restrictions.",
+      "findings": 8,
+      "severity": { "critical": 0, "high": 0, "medium": 0, "low": 8 },
+      "highlights": [
+        "3,295 subdomains enumerated, OpenAPI spec with 34 REST endpoints",
+        "8 consolidated reports covering CORS, S3, Actuator, SCIM exposure",
+        "Threat model: 3 high-value surfaces identified (trading API, WebSocket, payment)",
+        "Blocked: geo-restricted registration requires UK identity document"
+      ],
+      "tags": ["Intigriti", "Fintech", "API", "Configuration"]
+    },
+    {
+      "id": "just-eat-takeaway",
+      "name": "Just Eat Takeaway",
+      "type": "Bug Bounty",
+      "status": "On Hold",
+      "date": "2026-02-19",
+      "description": "Bugcrowd program for food delivery platform. Critical review revealed 7/10 reports were intelligence-not-vulnerabilities. Keycloak finding strongest at 65-75% acceptance probability.",
+      "findings": 11,
+      "severity": { "critical": 0, "high": 0, "medium": 1, "low": 3 },
+      "highlights": [
+        "Keycloak authentication finding: strongest report (65-75% acceptance)",
+        "Critical review: 7/10 reports reclassified as intelligence",
+        "Cut from 11 to 4 submission candidates after honest review",
+        "Key insight: IDOR on /orders/{id} = potential P1 ($3,500+)"
+      ],
+      "tags": ["Bugcrowd", "Food Delivery", "Auth", "Keycloak"]
+    },
+    {
+      "id": "meesho",
+      "name": "Meesho",
+      "type": "Bug Bounty",
+      "status": "Paused",
+      "date": "2026-02-19",
+      "description": "HackerOne program for Indian e-commerce platform. 75% out-of-scope rate due to *.valmo.in wildcard exclusion. Painful lesson in scope verification before testing.",
+      "findings": 4,
+      "severity": { "critical": 0, "high": 0, "medium": 1, "low": 0 },
+      "highlights": [
+        "75% out-of-scope rate — worst performance across all programs",
+        "JWT leak found on excluded *.valmo.in asset",
+        "Scope lesson: wildcard exclusions override individual asset matches",
+        "0 confirmed submissions via API — status uncertain"
+      ],
+      "tags": ["HackerOne", "E-commerce", "Scope Failure"]
+    },
+    {
       "id": "juice-shop",
       "name": "OWASP Juice Shop",
       "type": "Practice Lab",
@@ -21,21 +123,21 @@
   "bugBountyPlatforms": [
     {
       "platform": "HackerOne",
-      "status": "Pending Signup",
-      "profileUrl": null,
-      "stats": { "reports": 0, "bounties": "$0", "reputation": 0 }
+      "status": "Active",
+      "profileUrl": "https://hackerone.com/akshayraw",
+      "stats": { "reports": 3, "bounties": "$0", "reputation": 0 }
     },
     {
       "platform": "Bugcrowd",
-      "status": "Pending Signup",
+      "status": "Registered",
       "profileUrl": null,
       "stats": { "reports": 0, "bounties": "$0", "reputation": 0 }
     },
     {
       "platform": "Intigriti",
-      "status": "Pending Signup",
+      "status": "Active",
       "profileUrl": null,
-      "stats": { "reports": 0, "bounties": "$0", "reputation": 0 }
+      "stats": { "reports": 5, "bounties": "$0", "reputation": 0 }
     }
   ]
 }

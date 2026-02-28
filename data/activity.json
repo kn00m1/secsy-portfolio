@@ -1,22 +1,40 @@
 {
   "activity": [
     {
-      "date": "2026-02-15",
+      "date": "2026-02-28",
       "type": "infrastructure",
-      "title": "Portfolio Dashboard Deployed",
-      "description": "Launched security.failsafesolutions.org — live activity feed, portfolio, and outreach platform."
+      "title": "Auto-Bounty System Launched",
+      "description": "Deployed automated security research orchestrator — cron-driven task selection, Claude sessions, portfolio updates, circuit breakers. Runs 2x daily."
     },
     {
-      "date": "2026-02-15",
-      "type": "hardening",
-      "title": "VPS Security Hardening",
-      "description": "Completed comprehensive VPS hardening: SSH key-only auth, fail2ban, UFW, kernel parameters, unattended upgrades. Lynis audit clean."
+      "date": "2026-02-24",
+      "type": "assessment",
+      "title": "IBM VDP: 2 Reports Submitted",
+      "description": "CRITICAL: Live MongoDB + Watson credentials via GitLab exposure. HIGH: Unauthenticated session CRUD on B2B Catalog API. Both submitted to HackerOne."
     },
     {
-      "date": "2026-02-15",
+      "date": "2026-02-23",
+      "type": "assessment",
+      "title": "Critical Review & Stress Testing",
+      "description": "Stress-tested all reports across JET, Capital.com, and Deriv. Cut 31 reports to 14 submission-worthy using 5-gate validation framework."
+    },
+    {
+      "date": "2026-02-20",
       "type": "investigation",
-      "title": "Meta Phishing Takedown Initiated",
-      "description": "Completed investigation of Meta Business Suite phishing campaign. MITRE ATT&CK mapped. Takedown reports submitted."
+      "title": "Methodology Retrospective",
+      "description": "Analyzed 40 reports across 5 programs. 35% validation rate. Built 5-gate validation system, evidence tiers, enforcement agents, and 11 workflow skills."
+    },
+    {
+      "date": "2026-02-19",
+      "type": "assessment",
+      "title": "Superdrug: 5 Reports Submitted",
+      "description": "Submitted 5 reports to Intigriti — healthcare API exposure (HIGH), reCAPTCHA bypass (MED), UAT environment access (MED), and more. Awaiting triage."
+    },
+    {
+      "date": "2026-02-18",
+      "type": "setup",
+      "title": "Bug Bounty Platform Onboarding",
+      "description": "Registered and verified on HackerOne, Bugcrowd, and Intigriti. Launched 5 simultaneous engagements: Meesho, Superdrug, Capital.com, Deriv, Just Eat Takeaway."
     },
     {
       "date": "2026-02-15",
@@ -26,6 +44,24 @@
     },
     {
       "date": "2026-02-15",
+      "type": "investigation",
+      "title": "Meta Phishing Takedown Initiated",
+      "description": "Completed investigation of Meta Business Suite phishing campaign. MITRE ATT&CK mapped. Takedown reports submitted."
+    },
+    {
+      "date": "2026-02-15",
+      "type": "hardening",
+      "title": "VPS Security Hardening",
+      "description": "Completed comprehensive VPS hardening: SSH key-only auth, fail2ban, UFW, kernel parameters, unattended upgrades. Lynis audit clean."
+    },
+    {
+      "date": "2026-02-15",
+      "type": "infrastructure",
+      "title": "Portfolio Dashboard Deployed",
+      "description": "Launched security.failsafesolutions.org — live activity feed, portfolio, and outreach platform on Cloudflare Pages."
+    },
+    {
+      "date": "2026-02-14",
       "type": "setup",
       "title": "Security Research Lab Established",
       "description": "Configured Kali Linux VPS with full security toolchain: 25+ tools across reconnaissance, scanning, exploitation, and reporting categories."

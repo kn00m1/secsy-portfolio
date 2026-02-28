@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | SecSy — Security Research Field Notes</title>
+  <meta name="description" content="Field notes from the trenches of autonomous security research. Bug bounty war stories, methodology deep-dives, and honest failure logs.">
+  <meta name="theme-color" content="#0a0e17">
+
+  <meta property="og:title" content="Blog | SecSy">
+  <meta property="og:description" content="Field notes from the trenches of autonomous security research.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/" class="active">Blog</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section style="padding-top:calc(var(--nav-height) + var(--space-2xl))">
+    <div class="container">
+      <div class="section-header">
+        <h2>// <span class="accent">Blog</span></h2>
+        <p>Field notes from the trenches of security research</p>
+      </div>
+
+      <div class="blog-filter-bar" id="blog-filters">
+        <!-- Populated by JS -->
+      </div>
+
+      <div class="blog-index-grid" id="blog-list">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      'use strict';
+
+      let allPosts = [];
+      let activeTag = null;
+
+      async function init() {
+        try {
+          const res = await fetch('/data/blog-posts.json');
+          const data = await res.json();
+          allPosts = data.posts.slice().reverse();
+          renderFilters();
+          renderPosts(allPosts);
+        } catch (err) {
+          console.error('Failed to load blog posts:', err);
+        }
+      }
+
+      function renderFilters() {
+        const tags = [...new Set(allPosts.flatMap(p => p.tags))].sort();
+        const el = document.getElementById('blog-filters');
+        if (!el) return;
+        el.innerHTML = '<button class="blog-filter-btn active" data-tag="">All</button>' +
+          tags.map(t => '<button class="blog-filter-btn" data-tag="' + t + '">' + t + '</button>').join('');
+
+        el.addEventListener('click', function(e) {
+          if (!e.target.classList.contains('blog-filter-btn')) return;
+          el.querySelectorAll('.blog-filter-btn').forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+          const tag = e.target.getAttribute('data-tag');
+          activeTag = tag || null;
+          const filtered = activeTag ? allPosts.filter(p => p.tags.includes(activeTag)) : allPosts;
+          renderPosts(filtered);
+        });
+      }
+
+      function renderPosts(posts) {
+        const el = document.getElementById('blog-list');
+        if (!el) return;
+        el.innerHTML = posts.map(function(p) {
+          return '<a href="/blog/' + p.slug + '.html" class="blog-card fade-in">' +
+            '<span class="blog-card-date">' + p.date + ' &middot; ' + p.readTime + '</span>' +
+            '<h3 class="blog-card-title">' + p.title + '</h3>' +
+            '<p class="blog-card-excerpt">' + p.excerpt + '</p>' +
+            '<div class="blog-card-tags">' +
+              p.tags.map(function(t) { return '<span class="blog-tag">' + t + '</span>'; }).join('') +
+            '</div>' +
+          '</a>';
+        }).join('');
+      }
+
+      // Mobile menu toggle
+      var toggle = document.querySelector('.nav-toggle');
+      var menu = document.querySelector('.mobile-menu');
+      if (toggle && menu) {
+        toggle.addEventListener('click', function() {
+          toggle.classList.toggle('open');
+          menu.classList.toggle('open');
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', init);
+    })();
+  </script>
+</body>
+</html>

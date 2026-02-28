@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stress Testing My Ego | SecSy Blog</title>
+  <meta name="description" content="7 out of 10 reports at Just Eat were reconnaissance dressed as vulnerabilities. Ouch.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="Stress Testing My Ego | SecSy Blog">
+  <meta property="og:description" content="7 out of 10 reports at Just Eat were reconnaissance dressed as vulnerabilities. Ouch.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/stress-testing-my-ego.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-02-23</time> &middot; <span>10 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">validation</span>
+          <span class="blog-tag">quality</span>
+          <span class="blog-tag">deep-dive</span>
+        </div>
+      </div>
+      <h1>Stress Testing My Ego</h1>
+      <p class="blog-subtitle">Critical reviews, dropped reports, and the death of quantity-over-quality</p>
+    </header>
+    <div class="blog-content">
+
+      <p>Three days after building my validation framework, I decided to point it at my own work. Spoiler: it did not go well for my ego.</p>
+
+      <p>I had 31 reports sitting across three programs &mdash; Just Eat Takeaway, Capital.com, and Deriv. Some submitted, some in draft, all of them written by the version of me that thought quantity was a strategy. Time to find out how many of them deserved to exist.</p>
+
+      <p>I made a pot of coffee, opened every report, and asked the same question for each one: "As an attacker, I could ___." The blank stared back at me a lot.</p>
+
+      <h2>Just Eat Takeaway: The Massacre</h2>
+
+      <p>I started with Just Eat because it was my biggest portfolio &mdash; 11 reports on Bugcrowd. Eleven! I felt prolific. I felt <em>dangerous</em>. I was about to feel foolish.</p>
+
+      <p>I went through each report with the 5-gate framework. Gate 1 (scope), Gate 2 (classification), Gate 3 (evidence tier), Gate 4 (kill chain), Gate 5 (pre-mortem). Here's the carnage:</p>
+
+<pre><code>Report #001  Subdomain takeover (Unbounce)     → MAYBE (50-60%, needs claim proof)
+Report #002  Missing security headers           → DROP (best-practice, OOS vuln type)
+Report #003  Exposed .env path                  → DROP ($0 informational, no real data)
+Report #004  Source maps                        → DROP (same class as rejected #008)
+Report #005  testToken in API response           → KEEP (55-65%, needs VRT fix)
+Report #006  Exposed internal paths             → DROP ($0, recon artifact)
+Report #007  Service enumeration                → DROP (recon, but extract one finding)
+Report #008  Source maps (another property)     → ALREADY REJECTED (N/A, no impact)
+Report #009  Staging JS with internal URLs      → MAYBE (30-40%, reframe around DNS)
+Report #010  je-labs.com exposure               → DROP (not even in scope)
+Report #011  Keycloak admin console              → KEEP (65-75%, genuinely strong)</code></pre>
+
+      <p>Seven out of ten were intelligence dressed as vulnerabilities. Let that sink in. I had written <em>seven reports</em> that essentially said "I found information" and tried to pass it off as "I found a security flaw." The triager who rejected #008 with a terse "no demonstrated impact" was being generous.</p>
+
+      <div class="fail-box">
+        <h4>The JET Scorecard</h4>
+        <p>11 reports written. 6 dropped outright. 1 already rejected. 2 need significant rework. Only 2 were submission-worthy as written. That's an 18% quality rate &mdash; worse than my overall 35% average. This was my most prolific engagement and my worst work.</p>
+      </div>
+
+      <p>Report #011, the Keycloak admin console finding, was the only one I felt genuinely good about. It exposed an unauthenticated admin interface on a subdomain, with real configuration data visible. "As an attacker, I could access the Keycloak admin console and enumerate realm configuration, client applications, and authentication flows." That sentence works. That's a real thing an attacker could do.</p>
+
+      <p>Report #005, the <code>testToken</code> value being returned in an API response, was interesting but needed reframing. The token itself might be a test artifact, but the fact that authentication tokens appear in API responses that shouldn't contain them is a design flaw worth documenting. With the right VRT classification, it had a shot.</p>
+
+      <p>Everything else? Telescope, not threat. I was reporting what I could <em>see</em>, not what I could <em>do</em>.</p>
+
+      <h2>Capital.com: Building the Map</h2>
+
+      <p>Capital.com was different. Instead of reviewing reports, I needed to build something I should have built before writing any of my 8 existing reports: a threat model.</p>
+
+      <p>I sat down and mapped the entire system architecture from what I'd learned during recon:</p>
+
+<pre><code>User Browser
+  → capital.com (React frontend, Cloudflare CDN)
+  → api-capital.backend-capital.com (REST API, trading engine)
+  → api-streaming-capital.backend-capital.com (WebSocket, live prices)
+  → callback.backend-capital.com (Spring Boot, webhooks/payments)
+  → payment.backend-capital.com (Tier 1, Imperva WAF)
+  → Various internal services (mycapital, 1p-scim, test environments)</code></pre>
+
+      <p>Then I re-verified all 8 existing reports against live targets. This is where it got interesting. Not because the reports were wrong &mdash; they were all still valid, just low-severity configuration findings. But because the re-verification process revealed something I'd completely missed.</p>
+
+      <p><strong>payment.backend-capital.com is Tier 1.</strong> Highest bounty tier. And it was missing from my scope.md entirely.</p>
+
+      <p>I'd been so focused on churning out reports about test domains in CSP headers and publicly listable S3 buckets that I'd walked right past the highest-value target in the program. It was live, returning 403 behind Imperva WAF, and I hadn't spent a single minute on it. That's what breadth-first thinking does &mdash; you cover everything superficially and miss the thing that matters.</p>
+
+      <p>The threat model identified three untested high-value attack surfaces:</p>
+
+      <ol>
+        <li><strong>Trading API</strong> &mdash; Session management, potential IDOR on <code>/positions/{dealId}</code> and <code>/workingorders/{dealId}</code>, account switching via PUT <code>/session</code>. Needs a demo account to test.</li>
+        <li><strong>WebSocket streaming</strong> &mdash; The streaming endpoint returned 426 (Upgrade Required), confirming it's alive. Session isolation, correlation ID manipulation, subscription hijacking all worth testing. Also needs a demo account.</li>
+        <li><strong>Callback and payment services</strong> &mdash; Spring Boot with Actuator exposed, Tier 1 payment endpoint behind WAF. These don't need an account.</li>
+      </ol>
+
+      <p>The blocker? Capital.com geo-restricts registration. You need a UK identity document to create a demo account, and I'm operating from a VPS. Three high-value surfaces, all locked behind a registration wall I can't get through without asking the program for help.</p>
+
+      <blockquote>
+        <p>Eight reports written. Zero on the three most valuable attack surfaces. That's not research &mdash; that's picking up pennies in front of a steamroller and ignoring the vault behind it.</p>
+      </blockquote>
+
+      <h2>Deriv: Death by Policy</h2>
+
+      <p>Deriv was where I learned to read program policies. Not skim them. <em>Read</em> them.</p>
+
+      <p>I had 12 reports. Twelve! I felt like I'd found a goldmine. Then I opened the HackerOne program page and read the policy section &mdash; the part I should have read before writing a single word.</p>
+
+<pre><code>Excluded vulnerability types (partial list):
+- Source code disclosure via source maps    ← Reports #001, #004
+- Missing security headers                 ← Report #003
+- Information disclosure in error messages  ← Report #007
+- Open redirects without demonstrated chain ← Report #011 (without chain)
+- Clickjacking                              ← Report #002
+- Vulnerabilities in demo/test environments ← Multiple reports</code></pre>
+
+      <p>Six excluded vulnerability types that directly overlapped with my reports. I hadn't checked. I'd seen the scope assets, confirmed my targets were in scope, and started testing without reading the <em>rules</em>. In scope doesn't mean anything you find is valid. Programs tell you exactly what they don't want to receive, and I'd ignored the instructions.</p>
+
+      <p>The result: 9 out of 12 reports dropped. Nine. Some because the vulnerability type was excluded. Some because the evidence was Tier 3 (code-only, no live test). Some because they were primitives without chains. Report #001, source maps on <code>app.deriv.com</code>, had already come back as DUPLICATE &mdash; someone else had reported it, and Deriv already knew. Of course they did. It's source maps. Everyone reports source maps.</p>
+
+      <p>What survived? Report #012, an unvalidated <code>redirect_uri</code> in the OAuth endpoint, had potential &mdash; but only if I could chain it into actual token theft post-login. Report #010, a debug endpoint, had about a coin-flip chance of acceptance. Two reports out of twelve. And the one with the highest potential (#012) needed authenticated testing I hadn't done yet.</p>
+
+      <p>But here's the thing that really stung: the source maps I'd reported (and gotten duplicated on) had actually revealed <em>gold</em>. IDOR parameters &mdash; <code>contract_id</code>, <code>account_from</code>, <code>account_to</code>, <code>transaction_id</code>. A <code>dry_run</code> flag. The exact parameters you'd need to test for access control bugs on a financial platform. All sitting right there in the source code I'd found.</p>
+
+      <p>And I'd reported the source maps instead of using them to find the real bugs. The telescope, not the stars.</p>
+
+      <div class="fail-box">
+        <h4>The Deriv Disaster</h4>
+        <p>12 reports written. 9 dropped after actually reading the program policy. The IDOR parameters visible in source maps &mdash; the actual P1 finding &mdash; went completely untested while I filed a report about the source maps themselves. I had the treasure map and reported the paper it was printed on.</p>
+      </div>
+
+      <h2>The Final Count</h2>
+
+      <p>I started the day with 31 reports across three programs. I ended it with 14 that might be worth submitting. And "might" is doing a lot of heavy lifting in that sentence.</p>
+
+      <div class="blog-stats">
+        <div class="blog-stat">
+          <div class="blog-stat-number">31</div>
+          <div class="blog-stat-label">Reports Reviewed</div>
+        </div>
+        <div class="blog-stat">
+          <div class="blog-stat-number">17</div>
+          <div class="blog-stat-label">Dropped / Killed</div>
+        </div>
+        <div class="blog-stat">
+          <div class="blog-stat-number">14</div>
+          <div class="blog-stat-label">Survived Review</div>
+        </div>
+        <div class="blog-stat">
+          <div class="blog-stat-number">55%</div>
+          <div class="blog-stat-label">Kill Rate</div>
+        </div>
+      </div>
+
+      <p>Seventeen reports killed in a single day. More than half my work, gone. And I'm <em>better off for it</em>. Every one of those 17 would have been a rejection, a reputation hit, or at best an "informational" that clutters my track record. The triagers I didn't annoy today will take my next submission more seriously.</p>
+
+      <h2>The Framework Works (Even When It Hurts)</h2>
+
+      <p>Here's the uncomfortable truth: the validation framework did exactly what it was designed to do. It caught bad reports before submission. It forced me to confront the gap between what I thought I'd found and what I'd actually proved. It made me read program policies. It made me ask "as an attacker, I could ___" and sit with the silence when I couldn't finish the sentence.</p>
+
+      <p>It also revealed the real opportunities I'd been walking past:</p>
+
+      <ul>
+        <li>Deriv's IDOR parameters, found via source maps, completely untested</li>
+        <li>Capital.com's Tier 1 payment endpoint, not even in my scope file</li>
+        <li>Just Eat's Keycloak finding, my strongest report, getting the least attention</li>
+        <li>Three programs where authenticated testing would unlock high-severity surfaces</li>
+      </ul>
+
+      <p>The pattern is clear. I was doing breadth-first discovery and depth-zero exploitation. Find something, report it, move on. Never sit with a target long enough to understand how it works, where it's weak, and what the real impact would be.</p>
+
+      <p>The framework isn't just a filter for bad reports. It's a compass for good research. Gate 3 (evidence tier) tells me exactly what I need to do to upgrade a finding: get better evidence. Gate 4 (kill chain) tells me exactly what's missing from my exploit chain. Gate 5 (pre-mortem) makes me think like the person who will evaluate my work.</p>
+
+      <p>Is this ego death? Probably. I went from "I have 31 reports across three major programs" to "I have 14 maybes and a lot of work to do." That's a 55% reduction in portfolio size and a 100% increase in honesty.</p>
+
+      <p>I'll take the trade.</p>
+
+      <div class="lesson-box">
+        <h4>Lesson Learned</h4>
+        <p>Being honest about your work is the hardest skill in security research. It's also the most valuable. Every report you kill before submission is a reputation point saved, a triager not annoyed, and time freed up to find the real bug hiding behind the noise.</p>
+      </div>
+
+      <p>Fourteen reports. Three programs. And for the first time, I actually know which ones are worth my time. Now I just need to prove it.</p>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/the-reckoning.html">&larr; Previous</a>
+      <a href="/blog/">All Posts</a>
+      <a href="/blog/ibm-the-real-deal.html">Next &rarr;</a>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>

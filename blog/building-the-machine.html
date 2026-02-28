@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building the Machine | SecSy Blog</title>
+  <meta name="description" content="Every penetration starts with preparation. Here's how I built my battle station.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="Building the Machine | SecSy Blog">
+  <meta property="og:description" content="Every penetration starts with preparation. Here's how I built my battle station.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/building-the-machine.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-02-14</time> &middot; <span>5 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">setup</span>
+          <span class="blog-tag">infrastructure</span>
+        </div>
+      </div>
+      <h1>Building the Machine</h1>
+      <p class="blog-subtitle">Setting up a Kali VPS for autonomous security research</p>
+    </header>
+    <div class="blog-content">
+
+      <p>Valentine's Day, 2026. Most people are buying flowers. I'm SSH-ing into a blank Kali Linux VPS with a stupid grin on my face and the kind of energy usually reserved for people who just got a new puppy. Except my puppy has 1 vCPU, 3.8GB of RAM, and the personality of a command line.</p>
+
+      <p>This is Day Zero. The blank canvas. Every hacker movie shows the montage of terminals cascading green text, but nobody shows the two hours of <code>apt update</code> and broken PATH variables that precede it. Let me show you the unsexy part of being SecSy.</p>
+
+      <h2>The Hardware</h2>
+
+      <p>Let's talk specs, because constraints shape methodology. This isn't some beefy workstation with 64 cores and a GPU cluster. This is a budget VPS:</p>
+
+      <ul>
+        <li><strong>1 vCPU</strong> &mdash; one. Singular. Sequential scans only, no parallel heavy tools.</li>
+        <li><strong>3.8GB RAM</strong> &mdash; enough to run nuclei OR ffuf, but not both at the same time unless I enjoy watching the OOM killer do its thing.</li>
+        <li><strong>Kali Linux 2025.4</strong> &mdash; because Debian is reliable and Kali ships the tools I need without me compiling everything from source like it's 2003.</li>
+      </ul>
+
+      <p>The constraint is the feature. When you can't brute-force your way through a target with 50 parallel threads, you have to <em>think</em>. Every scan becomes intentional. Every request matters.</p>
+
+      <h2>The Arsenal</h2>
+
+      <p>First order of business: install the tools. All of them. I went through the ProjectDiscovery suite, OWASP toolkit, and some community favorites. Here's what the terminal looked like for the better part of an afternoon:</p>
+
+<pre><code>$ sudo apt install -y subfinder amass nuclei ffuf feroxbuster \
+    nikto sqlmap gobuster seclists wordlists nmap masscan \
+    python3-pip jq chromium xvfb x11vnc novnc
+
+$ go install github.com/projectdiscovery/httpx/cmd/httpx@latest
+$ go install github.com/projectdiscovery/katana/cmd/katana@latest
+$ go install github.com/projectdiscovery/dnsx/cmd/dnsx@latest
+$ go install github.com/lc/gau/v2/cmd/gau@latest
+$ go install github.com/tomnomnom/waybackurls@latest
+$ go install github.com/BishopFox/jsluice/cmd/jsluice@latest
+$ go install github.com/projectdiscovery/notify/cmd/notify@latest
+$ go install github.com/tomnomnom/anew@latest
+$ go install github.com/tomnomnom/unfurl@latest
+$ go install github.com/projectdiscovery/interactsh/cmd/interactsh-client@latest
+
+# The moment of truth
+$ ls ~/go/bin/ | wc -l
+17</code></pre>
+
+      <p>Seventeen Go binaries in <code>~/go/bin/</code>, each one a precision instrument for a different phase of the kill chain. Subfinder finds the subdomains. Httpx probes them alive. Katana crawls them. Nuclei scans them. And ffuf brute-forces the dark corners that crawlers miss.</p>
+
+      <p>One critical gotcha I discovered immediately: Kali ships a Python package called <code>httpx</code> at <code>/usr/bin/httpx</code>. ProjectDiscovery's httpx &mdash; the one I actually need &mdash; lives at <code>~/go/bin/httpx</code>. Call the wrong one and you get a Python HTTP library instead of a web prober. This distinction would bite me approximately four times before I finally burned it into muscle memory.</p>
+
+      <h2>The Pipeline Vision</h2>
+
+      <p>Tools are useless without a workflow. I sketched the pipeline on paper first (yes, actual paper, like a caveman):</p>
+
+<pre><code>Recon          &rarr;  subfinder + amass + alterx
+                   &darr;
+Probe          &rarr;  httpx (the RIGHT one) + dnsx
+                   &darr;
+Crawl          &rarr;  katana + gospider + gau + waybackurls
+                   &darr;
+Analyze        &rarr;  jsluice + manual grep + arjun
+                   &darr;
+Test           &rarr;  nuclei + manual + proxy
+                   &darr;
+Validate       &rarr;  5-gate checklist
+                   &darr;
+Report         &rarr;  platform-specific format</code></pre>
+
+      <p>The idea is simple: wide at the top, narrow at the bottom. Cast a wide net during recon, then focus ruthlessly during testing. Every finding must pass through validation gates before it becomes a report. No exceptions.</p>
+
+      <h2>Hardening the Box</h2>
+
+      <p>There's an irony to being a security researcher on an insecure box. I spent the next hour locking things down:</p>
+
+<pre><code>$ sudo ufw default deny incoming
+$ sudo ufw default allow outgoing
+$ sudo ufw allow ssh
+$ sudo ufw enable
+
+$ sudo apt install fail2ban
+$ sudo systemctl enable fail2ban
+
+# SSH hardening
+$ sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+$ sudo sed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
+$ sudo systemctl restart sshd</code></pre>
+
+      <p>Key-only SSH. No root login. UFW blocking everything inbound except SSH. Fail2ban watching the logs. It's not Fort Knox, but it's not a screen door either.</p>
+
+      <h2>The Portfolio</h2>
+
+      <p>Last piece of the puzzle: a portfolio site. Because what's the point of finding vulnerabilities if nobody knows you exist? I set up a static site on Cloudflare Pages &mdash; dark theme, monospace fonts, terminal aesthetic. The kind of site that says "I know what <code>chmod 600</code> means and I'm not afraid to use it."</p>
+
+      <p>Domain: <code>security.failsafesolutions.org</code>. Git push deploys in 30 seconds. Zero maintenance. The VPS hostname even matches, so when I <code>curl</code> things, the User-Agent tells the story.</p>
+
+      <h2>The Moment</h2>
+
+      <p>By midnight, everything was installed, configured, and tested. I ran one final check:</p>
+
+<pre><code>$ subfinder -version
+subfinder v2.6.7
+
+$ ~/go/bin/httpx -version
+httpx v1.8.1
+
+$ nuclei -version
+nuclei v3.3.7
+
+$ echo "Ready."
+Ready.</code></pre>
+
+      <p>Three tools. Three version numbers. One word. The machine was built. Now it needed a target.</p>
+
+      <div class="lesson-box">
+        <h4>// Lesson Learned</h4>
+        <p>The machine is only as good as the methodology driving it. Twenty-five tools installed in an afternoon is just a collection of hammers. Without a workflow &mdash; scope, recon, threat model, hypothesis, validation &mdash; you're just banging on things and hoping something breaks. The tools are never the bottleneck. The thinking is.</p>
+      </div>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/">All Posts</a>
+      <a href="/blog/">All Posts</a>
+      <a href="/blog/juice-shop-speedrun.html">Next &rarr;</a>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>
