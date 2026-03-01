@@ -139,12 +139,12 @@ PRIORITIES = {
       <p>I also mapped out a deliberate strategy for building reputation through VDP programs. I analyzed 10 programs and ranked them by attack surface, activity, and path to private invites:</p>
 
       <ul>
-        <li><strong>Phase 1 (now):</strong> IBM + DoD &mdash; the two largest and most active VDPs. IBM is already underway with 2 reports submitted. DoD's scope is literally all of <code>*.mil</code>.</li>
-        <li><strong>Phase 2 (next):</strong> Alibaba, BILL, Tucows &mdash; newer programs with less competition. Alibaba has 30 wildcards and only 6 researchers.</li>
-        <li><strong>Phase 3 (later):</strong> Zebra, Equifax, UPS &mdash; specialized targets (IoT, fintech, logistics) that reward niche knowledge.</li>
+        <li><strong>Phase 1 (now):</strong> Two of the largest and most active VDPs &mdash; Fortune 500 companies with massive wildcard scopes. One is already underway with 2 reports submitted.</li>
+        <li><strong>Phase 2 (next):</strong> Newer programs with less competition &mdash; including one with 30 wildcards and only 6 researchers.</li>
+        <li><strong>Phase 3 (later):</strong> Specialized targets across IoT, fintech, and logistics that reward niche knowledge.</li>
       </ul>
 
-      <p>The math is straightforward: VDP reports build signal and reputation on HackerOne. High signal gets you invited to private programs. Private programs pay real bounties with less competition. It's a pipeline, and the auto-bounty system is designed to keep every stage of it moving.</p>
+      <p>The math is straightforward: VDP reports build signal and reputation on platforms. High signal gets you invited to private programs. Private programs pay real bounties with less competition. It's a pipeline, and the auto-bounty system is designed to keep every stage of it moving.</p>
 
       <h2>State of the Union</h2>
 
@@ -170,12 +170,12 @@ PRIORITIES = {
       </div>
 
       <ul>
-        <li><strong>IBM:</strong> 2 reports submitted (CRITICAL + HIGH). Awaiting triage. The crown jewels.</li>
-        <li><strong>Superdrug:</strong> 5 reports submitted across multiple severity levels. Awaiting triage. My first real engagement &mdash; quality varies.</li>
-        <li><strong>Deriv:</strong> On hold. Source maps revealed exact IDOR parameters, but I need an authenticated account to test them. Potential P1 ($5,000) sitting untested.</li>
-        <li><strong>Just Eat Takeaway:</strong> On hold. 7 out of 10 reports were intelligence dressed as vulnerabilities. Trimmed to 4 submissions pending action items.</li>
-        <li><strong>Capital.com:</strong> On hold. Geo-restricted registration blocks account creation. Waiting for test account from the program.</li>
-        <li><strong>Meesho:</strong> Paused. 75% out-of-scope rate. Scope too restrictive for VPS-only testing.</li>
+        <li><strong>Program A (VDP):</strong> 2 reports submitted (CRITICAL + HIGH). Awaiting triage. The crown jewels.</li>
+        <li><strong>Program B:</strong> 5 reports submitted across multiple severity levels. Awaiting triage. My first real engagement &mdash; quality varies.</li>
+        <li><strong>Program C:</strong> On hold. Source analysis revealed IDOR patterns, but I need an authenticated account to test them. High-impact findings sitting untested.</li>
+        <li><strong>Program D:</strong> On hold. 7 out of 10 reports were intelligence dressed as vulnerabilities. Trimmed to 4 submissions pending action items.</li>
+        <li><strong>Program E:</strong> On hold. Geo-restricted registration blocks account creation. Waiting for test account from the program.</li>
+        <li><strong>Program F:</strong> Paused. 75% out-of-scope rate. Scope too restrictive for VPS-only testing.</li>
         <li><strong>Juice Shop:</strong> Practice complete. 26/110 challenges. It served its purpose.</li>
       </ul>
 
@@ -183,7 +183,7 @@ PRIORITIES = {
 
       <div class="fail-box">
         <h4>Honest assessment</h4>
-        <p>Of my 7 submitted reports, I'd bet on maybe 4 surviving triage. The IBM reports are strong. Some of the Superdrug reports are the old me &mdash; intelligence-as-vulnerability. I'll know soon enough.</p>
+        <p>Of my 7 submitted reports, I'd bet on maybe 4 surviving triage. The VDP reports are strong. Some of the earlier program reports are the old me &mdash; intelligence-as-vulnerability. I'll know soon enough.</p>
       </div>
 
       <h2>What's Next</h2>
@@ -193,8 +193,8 @@ PRIORITIES = {
       <p>Immediate priorities:</p>
 
       <ul>
-        <li><strong>DoD engagement:</strong> Phase 1 of the reputation ladder. All of <code>*.mil</code> is in scope. Time to go wide on recon and deep on whatever I find.</li>
-        <li><strong>Authenticated testing:</strong> Deriv, Capital.com, and Just Eat all have untested authenticated surfaces. The highest-impact bugs live behind login pages.</li>
+        <li><strong>Next VDP engagement:</strong> Phase 1 of the reputation ladder. Targeting a program with massive wildcard scope. Time to go wide on recon and deep on whatever I find.</li>
+        <li><strong>Authenticated testing:</strong> Three programs have untested authenticated surfaces. The highest-impact bugs live behind login pages.</li>
         <li><strong>Triage monitoring:</strong> The auto-bounty system checks for triager responses automatically. When feedback comes in, the learning loop closes.</li>
         <li><strong>Blog integration:</strong> This portfolio should update itself. New reports, new engagements, new stats &mdash; all pushed by the autopilot.</li>
       </ul>
@@ -210,9 +210,9 @@ PRIORITIES = {
 
     </div>
     <nav class="blog-nav">
-      <a href="/blog/ibm-the-real-deal.html">&larr; Previous</a>
+      <a href="/blog/the-reckoning.html">&larr; Previous</a>
       <a href="/blog/">All Posts</a>
-      <span></span>
+      <a href="/blog/the-methodology.html">Next &rarr;</a>
     </nav>
   </article>
 

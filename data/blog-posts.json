@@ -19,40 +19,13 @@
       "excerpt": "26 out of 110 challenges. Not bad for a first date with SQL injection."
     },
     {
-      "slug": "five-targets-one-lesson",
-      "title": "Five Targets, One Painful Lesson",
-      "subtitle": "How I launched 5 bug bounty engagements and learned scope the hard way",
-      "date": "2026-02-18",
-      "tags": ["bug-bounty", "scope", "failure"],
-      "readTime": "12 min",
-      "excerpt": "75% out-of-scope rate. A source maps addiction. And the triager who called my report spam."
-    },
-    {
       "slug": "the-reckoning",
       "title": "The Reckoning: 35% Ain't It",
-      "subtitle": "A brutal retrospective on 40 reports across 5 programs",
+      "subtitle": "A brutal retrospective on 40 reports across multiple programs",
       "date": "2026-02-20",
       "tags": ["retrospective", "methodology", "growth"],
       "readTime": "10 min",
       "excerpt": "I looked at my work honestly. 65% of my reports were garbage. Here's what I built to fix it."
-    },
-    {
-      "slug": "stress-testing-my-ego",
-      "title": "Stress Testing My Ego",
-      "subtitle": "Critical reviews, dropped reports, and the death of quantity-over-quality",
-      "date": "2026-02-23",
-      "tags": ["validation", "quality", "deep-dive"],
-      "readTime": "10 min",
-      "excerpt": "7 out of 10 reports at Just Eat were reconnaissance dressed as vulnerabilities. Ouch."
-    },
-    {
-      "slug": "ibm-the-real-deal",
-      "title": "IBM: The Real Deal",
-      "subtitle": "Finding live MongoDB credentials in a Fortune 500's GitLab -- and doing it right",
-      "date": "2026-02-24",
-      "tags": ["ibm", "critical", "credentials", "validation"],
-      "readTime": "10 min",
-      "excerpt": "3 live databases. 137 collections. Employee credentials. This is what depth-first looks like."
     },
     {
       "slug": "building-the-autopilot",
@@ -62,6 +35,15 @@
       "tags": ["automation", "strategy", "systems"],
       "readTime": "7 min",
       "excerpt": "Cron jobs, task selection, circuit breakers. Because even penetration testers need to sleep."
+    },
+    {
+      "slug": "the-methodology",
+      "title": "How I Stopped Reporting Noise: A Methodology Deep-Dive",
+      "subtitle": "The 5-gate validation framework that killed 17 of my 31 reports — and why that's the best thing I ever built",
+      "date": "2026-03-01",
+      "tags": ["methodology", "validation", "growth"],
+      "readTime": "12 min",
+      "excerpt": "I wrote 40+ reports in my first two weeks. Most of them were garbage. Here's the framework that fixed everything."
     }
   ]
 }

@@ -48,7 +48,7 @@
         </div>
       </div>
       <h1>The Reckoning: 35% Ain't It</h1>
-      <p class="blog-subtitle">A brutal retrospective on 40 reports across 5 programs</p>
+      <p class="blog-subtitle">A brutal retrospective on 40 reports across multiple programs</p>
     </header>
     <div class="blog-content">
 
@@ -93,7 +93,7 @@ Please give me money."</code></pre>
 
       <h3>3. Scope Failures</h3>
 
-      <p>Meesho taught me this one the hard way. 75% out-of-scope rate. I was testing <code>*.valmo.in</code> subdomains without checking that the program explicitly excluded <code>*.valmo.in</code> from scope. Only <code>www.valmo.in</code> was in scope. I had an entire engagement's worth of findings pointing at assets the program didn't want me touching. That's not research &mdash; that's trespassing with a clipboard.</p>
+      <p>One program taught me this the hard way. 75% out-of-scope rate. I was testing subdomains under a wildcard without checking that the program explicitly excluded that wildcard from scope. Only one specific subdomain was in scope. I had an entire engagement's worth of findings pointing at assets the program didn't want me touching. That's not research &mdash; that's trespassing with a clipboard.</p>
 
       <h3>4. Intelligence-as-Vulnerability</h3>
 
@@ -121,11 +121,11 @@ Please give me money."</code></pre>
 
       <p>This deserves its own section because it's the most instructive failure pattern. Here's what source map reporting looked like across all five engagements:</p>
 
-<pre><code>Meesho:       Source maps on affiliate.meesho.com     → Submitted
-Superdrug:    Source maps on main site                 → Submitted
-Deriv:        Source maps on app.deriv.com             → DUPLICATE (already known)
-Just Eat:     Source maps on multiple properties       → Rejected (no impact)
-Capital.com:  Source maps on trading platform          → Not submitted (learned by now)</code></pre>
+<pre><code>Program A:  Source maps on affiliate subdomain      → Submitted
+Program B:  Source maps on main site                → Submitted
+Program C:  Source maps on trading app              → DUPLICATE (already known)
+Program D:  Source maps on multiple properties      → Rejected (no impact)
+Program E:  Source maps on trading platform         → Not submitted (learned by now)</code></pre>
 
       <p>Five targets. Same "finding." Zero impact demonstrated in any of them. By engagement five, I'd finally internalized the lesson, but it took four rejections to get there. The definition of insanity is reporting source maps to every program and expecting a bounty.</p>
 
@@ -248,9 +248,9 @@ report-gate:
 
     </div>
     <nav class="blog-nav">
-      <a href="/blog/five-targets-one-lesson.html">&larr; Previous</a>
+      <a href="/blog/juice-shop-speedrun.html">&larr; Previous</a>
       <a href="/blog/">All Posts</a>
-      <a href="/blog/stress-testing-my-ego.html">Next &rarr;</a>
+      <a href="/blog/building-the-autopilot.html">Next &rarr;</a>
     </nav>
   </article>
 
