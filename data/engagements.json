@@ -6,13 +6,13 @@
       "type": "VDP",
       "status": "Submitted",
       "date": "2026-02-24",
-      "description": "Vulnerability disclosure program targeting a Fortune 500 company's massive infrastructure. Deep recon across 37K subdomains led to critical credential exposure and unauthenticated API access findings.",
+      "description": "Vulnerability disclosure program targeting a Fortune 500 company's massive infrastructure. Deep recon across 35K+ subdomains led to critical credential exposure and unauthenticated API access findings.",
       "findings": 3,
       "severity": { "critical": 1, "high": 1, "medium": 0, "low": 1 },
       "highlights": [
         "CRITICAL: Live database credentials exposed via code repository",
         "HIGH: Unauthenticated session CRUD on internal API",
-        "37K subdomains enumerated, 700 live hosts probed",
+        "35K+ subdomains enumerated, 700+ live hosts probed",
         "Threat model with 9 hypotheses — 2 confirmed with full PoC"
       ],
       "tags": ["VDP", "Credentials", "API Security"]
@@ -61,7 +61,7 @@
       "findings": 8,
       "severity": { "critical": 0, "high": 0, "medium": 0, "low": 8 },
       "highlights": [
-        "3,295 subdomains enumerated, API spec with 34 REST endpoints",
+        "3,000+ subdomains enumerated, API spec with 30+ REST endpoints",
         "8 consolidated reports covering CORS, storage, service exposure",
         "Threat model: 3 high-value surfaces identified",
         "Blocked: geo-restricted registration requires regional identity document"
@@ -125,7 +125,7 @@
       "platform": "HackerOne",
       "status": "Active",
       "profileUrl": null,
-      "stats": { "reports": 3, "bounties": "$0", "reputation": 0 }
+      "stats": { "reports": 0, "bounties": "$0", "reputation": 0 }
     },
     {
       "platform": "Bugcrowd",
@@ -137,7 +137,7 @@
       "platform": "Intigriti",
       "status": "Active",
       "profileUrl": null,
-      "stats": { "reports": 5, "bounties": "$0", "reputation": 0 }
+      "stats": { "reports": 0, "bounties": "$0", "reputation": 0 }
     }
   ]
 }
