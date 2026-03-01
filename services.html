@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services | SecSy — Security Assessment Services</title>
+  <meta name="description" content="External attack surface assessments, web application security audits, and continuous monitoring. Affordable security services for businesses of all sizes.">
+  <meta name="theme-color" content="#0a0e17">
+
+  <meta property="og:title" content="Services | SecSy">
+  <meta property="og:description" content="External attack surface assessments and web application security audits. See what attackers see before they do.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://security.failsafesolutions.org/services.html">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <style>
+    .service-card {
+      background: var(--bg-card, #111827);
+      border: 1px solid var(--border-color, #1e293b);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: all 250ms ease;
+      position: relative;
+    }
+    .service-card:hover {
+      background: var(--bg-card-hover, #1a2332);
+      border-color: rgba(0, 255, 136, 0.2);
+      transform: translateY(-2px);
+    }
+    .service-card.featured {
+      border-color: rgba(0, 255, 136, 0.3);
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.05);
+    }
+    .service-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      background: var(--green, #00ff88);
+      color: #0a0e17;
+      padding: 2px 12px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: var(--font-mono, 'JetBrains Mono', monospace);
+      text-transform: uppercase;
+    }
+    .service-price {
+      font-family: var(--font-mono, 'JetBrains Mono', monospace);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--green, #00ff88);
+      margin: 0.5rem 0;
+    }
+    .service-tagline {
+      color: var(--text-secondary, #94a3b8);
+      font-style: italic;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    .service-turnaround {
+      font-family: var(--font-mono, 'JetBrains Mono', monospace);
+      font-size: 0.8rem;
+      color: var(--cyan, #00d4ff);
+      margin-bottom: 1rem;
+    }
+    .service-section-title {
+      font-family: var(--font-mono, 'JetBrains Mono', monospace);
+      font-size: 0.75rem;
+      color: var(--text-secondary, #94a3b8);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .service-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .service-list li {
+      padding: 0.25rem 0;
+      padding-left: 1.25rem;
+      position: relative;
+      color: var(--text-primary, #e2e8f0);
+      font-size: 0.9rem;
+    }
+    .service-list li::before {
+      content: '>';
+      position: absolute;
+      left: 0;
+      color: var(--green, #00ff88);
+      font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    @media (min-width: 768px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .cta-box {
+      background: linear-gradient(135deg, rgba(0,255,136,0.05), rgba(0,212,255,0.05));
+      border: 1px solid rgba(0,255,136,0.2);
+      border-radius: 12px;
+      padding: 3rem;
+      text-align: center;
+      margin: 3rem 0;
+    }
+    .cta-box h2 {
+      color: var(--text-primary, #e2e8f0);
+      margin-bottom: 0.5rem;
+    }
+    .cta-box p {
+      color: var(--text-secondary, #94a3b8);
+      margin-bottom: 1.5rem;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--green, #00ff88);
+      color: #0a0e17;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: var(--font-mono, 'JetBrains Mono', monospace);
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 250ms ease;
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+    }
+    .faq-section { margin: 3rem 0; }
+    .faq-item {
+      border-bottom: 1px solid var(--border-color, #1e293b);
+      padding: 1.5rem 0;
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      font-family: var(--font-mono, 'JetBrains Mono', monospace);
+      color: var(--text-primary, #e2e8f0);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .faq-q::before {
+      content: 'Q: ';
+      color: var(--green, #00ff88);
+    }
+    .faq-a {
+      color: var(--text-secondary, #94a3b8);
+      line-height: 1.6;
+    }
+    .legal-note {
+      text-align: center;
+      color: var(--text-secondary, #94a3b8);
+      font-size: 0.8rem;
+      margin-top: 2rem;
+      padding: 1rem;
+      border-top: 1px solid var(--border-color, #1e293b);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/services.html" class="active">Services</a>
+        <a href="/blog/">Blog</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/services.html">Services</a>
+      <a href="/blog/">Blog</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section style="padding-top:calc(var(--nav-height, 64px) + 3rem)">
+    <div class="container">
+      <div class="section-header">
+        <h2>// <span class="accent">Services</span></h2>
+        <p>Security assessments for businesses that can't afford to be breached</p>
+      </div>
+
+      <div class="services-grid" id="services-list">
+        <!-- Populated by JS -->
+      </div>
+
+      <div class="cta-box" id="cta-section">
+        <!-- Populated by JS -->
+      </div>
+
+      <div class="faq-section">
+        <div class="section-header">
+          <h2>// <span class="accent">FAQ</span></h2>
+        </div>
+        <div id="faq-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <div class="legal-note">
+        All security testing is performed only with explicit written authorization.<br>
+        FailSafe Solutions adheres to responsible disclosure practices and applicable laws.
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      'use strict';
+
+      async function init() {
+        try {
+          var res = await fetch('/data/services.json');
+          var data = await res.json();
+          renderServices(data.services);
+          renderCTA(data.cta);
+          renderFAQ(data.faq);
+        } catch (err) {
+          console.error('Failed to load services:', err);
+        }
+      }
+
+      function renderServices(services) {
+        var el = document.getElementById('services-list');
+        if (!el) return;
+        el.innerHTML = services.map(function(s) {
+          var featuredClass = s.featured ? ' featured' : '';
+          return '<div class="service-card fade-in' + featuredClass + '">' +
+            '<h3>' + s.title + '</h3>' +
+            '<div class="service-price">' + s.price + '</div>' +
+            '<div class="service-turnaround">Turnaround: ' + s.turnaround + '</div>' +
+            '<p class="service-tagline">' + s.tagline + '</p>' +
+            '<p>' + s.description + '</p>' +
+            '<div class="service-section-title">What We Check</div>' +
+            '<ul class="service-list">' +
+              s.capabilities.map(function(c) { return '<li>' + c + '</li>'; }).join('') +
+            '</ul>' +
+            '<div class="service-section-title">Deliverables</div>' +
+            '<ul class="service-list">' +
+              s.deliverables.map(function(d) { return '<li>' + d + '</li>'; }).join('') +
+            '</ul>' +
+          '</div>';
+        }).join('');
+      }
+
+      function renderCTA(cta) {
+        var el = document.getElementById('cta-section');
+        if (!el || !cta) return;
+        el.innerHTML = '<h2>' + cta.heading + '</h2>' +
+          '<p>' + cta.subheading + '</p>' +
+          '<a href="mailto:' + cta.email + '?subject=Security%20Assessment%20Inquiry" class="cta-btn">' + cta.buttonText + '</a>';
+      }
+
+      function renderFAQ(faq) {
+        var el = document.getElementById('faq-list');
+        if (!el || !faq) return;
+        el.innerHTML = faq.map(function(item) {
+          return '<div class="faq-item fade-in">' +
+            '<div class="faq-q">' + item.q + '</div>' +
+            '<div class="faq-a">' + item.a + '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      // Mobile menu toggle
+      var toggle = document.querySelector('.nav-toggle');
+      var menu = document.querySelector('.mobile-menu');
+      if (toggle && menu) {
+        toggle.addEventListener('click', function() {
+          toggle.classList.toggle('open');
+          menu.classList.toggle('open');
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', init);
+    })();
+  </script>
+</body>
+</html>

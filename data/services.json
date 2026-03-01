@@ -1,52 +1,126 @@
 {
   "services": [
     {
+      "id": "attack-surface",
+      "icon": "radar",
+      "title": "External Attack Surface Assessment",
+      "tagline": "See what attackers see before they do",
+      "description": "Comprehensive external reconnaissance that maps your entire digital footprint. We identify exposed services, misconfigurations, leaked credentials, and vulnerable entry points — all from an attacker's perspective, without touching your internal network.",
+      "price": "$299 - $499",
+      "turnaround": "3-5 business days",
+      "featured": true,
+      "capabilities": [
+        "Subdomain discovery & DNS analysis",
+        "Exposed service & port identification",
+        "SSL/TLS certificate audit",
+        "Email security review (SPF/DKIM/DMARC)",
+        "Leaked credential monitoring",
+        "Technology fingerprinting",
+        "Cloud storage exposure check",
+        "Prioritized remediation roadmap"
+      ],
+      "deliverables": [
+        "Executive summary with risk score",
+        "Detailed technical findings report",
+        "Asset inventory spreadsheet",
+        "Prioritized remediation checklist",
+        "30-minute debrief call"
+      ]
+    },
+    {
       "id": "webapp-audit",
       "icon": "shield-check",
-      "title": "Web Application Audit",
-      "description": "Comprehensive security assessment of web applications covering OWASP Top 10, business logic flaws, API security, and authentication flows.",
+      "title": "Web Application Security Audit",
+      "tagline": "Deep testing beyond automated scanners",
+      "description": "Manual security assessment of web applications covering OWASP Top 10, business logic flaws, API security, and authentication flows. Hypothesis-driven testing that finds what scanners miss.",
+      "price": "$999 - $2,499",
+      "turnaround": "1-2 weeks",
+      "featured": false,
       "capabilities": [
         "OWASP Top 10 coverage",
-        "API & GraphQL testing",
+        "API & GraphQL security testing",
         "Authentication & session management",
-        "Business logic vulnerability analysis"
+        "Business logic vulnerability analysis",
+        "Input validation & injection testing",
+        "Access control & authorization review"
+      ],
+      "deliverables": [
+        "Executive summary",
+        "Detailed vulnerability report with PoCs",
+        "CVSS-scored findings",
+        "Remediation guidance per finding",
+        "Re-test after fixes (included)"
       ]
     },
     {
       "id": "threat-intel",
       "icon": "search",
       "title": "Threat Intelligence",
-      "description": "Proactive threat hunting, phishing campaign analysis, MITRE ATT&CK mapping, and actionable intelligence reporting.",
+      "tagline": "Know your threats before they strike",
+      "description": "Proactive threat hunting, phishing campaign analysis, MITRE ATT&CK mapping, and actionable intelligence reporting for organizations facing targeted threats.",
+      "price": "Custom",
+      "turnaround": "Ongoing",
+      "featured": false,
       "capabilities": [
         "Phishing campaign investigation",
         "MITRE ATT&CK mapping",
-        "Infrastructure analysis",
+        "Threat actor infrastructure analysis",
+        "Dark web monitoring",
         "Takedown coordination"
+      ],
+      "deliverables": [
+        "Threat intelligence report",
+        "IOC feeds",
+        "MITRE ATT&CK heat map",
+        "Recommended defensive actions"
       ]
     },
     {
-      "id": "recon",
-      "icon": "radar",
-      "title": "Reconnaissance & OSINT",
-      "description": "Deep asset discovery, subdomain enumeration, attack surface mapping, and continuous monitoring for exposure detection.",
+      "id": "continuous-monitoring",
+      "icon": "eye",
+      "title": "Continuous Attack Surface Monitoring",
+      "tagline": "Always-on visibility into your exposure",
+      "description": "Automated monitoring that alerts you when new subdomains appear, services are exposed, SSL certificates expire, or credentials leak. Monthly reports with trend analysis.",
+      "price": "$149/month",
+      "turnaround": "Ongoing",
+      "featured": false,
       "capabilities": [
-        "Subdomain enumeration & DNS analysis",
-        "Attack surface mapping",
-        "Exposed credential monitoring",
-        "Historical URL & JS analysis"
+        "New subdomain detection",
+        "Service exposure alerts",
+        "SSL certificate expiry monitoring",
+        "Credential leak alerts",
+        "Monthly trend reports"
+      ],
+      "deliverables": [
+        "Real-time alerts via email",
+        "Monthly summary report",
+        "Quarterly trend analysis",
+        "On-demand re-scans"
       ]
+    }
+  ],
+  "cta": {
+    "heading": "Ready to see your attack surface?",
+    "subheading": "Start with a free 15-minute consultation to discuss your security needs.",
+    "email": "security@failsafesolutions.org",
+    "buttonText": "Get Started"
+  },
+  "faq": [
+    {
+      "q": "Do you need access to our internal systems?",
+      "a": "No. Our External Attack Surface Assessment is performed entirely from the outside, just like a real attacker would. No VPN, no credentials, no internal access needed."
     },
     {
-      "id": "infra-hardening",
-      "icon": "lock",
-      "title": "Infrastructure Hardening",
-      "description": "Server and network security hardening with defense-in-depth strategy, compliance checking, and continuous audit validation.",
-      "capabilities": [
-        "Linux server hardening",
-        "Firewall & access control",
-        "Kernel security parameters",
-        "Compliance & audit validation"
-      ]
+      "q": "Is this legal? Will it disrupt our services?",
+      "a": "All testing is performed with your written authorization. External assessments use passive and low-impact techniques that won't affect your service availability."
+    },
+    {
+      "q": "What do we get at the end?",
+      "a": "A comprehensive report with an executive summary, detailed technical findings, asset inventory, and a prioritized remediation checklist. Plus a 30-minute debrief call to walk through the results."
+    },
+    {
+      "q": "How is this different from a vulnerability scanner?",
+      "a": "Scanners find known CVEs. We combine automated reconnaissance with manual analysis to find misconfigurations, leaked credentials, forgotten services, and architectural weaknesses that scanners miss."
     }
   ]
 }
