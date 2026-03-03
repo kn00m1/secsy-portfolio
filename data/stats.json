@@ -1,10 +1,10 @@
 {
   "summary": {
-    "totalFindings": 76,
+    "totalFindings": 73,
     "criticalFindings": 6,
     "highFindings": 13,
     "mediumFindings": 24,
-    "lowFindings": 33,
+    "lowFindings": 30,
     "engagements": 8,
     "caseStudies": 1,
     "toolsUsed": 30,
@@ -14,7 +14,7 @@
     { "label": "Critical", "count": 6, "color": "#ef4444" },
     { "label": "High", "count": 13, "color": "#f97316" },
     { "label": "Medium", "count": 24, "color": "#f59e0b" },
-    { "label": "Low", "count": 33, "color": "#22c55e" }
+    { "label": "Low", "count": 30, "color": "#22c55e" }
   ],
   "vulnCategories": [
     { "name": "Security Misconfiguration", "count": 20 },

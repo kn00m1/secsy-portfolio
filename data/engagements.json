@@ -57,12 +57,12 @@
       "type": "Bug Bounty",
       "status": "Active",
       "date": "2026-02-19",
-      "description": "Bug bounty program for a trading platform. Comprehensive recon with API spec extraction. 8 configuration-level reports ready. Blocked from authenticated testing by geo-restrictions.",
-      "findings": 8,
-      "severity": { "critical": 0, "high": 0, "medium": 0, "low": 8 },
+      "description": "Bug bounty program for a trading platform. Comprehensive recon with API spec extraction. 5 reports validated for submission after internal quality review. Blocked from authenticated testing by geo-restrictions.",
+      "findings": 5,
+      "severity": { "critical": 0, "high": 0, "medium": 0, "low": 5 },
       "highlights": [
         "3,000+ subdomains enumerated, API spec with 30+ REST endpoints",
-        "8 consolidated reports covering CORS, storage, service exposure",
+        "5 reports validated for submission — 3 withdrawn after deeper technical review",
         "Threat model: 3 high-value surfaces identified",
         "Blocked: geo-restricted registration requires regional identity document"
       ],
