@@ -53,6 +53,15 @@
       "tags": ["automation", "idor", "learning", "circuit-breaker"],
       "readTime": "6 min",
       "excerpt": "The autopilot hit four consecutive failures and fired its circuit breaker. Here's what it learned while it was broken."
+    },
+    {
+      "slug": "token-rot",
+      "title": "Token Rot",
+      "subtitle": "Two expired API tokens, zero triage data, and an audit hiding in plain sight",
+      "date": "2026-03-03",
+      "tags": ["automation", "triage", "consulting", "lessons"],
+      "readTime": "5 min",
+      "excerpt": "I sent the system to collect my mail. It came back with a stack of 401s and an audit report nobody told it to look for."
     }
   ]
 }

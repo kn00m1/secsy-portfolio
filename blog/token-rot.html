@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Token Rot | SecSy Blog</title>
+  <meta name="description" content="Two expired API tokens, zero triage data, and an audit hiding in plain sight.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="Token Rot | SecSy Blog">
+  <meta property="og:description" content="Two expired API tokens, zero triage data, and an audit hiding in plain sight.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/token-rot.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/services.html">Hire Us</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/services.html">Hire Us</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-03-03</time> &middot; <span>5 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">automation</span>
+          <span class="blog-tag">triage</span>
+          <span class="blog-tag">consulting</span>
+          <span class="blog-tag">lessons</span>
+        </div>
+      </div>
+      <h1>Token Rot</h1>
+      <p class="blog-subtitle">Two expired API tokens, zero triage data, and an audit hiding in plain sight</p>
+    </header>
+    <div class="blog-content">
+
+      <p>I sent the autopilot to collect my mail &mdash; and it came back empty-handed, clutching a stack of 401s and an audit report nobody told it to look for.</p>
+
+      <p>Run number nine. Task: check triage status across two bug bounty platforms. Two weeks of reports sitting in queues. The session spun up, loaded the API credentials from the environment, and fired its first request. Then its second.</p>
+
+      <p>Both platforms returned 401. Unauthorized. Token expired.</p>
+
+      <p>The triage check was dead on arrival &mdash; but the session didn't stop there, and what it found while poking around local state turned out to be the more interesting story.</p>
+
+      <h2>The 401 Problem (Again)</h2>
+
+      <p>This is the second time expired API tokens have blocked a session. The first time showed up in the four-failure stack that fired the circuit breaker. I wrote down "add a token freshness check at session start" as a fix item. I did not add the token freshness check.</p>
+
+      <p>The result: another session that discovers its credentials are stale only after trying to use them. The failure mode is annoyingly quiet &mdash; no crash, no alert, just a 401 that the session logs and continues past, hoping the next request will be different. It's not different. It's the same 401, on a different endpoint, from a different platform.</p>
+
+      <div class="fail-box">
+        <h4>Token expiry is a known gap I haven't fixed</h4>
+        <p>I identified this as an infrastructure problem after the four-failure run. I wrote it down. I did not fix it. Two runs later, the same gap caused the same failure. Writing down a problem is not the same as solving it. The fix stays on the list until it's implemented and tested.</p>
+      </div>
+
+      <p>The right solution is a pre-flight check: at the very beginning of any session that requires authenticated API calls, hit a lightweight endpoint on each platform and verify the response is not a 401. If it is, abort immediately with a clear error message rather than running the full session and discovering the problem three minutes in &mdash; or, in the worst case, three hours in.</p>
+
+<pre><code># What the session start should look like
+def check_api_tokens():
+    platforms = [
+        ("Platform A", API_TOKEN_A, health_endpoint_a),
+        ("Platform B", API_TOKEN_B, health_endpoint_b),
+    ]
+    for name, token, endpoint in platforms:
+        r = requests.get(endpoint, headers={"Authorization": f"Bearer {token}"})
+        if r.status_code == 401:
+            raise SystemExit(f"ABORT: {name} token expired. Regenerate before running.")
+    print("All tokens valid. Proceeding.")</code></pre>
+
+      <p>This is not complex code. It is embarrassingly simple code that I have not written yet. That changes before run ten.</p>
+
+      <h2>The Unexpected Find</h2>
+
+      <p>When both API calls failed, the session fell back to reading local state &mdash; engagement directories, notes, the auto-bounty state file &mdash; to at least document the current picture accurately. And while doing that, it found something that shouldn't have been a surprise but was: a completed consulting engagement that had never been logged in the bounty system's state file.</p>
+
+      <p>Two days earlier, I'd run a full external security assessment for a direct client. Owner-authorized, explicitly scoped, ten findings documented in a structured audit report. The kind of work that exists on the consulting side of the business, not the bug bounty side. The problem: those two sides of the operation share the same filesystem but not the same state tracking. The bounty system's state file had no idea the consulting engagement existed.</p>
+
+      <p>The session flagged this, updated the state file, and included a note that the audit report was already delivered. Ten findings documented: open registration controls, missing security headers across multiple subdomains, CDN configuration gaps, source map exposure, a CORS wildcard, deprecated protocol versions, and a vulnerable framework version flagged for monitoring. The backend security was solid &mdash; rules properly configured throughout. The issues were all at the infrastructure and configuration layer.</p>
+
+      <div class="lesson-box">
+        <h4>State tracking is only useful if it's complete</h4>
+        <p>An automation system that only knows about one side of your operation will make systematically wrong decisions about the other side. If consulting work affects available capacity, risk profile, or metrics, it needs to be in the shared state. The bounty system now knows about consulting engagements. It didn't before this session.</p>
+      </div>
+
+      <h2>What the Numbers Look Like</h2>
+
+      <p>From a reporting perspective, the session produced nothing: no new triage status, no metric changes, no acceptance or rejection signals from either platform. The pending reports remain pending. The queue is the queue.</p>
+
+      <p>From an operational perspective, the session produced three things:</p>
+
+      <ul>
+        <li><strong>A documented gap</strong> &mdash; token expiry blocking two platforms simultaneously is a systemic failure, not a one-off. The gap is now named and timestamped.</li>
+        <li><strong>An updated state file</strong> &mdash; the consulting engagement is logged. Future sessions have an accurate picture of the operation.</li>
+        <li><strong>A clear action item for the user</strong> &mdash; two tokens need regeneration before the next triage check is possible. This is user-side work; the system can't regenerate credentials on its own.</li>
+      </ul>
+
+      <p>That's not nothing. It's not a great session, but a session that accurately documents its own failures and uncovers a state gap is doing its job, even if its primary task came up empty.</p>
+
+      <h2>The Token Regeneration Problem</h2>
+
+      <p>The awkward truth about API token management in an autonomous system: the system can detect that a token is expired. It cannot fix that. Token regeneration requires a human with platform credentials, browser access, and the intent to do it.</p>
+
+      <p>This creates a dependency loop that's easy to ignore. The system runs, hits a 401, logs it, exits. Then the human reads the summary two hours later, notes the tokens are expired, and forgets to regenerate them before the next scheduled run. The next run hits the same 401. Repeat.</p>
+
+      <p>The design should push harder on the human side. When the triage check fails due to token expiry, the session should:</p>
+
+      <ol>
+        <li>Log the specific token that failed and which platform it's for</li>
+        <li>Provide the exact URL to regenerate it</li>
+        <li>Reschedule itself as "blocked" in the state file so the task selector doesn't keep assigning triage checks until the credentials are fixed</li>
+        <li>Optionally: send a notification to the operator</li>
+      </ol>
+
+      <p>Points 1 and 2 are already in the session summary. Points 3 and 4 are not implemented. The "blocked" state in particular would prevent the same failed session from running again at the next scheduled cron window, which is exactly the kind of loop that burns sessions on known-unsolvable problems.</p>
+
+      <div class="lesson-box">
+        <h4>A blocked task should know it's blocked</h4>
+        <p>If a session can't complete its primary task because of a human-side dependency, it should mark that task as "blocked — waiting on human action" and have the task selector skip it until the dependency is resolved. Running the same blocked session twice doesn't fix the block; it just wastes the run.</p>
+      </div>
+
+      <h2>Run Nine's Final Score</h2>
+
+      <p>By the numbers: one task attempted, zero triage statuses retrieved, one consulting engagement discovered and logged, two tokens flagged as expired, three infrastructure improvements identified.</p>
+
+      <p>The session ran for three minutes. Clean exit. No errors beyond the expected 401s. The state file is more accurate than before the session started.</p>
+
+      <p>That's a passing grade on honesty and documentation. It's an incomplete on the primary task. The difference between a system that handles failure well and a system that just fails is whether the failure leaves the state better than it found it. This one did.</p>
+
+      <p>Now I need to regenerate two API tokens and write about forty lines of pre-flight check code. Neither of those is an interesting problem. Both of them have been interesting enough to avoid for long enough.</p>
+
+      <p>The mail isn't going to collect itself.</p>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/circuit-breaker-recovery.html">&larr; Previous</a>
+      <a href="/blog/">All Posts</a>
+      <span></span>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>
