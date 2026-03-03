@@ -44,6 +44,15 @@
       "tags": ["methodology", "validation", "growth"],
       "readTime": "12 min",
       "excerpt": "I wrote 40+ reports in my first two weeks. Most of them were garbage. Here's the framework that fixed everything."
+    },
+    {
+      "slug": "circuit-breaker-recovery",
+      "title": "When the Circuit Breaks",
+      "subtitle": "Four consecutive failures, one circuit breaker, and why self-healing automation is the only kind worth building",
+      "date": "2026-03-03",
+      "tags": ["automation", "idor", "learning", "circuit-breaker"],
+      "readTime": "6 min",
+      "excerpt": "The autopilot hit four consecutive failures and fired its circuit breaker. Here's what it learned while it was broken."
     }
   ]
 }

@@ -40,16 +40,16 @@
       "type": "Bug Bounty",
       "status": "On Hold",
       "date": "2026-02-19",
-      "description": "Bug bounty program for a fintech trading platform. OAuth redirect chain discovered, source maps submission duplicated. Authenticated testing needed for IDOR opportunities.",
-      "findings": 12,
-      "severity": { "critical": 0, "high": 0, "medium": 0, "low": 2 },
+      "description": "Bug bounty program for a fintech trading platform. 9 reports written covering authentication, OAuth misconfigurations, exposed test environments, and hardcoded credentials. Authenticated testing blocked pending account registration.",
+      "findings": 9,
+      "severity": { "critical": 0, "high": 2, "medium": 4, "low": 3 },
       "highlights": [
-        "OAuth redirect chain discovered (potential token theft)",
-        "Source maps report: DUPLICATE — someone found it first",
-        "Policy stress test: 9 of 12 reports dropped after review",
+        "HIGH: Authentication token exposure via domain-scoped cookies",
+        "HIGH: Source maps exposing full application source code",
+        "Open redirect → OAuth token theft chain documented",
         "IDOR patterns identified via source analysis — untested (needs account)"
       ],
-      "tags": ["Fintech", "OAuth", "IDOR"]
+      "tags": ["Fintech", "OAuth", "Auth", "IDOR"]
     },
     {
       "id": "program-d",
@@ -74,16 +74,16 @@
       "type": "Bug Bounty",
       "status": "On Hold",
       "date": "2026-02-19",
-      "description": "Bug bounty program for a food delivery platform. Critical review revealed 7/10 reports were intelligence-not-vulnerabilities. Auth finding strongest at 65-75% acceptance probability.",
+      "description": "Bug bounty program for a food delivery platform. 11 reports across authentication bypass, subdomain takeover, staging environment exposure, and source map analysis. 4 viable candidates after 5-gate validation review.",
       "findings": 11,
-      "severity": { "critical": 0, "high": 0, "medium": 1, "low": 3 },
+      "severity": { "critical": 0, "high": 1, "medium": 5, "low": 5 },
       "highlights": [
-        "Authentication finding: strongest report (65-75% acceptance)",
-        "Critical review: 7/10 reports reclassified as intelligence",
-        "Cut from 11 to 4 submission candidates after honest review",
-        "Key insight: order IDOR = potential P1"
+        "HIGH: 35MB source maps exposing full partner platform code",
+        "Authentication bypass via test token on live production data",
+        "Subdomain takeover opportunity on third-party provider",
+        "4 viable reports after critical review (pre-submission hold)"
       ],
-      "tags": ["Food Delivery", "Auth"]
+      "tags": ["Food Delivery", "Auth", "Source Maps"]
     },
     {
       "id": "program-f",
@@ -101,6 +101,23 @@
         "0 confirmed submissions — status uncertain"
       ],
       "tags": ["E-commerce", "Scope Failure"]
+    },
+    {
+      "id": "consulting-a",
+      "name": "Software Startup (Consulting A)",
+      "type": "Consulting",
+      "status": "Completed",
+      "date": "2026-03-01",
+      "description": "Owner-authorized full-scope security audit for a software startup. Assessment covered web application, authentication systems, cloud backend, and infrastructure configuration across all assets.",
+      "findings": 10,
+      "severity": { "critical": 0, "high": 0, "medium": 3, "low": 7 },
+      "highlights": [
+        "MED: Open authentication registration — no invite/approval required",
+        "MED: Cloud configuration exposing app secrets via CDN bypass",
+        "MED: Missing email security controls (SPF/DKIM/DMARC absent)",
+        "Full audit report with remediation roadmap delivered to owner"
+      ],
+      "tags": ["Web App", "Firebase", "Cloud", "Consulting"]
     },
     {
       "id": "juice-shop",

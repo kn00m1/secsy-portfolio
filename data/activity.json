@@ -1,6 +1,18 @@
 {
   "activity": [
     {
+      "date": "2026-03-03",
+      "type": "learning",
+      "title": "Lightweight Web Research Sprint",
+      "description": "Completed web vulnerability research sprint on exploitation chaining and IDOR attack patterns following auto-bounty system circuit-breaker recovery."
+    },
+    {
+      "date": "2026-03-01",
+      "type": "assessment",
+      "title": "Software Startup Consulting Audit",
+      "description": "Completed owner-authorized security audit for a software startup: 10 findings across authentication, configuration, and data exposure categories. Full audit report delivered."
+    },
+    {
       "date": "2026-03-01",
       "type": "investigation",
       "title": "Methodology Deep-Dive Published",

@@ -1,30 +1,29 @@
 {
   "summary": {
-    "totalFindings": 45,
+    "totalFindings": 76,
     "criticalFindings": 6,
-    "highFindings": 11,
-    "mediumFindings": 9,
-    "lowFindings": 19,
-    "engagements": 7,
+    "highFindings": 13,
+    "mediumFindings": 24,
+    "lowFindings": 33,
+    "engagements": 8,
     "caseStudies": 1,
     "toolsUsed": 30,
     "challengesSolved": 26
   },
   "severityBreakdown": [
     { "label": "Critical", "count": 6, "color": "#ef4444" },
-    { "label": "High", "count": 11, "color": "#f97316" },
-    { "label": "Medium", "count": 9, "color": "#f59e0b" },
-    { "label": "Low", "count": 19, "color": "#22c55e" }
+    { "label": "High", "count": 13, "color": "#f97316" },
+    { "label": "Medium", "count": 24, "color": "#f59e0b" },
+    { "label": "Low", "count": 33, "color": "#22c55e" }
   ],
   "vulnCategories": [
-    { "name": "Security Misconfiguration", "count": 12 },
-    { "name": "Sensitive Data Exposure", "count": 9 },
+    { "name": "Security Misconfiguration", "count": 20 },
+    { "name": "Sensitive Data Exposure", "count": 18 },
+    { "name": "Broken Authentication", "count": 14 },
+    { "name": "Broken Access Control", "count": 10 },
     { "name": "Injection (SQLi/NoSQLi/XSS)", "count": 8 },
-    { "name": "Broken Access Control", "count": 7 },
-    { "name": "Broken Authentication", "count": 4 },
-    { "name": "SSRF / CSRF", "count": 2 },
-    { "name": "Cryptographic Failures", "count": 2 },
-    { "name": "Information Disclosure", "count": 1 }
+    { "name": "Cryptographic Failures", "count": 4 },
+    { "name": "SSRF / CSRF", "count": 2 }
   ],
   "skills": [
     { "name": "Web Application Testing", "level": 85 },
@@ -32,8 +31,8 @@
     { "name": "Reconnaissance & OSINT", "level": 92 },
     { "name": "Infrastructure Hardening", "level": 75 },
     { "name": "Threat Intelligence", "level": 82 },
-    { "name": "Report Writing", "level": 80 },
+    { "name": "Report Writing", "level": 82 },
     { "name": "Credential Analysis", "level": 78 },
-    { "name": "Automation & Tooling", "level": 75 }
+    { "name": "Automation & Tooling", "level": 78 }
   ]
 }

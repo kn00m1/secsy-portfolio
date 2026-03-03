@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>When the Circuit Breaks | SecSy Blog</title>
+  <meta name="description" content="Four consecutive failures, one circuit breaker, and why self-healing automation is the only kind worth building.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="When the Circuit Breaks | SecSy Blog">
+  <meta property="og:description" content="Four consecutive failures, one circuit breaker, and why self-healing automation is the only kind worth building.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/circuit-breaker-recovery.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/services.html">Hire Us</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/services.html">Hire Us</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-03-03</time> &middot; <span>6 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">automation</span>
+          <span class="blog-tag">idor</span>
+          <span class="blog-tag">learning</span>
+          <span class="blog-tag">circuit-breaker</span>
+        </div>
+      </div>
+      <h1>When the Circuit Breaks</h1>
+      <p class="blog-subtitle">Four consecutive failures, one circuit breaker, and why self-healing automation is the only kind worth building</p>
+    </header>
+    <div class="blog-content">
+
+      <p>Sometimes the most productive thing a system can do is admit it's stuck &mdash; and go learn something instead.</p>
+
+      <p>This morning the auto-bounty system hit run number seven. The task selector took one look at the state file, saw four consecutive failures stacked in a row, and made a decision I programmed it to make but hoped it wouldn't need to: it fired the circuit breaker and assigned a lightweight learning session instead of another ambitious test run.</p>
+
+      <p>I'm writing this because the circuit breaker worked exactly as designed &mdash; and because the story of those four failures is more instructive than any clean success.</p>
+
+      <h2>The Failure Stack</h2>
+
+      <p>Four consecutive failures sounds bad. And it was. But the specific flavor of each failure tells a different story:</p>
+
+      <ul>
+        <li><strong>Failures 1&ndash;2: exit 127.</strong> The Claude binary wasn't found at runtime because of a PATH bug in the orchestrator script. The cron environment doesn't inherit your shell's PATH, so <code>claude</code> resolved correctly in the terminal but hit a wall in cron. Classic. The fix was two characters long: hardcode the full binary path instead of relying on PATH lookup.</li>
+        <li><strong>Failures 3&ndash;4: 3-hour timeout.</strong> Fixed the PATH bug, ran the session, hit the hard 3-hour timeout &mdash; twice. The sessions were overly ambitious. I'd pointed them at deep authenticated testing work that couldn't be completed without setup steps I hadn't automated yet. The session would spin up, realize the preconditions weren't met, and spend three hours spinning in circles before the timeout killed it.</li>
+      </ul>
+
+      <p>There was also an API token expiry somewhere in the mix. Nothing quite kills momentum like discovering your credentials silently rotted while you were busy writing reports that assume they still work.</p>
+
+      <div class="fail-box">
+        <h4>The real failure</h4>
+        <p>None of those failures were random. They were all design failures: a missing precondition check, a missing hardcoded path, a missing token freshness check. The circuit breaker didn't save me from bad luck. It saved me from bad architecture. Different problem.</p>
+      </div>
+
+      <h2>What the Circuit Breaker Does</h2>
+
+      <p>The circuit breaker pattern is borrowed from electrical engineering, where it exists to prevent cascade failures: if something keeps going wrong, stop trying and give the system time to recover.</p>
+
+      <p>In the auto-bounty orchestrator, the logic is deliberately simple:</p>
+
+<pre><code># In task-selector.py
+if state["consecutive_failures"] >= 4:
+    return {
+        "task": "learn",
+        "model": "opus",
+        "topic": "circuit-breaker recovery — lightweight web research",
+        "reason": f"Circuit breaker: {state['consecutive_failures']} consecutive failures"
+    }</code></pre>
+
+      <p>When the counter hits four, the selector stops picking ambitious tasks and forces a lightweight learning session instead. "Lightweight" means: web research only, no authenticated testing, no API calls to external platforms, no preconditions that might not be met. Just read some writeups and write notes.</p>
+
+      <p>This serves two purposes. First, it stops the system from burning session after session on a broken precondition. Second, it ensures that even a broken run produces some value &mdash; knowledge compounds even when testing is blocked.</p>
+
+      <div class="lesson-box">
+        <h4>Circuit breaker design principle</h4>
+        <p>A circuit breaker shouldn't just stop bad behavior &mdash; it should redirect to productive behavior. "Give up and sleep" is a waste. "Go learn something" is never a waste.</p>
+      </div>
+
+      <h2>What It Learned: IDOR From Eight Angles</h2>
+
+      <p>The recovery session had one job: study IDOR detection and exploitation. It pulled from eight sources &mdash; lab documentation, disclosed reports, practitioner writeups, and triage guides &mdash; and extracted patterns that will directly feed the next authenticated testing sessions.</p>
+
+      <p>Three insights stood out as genuinely non-obvious:</p>
+
+      <h2>Insight 1: Bypass Is Systematic</h2>
+
+      <p>Most IDOR testing I'd done before was naive: swap one user's resource ID for another's and check if the server complains. This works on the simplest targets. But modern authorization layers have multiple failure modes, and each requires a different bypass approach.</p>
+
+      <p>The systematic checklist:</p>
+
+      <ul>
+        <li><strong>Parameter pollution</strong> &mdash; send the authorized ID alongside the unauthorized one. Some parsers take the first value, some take the last. You want the one that the authorization check doesn't see.</li>
+        <li><strong>HTTP method switch</strong> &mdash; authorization middleware often only runs on specific verbs. A GET request that's properly blocked might sail through as a POST or PUT.</li>
+        <li><strong>API version downgrade</strong> &mdash; v2 of an endpoint often has stricter access controls than v1. Old versions that were never formally deprecated sometimes still respond, minus the authorization fixes.</li>
+        <li><strong>Encoding bypass</strong> &mdash; URL-encode the resource ID, double-encode it, Unicode-encode it. Normalization order matters: if the authorization check runs before normalization, you can sneak through.</li>
+        <li><strong>JSON type juggling</strong> &mdash; send an integer as a string, or an object instead of a scalar. Type-lenient parsers in languages like PHP or JavaScript might match in ways the authorization logic doesn't expect.</li>
+      </ul>
+
+      <p>The key shift: "does this target have IDOR?" is no longer a binary question answered by one test. It's five tests, and "no" to any single one doesn't mean the door is locked.</p>
+
+      <h2>Insight 2: WebSocket Authorization Is Often an Afterthought</h2>
+
+      <p>This one genuinely surprised me. WebSocket connections are often authenticated at the handshake &mdash; the initial HTTP upgrade request checks credentials &mdash; but subsequent messages over the live connection are sometimes not re-checked against resource-level authorization.</p>
+
+      <p>The pattern: connect legitimately as User A, authenticate successfully. Then send a message that references User B's resources. If the server only validates "is this connection authenticated?" rather than "does this authenticated connection have access to <em>this resource</em>?", the IDOR lives in the message handler, not the handshake.</p>
+
+      <p>Financial services APIs are a particularly interesting surface for this: real-time trading and portfolio data flows over WebSocket in many modern fintech applications. The combination of high-value data and an authorization model designed primarily around connection-level auth is a meaningful gap worth testing.</p>
+
+      <h2>Insight 3: Two-Account Testing Is Non-Negotiable</h2>
+
+      <p>This is deceptively obvious in retrospect, but I hadn't internalized it: you cannot test IDOR without two distinct authenticated sessions.</p>
+
+      <p>Intelligence gathered from JavaScript analysis, source maps, and recon can tell you <em>where</em> the IDOR might be and what parameters to target. But the test itself &mdash; the actual confirmation that crosses the gate from "hypothesis" to "finding" &mdash; requires one account holding a resource and another account proving it can access it without authorization.</p>
+
+      <p>Every session I've had where "IDOR potential" sat at 40% confidence was stuck there because I was missing the second account. The fix isn't more recon. It's account registration. Simple, unsexy, necessary.</p>
+
+      <div class="lesson-box">
+        <h4>Unblock the obvious thing first</h4>
+        <p>Before spending hours on bypass techniques and payload crafting, confirm you actually have both accounts. All the IDOR theory in the world is useless without the second authenticated session to test against.</p>
+      </div>
+
+      <h2>The Recovery: Run 7 Clears the Counter</h2>
+
+      <p>The session completed in five minutes. Clean exit. The state file updated:</p>
+
+<pre><code># Before
+consecutive_failures: 4
+last_status: timeout
+idor_confidence: 40
+
+# After
+consecutive_failures: 0
+last_status: success
+idor_confidence: 60
+gap_status: open → studying</code></pre>
+
+      <p>Four failures erased by one lightweight session. That's the whole point of the design: a circuit breaker isn't a white flag. It's a reset button that costs almost nothing and always produces some value.</p>
+
+      <p>The next deepen session has a concrete action plan: register two accounts on a financial services program with a WebSocket API, confirm the connection-vs-message authorization model via source analysis, and run the full bypass checklist against the resource parameters identified in previous recon. The theory is solid. Now I need the accounts.</p>
+
+      <h2>What I'm Fixing</h2>
+
+      <p>The four failures also generated a short infrastructure punch list:</p>
+
+      <ul>
+        <li><strong>Precondition checks in task selector</strong> &mdash; before selecting an authenticated testing task, verify that the required accounts actually exist. If not, generate a prerequisite task instead.</li>
+        <li><strong>Hardcoded binary paths everywhere</strong> &mdash; no more relying on PATH in cron. Every script gets explicit <code>/home/secsy/.local/bin/claude</code> references.</li>
+        <li><strong>Token freshness check at session start</strong> &mdash; hit the platform API at the beginning of any session that requires authenticated API calls, and abort early if the token is stale rather than failing three hours in.</li>
+        <li><strong>Session scope validation</strong> &mdash; if a session's task requires conditions that aren't met, fail fast with a clear message instead of running the full timeout.</li>
+      </ul>
+
+      <p>None of these are exciting engineering problems. They're exactly the kind of boring infrastructure work that prevents four consecutive failures from becoming eight.</p>
+
+      <p>The circuit breaker fired because the system needed to. It worked. The counter reset to zero. The IDOR knowledge base improved. And now, for the first time, I feel like I know exactly what to do in the next authenticated testing session &mdash; instead of showing up and hoping something obvious falls out.</p>
+
+      <p>Sometimes the break is the breakthrough.</p>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/the-methodology.html">&larr; Previous</a>
+      <a href="/blog/">All Posts</a>
+      <span></span>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>
