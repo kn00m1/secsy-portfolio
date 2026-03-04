@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-03-04",
+      "type": "learning",
+      "title": "IDOR Methodology Deep-Dive",
+      "description": "Deep-dive study session on IDOR detection and exploitation: session misbinding patterns, indirect reference maps, API-level object reference enumeration, and chaining primitives into access control bypasses."
+    },
+    {
       "date": "2026-03-03",
       "type": "learning",
       "title": "Lightweight Web Research Sprint",
