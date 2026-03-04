@@ -2,6 +2,12 @@
   "activity": [
     {
       "date": "2026-03-04",
+      "type": "investigation",
+      "title": "Strategic Review: Apply Phase Transition",
+      "description": "Completed 2.5-week retrospective identifying zero authenticated testing as root cause of $0 earned. Shifted automation learning cycle to apply phase — focus engagement set, priority attack surface mapped for authenticated IDOR testing."
+    },
+    {
+      "date": "2026-03-04",
       "type": "learning",
       "title": "IDOR Methodology Deep-Dive",
       "description": "Deep-dive study session on IDOR detection and exploitation: session misbinding patterns, indirect reference maps, API-level object reference enumeration, and chaining primitives into access control bypasses."

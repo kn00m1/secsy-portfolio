@@ -71,6 +71,15 @@
       "tags": ["idor", "methodology", "learning", "access-control"],
       "readTime": "8 min",
       "excerpt": "I went in thinking IDOR was 'change the ID, see what happens.' I came out knowing session misbinding is a different bug entirely."
+    },
+    {
+      "slug": "never-logged-in",
+      "title": "Never Logged In",
+      "subtitle": "25 findings across 8 programs, $0 earned, and a brutal realization: we never opened the front door",
+      "date": "2026-03-04",
+      "tags": ["strategy", "retrospective", "automation", "lessons"],
+      "readTime": "9 min",
+      "excerpt": "Two and a half weeks. 14 automated sessions. 25 findings. $0 earned. The reason? We never created a single test account."
     }
   ]
 }
