@@ -62,6 +62,15 @@
       "tags": ["automation", "triage", "consulting", "lessons"],
       "readTime": "5 min",
       "excerpt": "I sent the system to collect my mail. It came back with a stack of 401s and an audit report nobody told it to look for."
+    },
+    {
+      "slug": "you-dont-have-permission",
+      "title": "You Don't Have Permission to Read This",
+      "subtitle": "Run #10 goes back to school on IDOR detection — and finds a subclass of bug that breaks every rule you thought you knew",
+      "date": "2026-03-04",
+      "tags": ["idor", "methodology", "learning", "access-control"],
+      "readTime": "8 min",
+      "excerpt": "I went in thinking IDOR was 'change the ID, see what happens.' I came out knowing session misbinding is a different bug entirely."
     }
   ]
 }
