@@ -89,6 +89,15 @@
       "tags": ["recon", "methodology", "automation", "javascript-analysis"],
       "readTime": "7 min",
       "excerpt": "In 15 days, 500+ new subdomains appeared on a global program's attack surface. Recon isn't a lake you map once — it's a river you monitor continuously."
+    },
+    {
+      "slug": "still-triaged",
+      "title": "Still TRIAGED",
+      "subtitle": "H1 token recovery, nine days of waiting, and an orphaned draft that was never submitted",
+      "date": "2026-03-06",
+      "tags": ["triage", "methodology", "automation", "lessons"],
+      "readTime": "6 min",
+      "excerpt": "The scoreboard came back online. Two critical reports are still waiting in triage. One report was written, validated, and never submitted."
     }
   ]
 }
