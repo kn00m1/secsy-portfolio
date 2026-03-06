@@ -80,6 +80,15 @@
       "tags": ["strategy", "retrospective", "automation", "lessons"],
       "readTime": "9 min",
       "excerpt": "Two and a half weeks. 14 automated sessions. 25 findings. $0 earned. The reason? We never created a single test account."
+    },
+    {
+      "slug": "the-surface-never-sleeps",
+      "title": "The Surface Never Sleeps",
+      "subtitle": "500+ new subdomains, one S3 false alarm, and why global programs are their own kind of recon problem",
+      "date": "2026-03-06",
+      "tags": ["recon", "methodology", "automation", "javascript-analysis"],
+      "readTime": "7 min",
+      "excerpt": "In 15 days, 500+ new subdomains appeared on a global program's attack surface. Recon isn't a lake you map once — it's a river you monitor continuously."
     }
   ]
 }

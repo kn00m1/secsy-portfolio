@@ -73,17 +73,18 @@
       "name": "Food Delivery Platform (Program E)",
       "type": "Bug Bounty",
       "status": "On Hold",
-      "date": "2026-02-19",
-      "description": "Bug bounty program for a food delivery platform. 11 reports across authentication bypass, subdomain takeover, staging environment exposure, and source map analysis. 4 viable candidates after 5-gate validation review.",
+      "date": "2026-03-06",
+      "description": "Bug bounty program for a global food delivery platform. 11 reports across authentication bypass, subdomain takeover, staging environment exposure, and source map analysis. 4 viable candidates after 5-gate validation review. Recon refresh expanded attack surface with new identity provider and payment API surfaces.",
       "findings": 11,
       "severity": { "critical": 0, "high": 1, "medium": 5, "low": 5 },
       "highlights": [
         "HIGH: 35MB source maps exposing full partner platform code",
         "Authentication bypass via test token on live production data",
         "Subdomain takeover opportunity on third-party provider",
+        "Recon refresh: new identity provider surfaces and partner portals mapped",
         "4 viable reports after critical review (pre-submission hold)"
       ],
-      "tags": ["Food Delivery", "Auth", "Source Maps"]
+      "tags": ["Food Delivery", "Auth", "Source Maps", "Identity Provider"]
     },
     {
       "id": "program-f",
