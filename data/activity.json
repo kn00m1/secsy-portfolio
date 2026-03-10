@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-03-10",
+      "type": "recon",
+      "title": "Fintech Trading Platform: Recon Refresh, New Surfaces Mapped",
+      "description": "Recon refresh on focus engagement uncovered three new attack surfaces: an unguarded staging environment, an OAuth OIDC configuration with implicit flow and weak PKCE, and a legacy API with exposed documentation and sitemap — expanding the authenticated testing target list."
+    },
+    {
       "date": "2026-03-06",
       "type": "investigation",
       "title": "Fortune 500 VDP: Triage Status Verified",

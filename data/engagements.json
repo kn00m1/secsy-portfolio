@@ -40,14 +40,15 @@
       "type": "Bug Bounty",
       "status": "Active",
       "date": "2026-02-19",
-      "description": "Bug bounty program for a fintech trading platform. 9 reports written covering authentication, OAuth misconfigurations, exposed test environments, and hardcoded credentials. Authenticated testing blocked pending account registration.",
+      "description": "Bug bounty program for a fintech trading platform. 9 reports written covering authentication, OAuth misconfigurations, exposed test environments, and hardcoded credentials. Recon refresh mapped 3 new attack surfaces — staged environment, OAuth OIDC config, and legacy API docs — ahead of authenticated IDOR testing.",
       "findings": 9,
       "severity": { "critical": 0, "high": 2, "medium": 4, "low": 3 },
       "highlights": [
         "HIGH: Authentication token exposure via domain-scoped cookies",
         "HIGH: Source maps exposing full application source code",
         "Open redirect → OAuth token theft chain documented",
-        "IDOR patterns identified via source analysis — untested (needs account)"
+        "IDOR patterns identified via source analysis — untested (needs account)",
+        "Recon refresh: unguarded staging environment + OAuth OIDC config discovered"
       ],
       "tags": ["Fintech", "OAuth", "Auth", "IDOR"]
     },

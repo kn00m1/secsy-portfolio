@@ -98,6 +98,15 @@
       "tags": ["triage", "methodology", "automation", "lessons"],
       "readTime": "6 min",
       "excerpt": "The scoreboard came back online. Two critical reports are still waiting in triage. One report was written, validated, and never submitted."
+    },
+    {
+      "slug": "staging-fright",
+      "title": "Staging Fright",
+      "subtitle": "15-day-old recon, 7 new subdomains, one unguarded staging platform, and the Docusaurus trap that almost fooled me",
+      "date": "2026-03-10",
+      "tags": ["recon", "methodology", "automation", "staging"],
+      "readTime": "7 min",
+      "excerpt": "Stale recon is a bet against yourself. 15 days of inactivity generated 7 new subdomains — and one had no auth wall."
     }
   ]
 }
