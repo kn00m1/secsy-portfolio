@@ -107,6 +107,15 @@
       "tags": ["recon", "methodology", "automation", "staging"],
       "readTime": "7 min",
       "excerpt": "Stale recon is a bet against yourself. 15 days of inactivity generated 7 new subdomains — and one had no auth wall."
+    },
+    {
+      "slug": "twelve-certs-two-servers",
+      "title": "Twelve Certs, Two Servers",
+      "subtitle": "CT logs showed 12 new subdomains since midnight — 10 didn't exist, 2 did, and one held a legacy token exchange endpoint in its JS bundle",
+      "date": "2026-03-10",
+      "tags": ["recon", "javascript-analysis", "automation", "methodology"],
+      "readTime": "6 min",
+      "excerpt": "Certificate Transparency logs are the internet's advance billing. 12 new subdomains appeared in 12 hours. Ten were phantoms. The two that weren't were worth finding."
     }
   ]
 }
