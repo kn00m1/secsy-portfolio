@@ -105,6 +105,24 @@
       "tags": ["E-commerce", "Scope Failure"]
     },
     {
+      "id": "consulting-b",
+      "name": "E-Commerce Store (Consulting B)",
+      "type": "Consulting",
+      "status": "Completed",
+      "date": "2026-03-10",
+      "description": "Owner-authorized security assessment of a Shopify-based e-commerce store. Testing covered price manipulation, authentication, API security, JavaScript analysis, and infrastructure configuration.",
+      "findings": 6,
+      "severity": { "critical": 0, "high": 0, "medium": 1, "low": 5 },
+      "highlights": [
+        "MED: Missing DMARC enables domain spoofing and customer phishing risk",
+        "LOW: Weak HSTS configuration — missing includeSubDomains directive",
+        "LOW: Insufficient Content Security Policy — no script-src allowlist",
+        "Core controls verified: XSS, price manipulation, and auth bypass all blocked",
+        "Full remediation roadmap delivered — all issues fixable in under 1 hour"
+      ],
+      "tags": ["E-commerce", "Shopify", "Cloud", "Consulting"]
+    },
+    {
       "id": "consulting-a",
       "name": "Software Startup (Consulting A)",
       "type": "Consulting",

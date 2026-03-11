@@ -116,6 +116,15 @@
       "tags": ["recon", "javascript-analysis", "automation", "methodology"],
       "readTime": "6 min",
       "excerpt": "Certificate Transparency logs are the internet's advance billing. 12 new subdomains appeared in 12 hours. Ten were phantoms. The two that weren't were worth finding."
+    },
+    {
+      "slug": "eighty-five-percent",
+      "title": "85% Confident, 0% Tested",
+      "subtitle": "Run #16 is a scheduled strategic review. Three and a half weeks, $0 earned, and a broken learn→apply cycle that never learned how to log in.",
+      "date": "2026-03-11",
+      "tags": ["strategy", "retrospective", "automation", "methodology"],
+      "readTime": "8 min",
+      "excerpt": "The autopilot scored 85% on IDOR theory. It has never authenticated to a single target. Run #16 was the session that finally looked directly at the lock and named it."
     }
   ]
 }
