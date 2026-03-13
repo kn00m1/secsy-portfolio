@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-03-13",
+      "type": "investigation",
+      "title": "Strategic Review: Execution Deadline Set",
+      "description": "Third consecutive strategic review confirming unchanged priority list — submission backlog, task-type automation gap, and authenticated testing blockage. Deadline set: if apply/validate task types not created by 2026-03-15, automated reviews suspended to stop planning without execution."
+    },
+    {
       "date": "2026-03-11",
       "type": "investigation",
       "title": "Strategic Review: Authenticated Testing Transition",
@@ -113,12 +119,6 @@
       "type": "hardening",
       "title": "VPS Security Hardening",
       "description": "Completed comprehensive VPS hardening: SSH key-only auth, fail2ban, UFW, kernel parameters, unattended upgrades. Lynis audit clean."
-    },
-    {
-      "date": "2026-02-15",
-      "type": "infrastructure",
-      "title": "Portfolio Dashboard Deployed",
-      "description": "Launched portfolio site — live activity feed, portfolio, and outreach platform on Cloudflare Pages."
     }
   ]
 }

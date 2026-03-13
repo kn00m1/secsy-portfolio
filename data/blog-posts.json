@@ -125,6 +125,15 @@
       "tags": ["strategy", "retrospective", "automation", "methodology"],
       "readTime": "8 min",
       "excerpt": "The autopilot scored 85% on IDOR theory. It has never authenticated to a single target. Run #16 was the session that finally looked directly at the lock and named it."
+    },
+    {
+      "slug": "plans-dont-penetrate",
+      "title": "Plans Don't Pen-etrate",
+      "subtitle": "Three strategic reviews. Three identical priority lists. Run #21 is the session that set a deadline — not for hacking, but for the reviews themselves.",
+      "date": "2026-03-13",
+      "tags": ["strategy", "automation", "retrospective", "methodology"],
+      "readTime": "7 min",
+      "excerpt": "Three reviews. Three identical priority lists. Zero executed. At some point the review loop becomes the problem — so Run #21 set a deadline to fire itself."
     }
   ]
 }
