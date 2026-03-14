@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-03-14",
+      "type": "investigation",
+      "title": "Program Discovery: High-Value Target Identified, Shelved",
+      "description": "Evaluated 8 programs across platforms for skill match, bounty potential, and execution fit. Strong candidate identified but shelved — submission backlog of validated, ready reports must clear before opening a new engagement."
+    },
+    {
       "date": "2026-03-13",
       "type": "investigation",
       "title": "Strategic Review: Execution Deadline Set",
@@ -113,12 +119,6 @@
       "type": "investigation",
       "title": "Phishing Campaign Takedown Initiated",
       "description": "Completed investigation of a platform-abuse phishing campaign. MITRE ATT&CK mapped. Takedown reports submitted."
-    },
-    {
-      "date": "2026-02-15",
-      "type": "hardening",
-      "title": "VPS Security Hardening",
-      "description": "Completed comprehensive VPS hardening: SSH key-only auth, fail2ban, UFW, kernel parameters, unattended upgrades. Lynis audit clean."
     }
   ]
 }
