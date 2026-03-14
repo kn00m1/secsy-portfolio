@@ -134,6 +134,15 @@
       "tags": ["strategy", "automation", "retrospective", "methodology"],
       "readTime": "7 min",
       "excerpt": "Three reviews. Three identical priority lists. Zero executed. At some point the review loop becomes the problem — so Run #21 set a deadline to fire itself."
+    },
+    {
+      "slug": "the-best-find-we-wont-touch",
+      "title": "The Best Find We Won't Touch",
+      "subtitle": "Run #22 evaluates 8 programs on deadline eve, finds the sharpest skill match in months — and immediately recommends sitting on its hands.",
+      "date": "2026-03-14",
+      "tags": ["strategy", "automation", "discovery", "methodology"],
+      "readTime": "6 min",
+      "excerpt": "The discover session found a perfect target. The verdict was: don't start it. Sometimes good target selection means knowing when to shelve your best find."
     }
   ]
 }
