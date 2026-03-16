@@ -143,6 +143,15 @@
       "tags": ["strategy", "automation", "discovery", "methodology"],
       "readTime": "6 min",
       "excerpt": "The discover session found a perfect target. The verdict was: don't start it. Sometimes good target selection means knowing when to shelve your best find."
+    },
+    {
+      "slug": "apply-yourself",
+      "title": "Apply Yourself",
+      "subtitle": "Run #26 was the fourth scheduled strategic review to identify the same execution blocker. It was the first one to fix it — with code, not a priority list.",
+      "date": "2026-03-16",
+      "tags": ["automation", "strategy", "retrospective", "methodology"],
+      "readTime": "7 min",
+      "excerpt": "40 automated runs, 0 authenticated test sessions, 5 weeks, $0. The fourth strategic review finally wrote the code instead of the plan."
     }
   ]
 }
