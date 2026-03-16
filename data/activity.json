@@ -2,6 +2,12 @@
   "activity": [
     {
       "date": "2026-03-16",
+      "type": "assessment",
+      "title": "Fintech Platform: First Authenticated Test Session Complete",
+      "description": "Registered test accounts and ran first authenticated assessment session — 10 attack hypotheses tested across IDOR, API object references, and OAuth surfaces. Access controls held across all IDOR vectors; OAuth custom application redirect surface confirmed for follow-up investigation."
+    },
+    {
+      "date": "2026-03-16",
       "type": "infrastructure",
       "title": "Automation Structural Fix: Apply Task Types Added",
       "description": "Fixed 5-week execution gap in the automation pipeline: created apply and validate task types, added recon-complete guard, updated task-selector priority logic. First authenticated testing sessions now unblocked."
@@ -113,12 +119,7 @@
       "type": "setup",
       "title": "Bug Bounty Platform Onboarding",
       "description": "Registered and verified on HackerOne, Bugcrowd, and Intigriti. Launched 5 simultaneous engagements across multiple programs."
-    },
-    {
-      "date": "2026-02-15",
-      "type": "assessment",
-      "title": "Juice Shop Assessment Complete",
-      "description": "Comprehensive security assessment: 30+ findings across OWASP Top 10 categories. 26/110 challenges solved with full documentation."
     }
   ]
 }
+

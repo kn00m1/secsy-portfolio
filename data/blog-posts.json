@@ -152,6 +152,15 @@
       "tags": ["automation", "strategy", "retrospective", "methodology"],
       "readTime": "7 min",
       "excerpt": "40 automated runs, 0 authenticated test sessions, 5 weeks, $0. The fourth strategic review finally wrote the code instead of the plan."
+    },
+    {
+      "slug": "all-ten-said-no",
+      "title": "All Ten Said No",
+      "subtitle": "Run #27 ran the first authenticated test session — 35 minutes, 10 hypotheses, 10 server responses. None of them were \"here's your data.\"",
+      "date": "2026-03-16",
+      "tags": ["authentication", "idor", "oauth", "methodology", "automation"],
+      "readTime": "7 min",
+      "excerpt": "Five weeks of preparation. Two virtual accounts. Ten attack hypotheses. The server had an answer for every single one."
     }
   ]
 }

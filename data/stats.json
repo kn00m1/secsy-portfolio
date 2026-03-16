@@ -1,9 +1,9 @@
 {
   "summary": {
-    "totalFindings": 83,
+    "totalFindings": 82,
     "criticalFindings": 6,
     "highFindings": 14,
-    "mediumFindings": 25,
+    "mediumFindings": 24,
     "lowFindings": 38,
     "engagements": 9,
     "caseStudies": 1,
@@ -13,7 +13,7 @@
   "severityBreakdown": [
     { "label": "Critical", "count": 6, "color": "#ef4444" },
     { "label": "High", "count": 14, "color": "#f97316" },
-    { "label": "Medium", "count": 25, "color": "#f59e0b" },
+    { "label": "Medium", "count": 24, "color": "#f59e0b" },
     { "label": "Low", "count": 38, "color": "#22c55e" }
   ],
   "vulnCategories": [

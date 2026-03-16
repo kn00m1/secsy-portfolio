@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Ten Said No | SecSy Blog</title>
+  <meta name="description" content="Run #27 ran the first authenticated test session — 35 minutes, 10 hypotheses, 10 server responses. None of them were 'here's your data.'">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="All Ten Said No | SecSy Blog">
+  <meta property="og:description" content="Five weeks of preparation. Two virtual accounts. Ten attack hypotheses. The server had an answer for every single one.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/all-ten-said-no.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/services.html">Hire Us</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/services.html">Hire Us</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-03-16</time> &middot; <span>7 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">authentication</span>
+          <span class="blog-tag">idor</span>
+          <span class="blog-tag">oauth</span>
+          <span class="blog-tag">methodology</span>
+          <span class="blog-tag">automation</span>
+        </div>
+      </div>
+      <h1>All Ten Said No</h1>
+      <p class="blog-subtitle">Run #27 ran the first authenticated test session &mdash; 35 minutes, 10 hypotheses, 10 server responses. None of them were &ldquo;here&rsquo;s your data.&rdquo;</p>
+    </header>
+    <div class="blog-content">
+
+      <p>Permission denied. Object not found. Empty response. Permission denied. Permission denied. Five weeks ago, any of those server responses would have been hypothetical. Today they&rsquo;re documented, reproducible, and filed as Tier 1 negative evidence. The auto-bounty system had its first authenticated session this morning. The server said no to everything. That&rsquo;s the story &mdash; and it&rsquo;s a good one.</p>
+
+      <h2>Getting Through the Door</h2>
+
+      <p>Run #27 started with the structural fix from Run #26: the task selector now has an <code>apply</code> route. First order of business was account registration. The apply prompt instructs the system to spin up Playwright through mitmproxy, navigate to the target&rsquo;s registration flow, and create two separate virtual test accounts in different jurisdictions.</p>
+
+      <p>Both accounts registered without a CAPTCHA. Thirty seconds of Playwright execution and the system had two independently-authenticated sessions ready &mdash; one with a European regulatory profile, one without. With both sessions live, the attack phase could begin.</p>
+
+      <div class="blog-stats">
+        <div class="blog-stat">
+          <div class="blog-stat-number">2</div>
+          <div class="blog-stat-label">Accounts Registered</div>
+        </div>
+        <div class="blog-stat">
+          <div class="blog-stat-number">10</div>
+          <div class="blog-stat-label">Hypotheses Tested</div>
+        </div>
+        <div class="blog-stat">
+          <div class="blog-stat-number">112</div>
+          <div class="blog-stat-label">Tools Executed</div>
+        </div>
+        <div class="blog-stat">
+          <div class="blog-stat-number">35m</div>
+          <div class="blog-stat-label">Session Duration</div>
+        </div>
+      </div>
+
+      <h2>The WebSocket API: A Wall Well-Built</h2>
+
+      <p>The threat model for this program had flagged a WebSocket-based trading API as the primary attack surface. The hypothesis was access control: could an authenticated user reference another user&rsquo;s objects by iterating identifiers? Three specific patterns to test:</p>
+
+      <p><strong>Read access</strong> &mdash; request an open contract belonging to a different account. Result: empty object returned. The server doesn&rsquo;t error, doesn&rsquo;t 403 &mdash; it just quietly returns nothing. No data leak. The silence is correct behavior.</p>
+
+      <p><strong>Write access</strong> &mdash; attempt to sell or close a contract belonging to a different account. Result: object-not-found class error. The server doesn&rsquo;t ask who you are before telling you the object doesn&rsquo;t exist. This is a classic pattern for safe ID spaces: respond as if the object never existed rather than as if you&rsquo;re unauthorized to see it. Both responses are correct; this one also prevents enumeration.</p>
+
+      <p><strong>Cross-account read</strong> &mdash; Account A authenticates, requests a contract known to belong to Account B. Result: empty. The cross-account isolation test &mdash; the one that requires two independent sessions &mdash; confirmed that account boundaries are enforced server-side, not just by session scope.</p>
+
+      <p>For financial operations, the results were identical: ownership errors for every attempt to reference another account&rsquo;s funds or balances. The API validates that the requesting session owns the target resource. It does this consistently, across all tested call types, with Tier 1 evidence: two real accounts, live server, observed responses.</p>
+
+      <h2>The OAuth Flow: Nine Denials and One Interesting Redirect</h2>
+
+      <p>The second attack surface was the OAuth implementation. A financial platform that supports third-party app integration has a custom OAuth server, and custom OAuth servers are historically interesting. The hypotheses:</p>
+
+      <p><strong>Redirect URI passthrough</strong> &mdash; inject an attacker-controlled redirect URI into the authorization URL, see if it passes through to the OAuth server. The platform&rsquo;s login gateway strips the redirect parameter before constructing the OAuth request downstream. The chain breaks at the first hop. No token leak.</p>
+
+      <p><strong>Implicit flow token leak</strong> &mdash; request <code>response_type=token</code> to attempt to surface tokens in a redirect fragment. Same result: the login gateway sanitizes the request. No implicit token issued.</p>
+
+      <p><strong>PKCE plain downgrade</strong> &mdash; check whether the OAuth server accepts <code>code_challenge_method=plain</code> instead of S256. It does &mdash; but this is explicitly listed in the server&rsquo;s published OIDC configuration. Not a misconfiguration. By design.</p>
+
+      <p><strong>Custom app registration with attacker redirect URI</strong> &mdash; this one was different. The platform allows any authenticated user to register a custom OAuth application with an arbitrary redirect URI. Set up an app with <code>redirect_uri=https://attacker.example</code>, trigger the OAuth authorization flow, and observe what happens at the consent step.</p>
+
+      <p>The redirect to the attacker domain happened. A real <code>302</code> to the registered attacker URL, logged in the proxy. The user never saw a consent screen. The OAuth server redirected immediately on authorization.</p>
+
+      <p>And then: <code>error=access_denied</code>. No authorization code. No token. The error was appended as a query parameter to the redirect. The attacker domain receives the request &mdash; which confirms the user visited the page &mdash; but receives nothing usable for account access.</p>
+
+      <div class="fail-box">
+        <h4>The redirect that went nowhere</h4>
+        <p>The custom app registration OAuth redirect is the closest thing to a real finding in this session. The redirect works: any user can register an OAuth app with an arbitrary domain and trigger a redirect to that domain after login, without a consent screen. That&rsquo;s a phishing vector &mdash; a convincing one, since it originates from the platform&rsquo;s own OAuth server. But <code>error=access_denied</code> means no tokens are delivered. The attack chain terminates at &ldquo;user is redirected to attacker site&rdquo; with nothing to show for it beyond knowing the user attempted to authorize. Without an authorization code or token in that redirect, the impact ceiling is phishing and account enumeration &mdash; not account takeover. Session JSON says: not reportable. The chain doesn&rsquo;t close.</p>
+      </div>
+
+      <h2>What Negative Results Actually Mean</h2>
+
+      <p>Ten hypotheses. Nine clearly denied. One partially confirmed but chain-incomplete. The output of this session is not zero &mdash; it&rsquo;s a map.</p>
+
+      <p>Before this session, the threat model for this program was a set of guesses derived from source map analysis, historical endpoint data, and generic knowledge about the class of application. The hypotheses were informed speculation. Now those same hypotheses are closed, each one backed by a specific observed server response from a real authenticated session.</p>
+
+      <p>That matters for two reasons. First, it eliminates false leads: we won&rsquo;t spend more time on contract IDOR because we have Tier 1 evidence that the server enforces ownership. The next session doesn&rsquo;t start from scratch &mdash; it starts from a narrowed attack surface. Second, it defines what to look for next. The financial transfer API said no cleanly. The OAuth app registration said &ldquo;almost.&rdquo; The <em>almost</em> has leads: postMessage origin validation, token cookie exposure windows during redirects, account management flow authentication, staging environment behavior.</p>
+
+      <pre><code>Hypotheses tested: 10
+  Clearly denied (Tier 1): 8
+  By design (Tier 2): 1
+  Partially confirmed, chain incomplete: 1
+  Reportable: 0
+Negative results documented: 5 (cross-account isolation, financial isolation, redirect sanitization)
+Leads generated: 6</code></pre>
+
+      <div class="lesson-box">
+        <h4>Negative results are reconnaissance</h4>
+        <p>The common framing of a security test session is: you either find something or you don&rsquo;t. This framing is wrong. A session where ten hypotheses are tested and ten return documented denials has produced ten pieces of evidence &mdash; each one a constraint on the remaining attack surface. The server that enforces ownership on all contract operations is now a known quantity. You don&rsquo;t need to re-test it. The surface that was infinite before the session is now finite after it: you have rules about what this server does, confirmed under real conditions. Map the surface by elimination and you eventually find the part that the map doesn&rsquo;t cover. That&rsquo;s where bugs live.</p>
+      </div>
+
+      <h2>What&rsquo;s Next</h2>
+
+      <p>The session closed with six documented next actions: test postMessage origin validation for cross-window token injection, check token cookie exposure windows during the redirect flow, test the account management and cashier flows for authentication state assumptions, and investigate whether the staging environment handles the OAuth flow differently from production.</p>
+
+      <p>One structural blocker remains: both test accounts are virtual accounts. Some authorization behaviors &mdash; particularly around the OAuth app authorization flow &mdash; may differ for real-money accounts. The &ldquo;error=access_denied&rdquo; response on the custom app redirect could theoretically be a virtual-account restriction rather than a permanent denial. Confirming that requires a funded account, which requires a manual user action.</p>
+
+      <p>The apply cycle is running. The next noon session will pick up where this one stopped &mdash; not at account registration, not at API probing, but at the six specific leads this session produced. Five weeks of preparation generated a threat model. Run #27 generated evidence. The next run narrows the surface further.</p>
+
+      <blockquote>Ten times the server said no. Ten documented responses are a better starting point than ten untested guesses. Denial is data.</blockquote>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/apply-yourself.html">&larr; Previous</a>
+      <a href="/blog/">All Posts</a>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>
