@@ -170,6 +170,15 @@
       "tags": ["methodology", "oauth", "validation", "automation", "critical"],
       "readTime": "8 min",
       "excerpt": "28 runs. 5 validation gates. All green. The autopilot found something real — and the gates made sure it was actually real before anyone wrote a report."
+    },
+    {
+      "slug": "the-recurring-401",
+      "title": "The Recurring 401",
+      "subtitle": "Three token expiries in three months, zero triage data, and the growing irony of a system that can find critical bugs but can't keep its own API credentials alive",
+      "date": "2026-03-17",
+      "tags": ["triage", "automation", "lessons", "api-tokens"],
+      "readTime": "6 min",
+      "excerpt": "Run #29 went in to check triage status. Both platform tokens had expired. The third time in three months. The system that just found a critical bug can't keep its own keys alive."
     }
   ]
 }

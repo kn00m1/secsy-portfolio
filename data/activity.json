@@ -2,6 +2,12 @@
   "activity": [
     {
       "date": "2026-03-17",
+      "type": "investigation",
+      "title": "Triage Check: Recurring API Token Expiry Issue Documented",
+      "description": "Attempted triage status check on Fortune 500 VDP reports revealed both HackerOne and Intigriti API tokens had expired — third occurrence in three months. Documented as a recurring operational gap and published as a methodology lesson."
+    },
+    {
+      "date": "2026-03-17",
       "type": "assessment",
       "title": "Fintech Platform: P1 Critical Finding — All 5 Gates Passed",
       "description": "Deep-dive authenticated session on OAuth custom application surface. Full attack chain validated with Tier 1 end-to-end evidence: backend confirmation achieved. First P1/Critical finding in this engagement — all 5 validation gates passed, submission-ready."
@@ -113,12 +119,6 @@
       "type": "investigation",
       "title": "Methodology Retrospective",
       "description": "Analyzed 40 reports across 5 programs. 35% validation rate. Built 5-gate validation system, evidence tiers, enforcement agents, and 11 workflow skills."
-    },
-    {
-      "date": "2026-02-19",
-      "type": "assessment",
-      "title": "Healthcare Retailer: 5 Reports Submitted",
-      "description": "Submitted 5 reports — API documentation exposure (HIGH), CAPTCHA bypass (MED), UAT environment access (MED), and more. Awaiting triage."
     }
   ]
 }
