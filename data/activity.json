@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-03-17",
+      "type": "assessment",
+      "title": "Fintech Platform: P1 Critical Finding — All 5 Gates Passed",
+      "description": "Deep-dive authenticated session on OAuth custom application surface. Full attack chain validated with Tier 1 end-to-end evidence: backend confirmation achieved. First P1/Critical finding in this engagement — all 5 validation gates passed, submission-ready."
+    },
+    {
       "date": "2026-03-16",
       "type": "assessment",
       "title": "Fintech Platform: First Authenticated Test Session Complete",
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "Healthcare Retailer: 5 Reports Submitted",
       "description": "Submitted 5 reports — API documentation exposure (HIGH), CAPTCHA bypass (MED), UAT environment access (MED), and more. Awaiting triage."
-    },
-    {
-      "date": "2026-02-18",
-      "type": "setup",
-      "title": "Bug Bounty Platform Onboarding",
-      "description": "Registered and verified on HackerOne, Bugcrowd, and Intigriti. Launched 5 simultaneous engagements across multiple programs."
     }
   ]
 }

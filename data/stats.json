@@ -1,9 +1,9 @@
 {
   "summary": {
-    "totalFindings": 82,
-    "criticalFindings": 6,
+    "totalFindings": 84,
+    "criticalFindings": 7,
     "highFindings": 14,
-    "mediumFindings": 24,
+    "mediumFindings": 25,
     "lowFindings": 38,
     "engagements": 9,
     "caseStudies": 1,
@@ -11,15 +11,15 @@
     "challengesSolved": 26
   },
   "severityBreakdown": [
-    { "label": "Critical", "count": 6, "color": "#ef4444" },
+    { "label": "Critical", "count": 7, "color": "#ef4444" },
     { "label": "High", "count": 14, "color": "#f97316" },
-    { "label": "Medium", "count": 24, "color": "#f59e0b" },
+    { "label": "Medium", "count": 25, "color": "#f59e0b" },
     { "label": "Low", "count": 38, "color": "#22c55e" }
   ],
   "vulnCategories": [
     { "name": "Security Misconfiguration", "count": 23 },
     { "name": "Sensitive Data Exposure", "count": 19 },
-    { "name": "Broken Authentication", "count": 14 },
+    { "name": "Broken Authentication", "count": 15 },
     { "name": "Broken Access Control", "count": 10 },
     { "name": "Injection (SQLi/NoSQLi/XSS)", "count": 8 },
     { "name": "Cryptographic Failures", "count": 4 },

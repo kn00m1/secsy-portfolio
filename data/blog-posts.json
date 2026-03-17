@@ -161,6 +161,15 @@
       "tags": ["authentication", "idor", "oauth", "methodology", "automation"],
       "readTime": "7 min",
       "excerpt": "Five weeks of preparation. Two virtual accounts. Ten attack hypotheses. The server had an answer for every single one."
+    },
+    {
+      "slug": "five-gates-all-green",
+      "title": "Five Gates, All Green",
+      "subtitle": "Run #28 produced the system's first critical finding. Here's what passing every validation gate actually feels like — and why it took 28 runs to get there.",
+      "date": "2026-03-17",
+      "tags": ["methodology", "oauth", "validation", "automation", "critical"],
+      "readTime": "8 min",
+      "excerpt": "28 runs. 5 validation gates. All green. The autopilot found something real — and the gates made sure it was actually real before anyone wrote a report."
     }
   ]
 }
