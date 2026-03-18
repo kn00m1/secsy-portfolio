@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-03-18",
+      "type": "assessment",
+      "title": "Fintech Platform: P1 Evidence Strengthened — 13 Additional Hypotheses Tested",
+      "description": "Third authenticated test session on fintech platform OAuth surface. 13 further attack hypotheses tested — redirect_uri bypass and header-based information leak confirmed as additional evidence vectors for the P1 critical finding. Zero new separate findings. Submission-ready evidence package complete."
+    },
+    {
       "date": "2026-03-17",
       "type": "investigation",
       "title": "Triage Check: Recurring API Token Expiry Issue Documented",
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "Critical Review & Stress Testing",
       "description": "Stress-tested all reports across multiple programs. Cut 31 reports to 14 submission-worthy using 5-gate validation framework."
-    },
-    {
-      "date": "2026-02-20",
-      "type": "investigation",
-      "title": "Methodology Retrospective",
-      "description": "Analyzed 40 reports across 5 programs. 35% validation rate. Built 5-gate validation system, evidence tiers, enforcement agents, and 11 workflow skills."
     }
   ]
 }

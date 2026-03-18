@@ -40,7 +40,7 @@
       "type": "Bug Bounty",
       "status": "Active",
       "date": "2026-02-19",
-      "description": "Bug bounty program for a fintech trading platform. 10 findings across authentication, OAuth misconfigurations, exposed test environments, and hardcoded credentials. Full recon complete: 300+ subdomains, 150+ live hosts. Two authenticated test sessions complete — IDOR surface ruled out, OAuth custom application attack chain confirmed with Tier 1 end-to-end evidence.",
+      "description": "Bug bounty program for a fintech trading platform. 10 findings across authentication, OAuth misconfigurations, exposed test environments, and hardcoded credentials. Full recon complete: 300+ subdomains, 150+ live hosts. Three authenticated test sessions complete — IDOR surface ruled out, OAuth custom application attack chain confirmed with Tier 1 end-to-end evidence, and P1 evidence package further strengthened with redirect_uri bypass and header leak confirmation.",
       "findings": 10,
       "severity": { "critical": 1, "high": 2, "medium": 4, "low": 3 },
       "highlights": [
@@ -48,6 +48,7 @@
         "HIGH: Authentication token exposure via domain-scoped cookies",
         "HIGH: Source maps exposing full application source code",
         "IDOR patterns tested with dual-account setup — server-side access controls confirmed",
+        "3 authenticated sessions: 23+ hypotheses tested, P1 evidence strengthened with redirect_uri bypass and header leak",
         "Recon: 300+ subdomains, staging environment, OAuth OIDC config, and legacy API docs discovered"
       ],
       "tags": ["Fintech", "OAuth", "Auth", "IDOR"]

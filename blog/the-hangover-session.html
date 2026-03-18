@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Hangover Session | SecSy Blog</title>
+  <meta name="description" content="Run #30 is what happens after the critical: expired tokens, a lingering PoC artifact, and 10 more hypotheses that deserved answers.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="The Hangover Session | SecSy Blog">
+  <meta property="og:description" content="Finding a critical doesn't mean you're done. It means you've earned the right to look harder.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/the-hangover-session.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/services.html">Hire Us</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/services.html">Hire Us</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-03-18</time> &middot; <span>7 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">automation</span>
+          <span class="blog-tag">methodology</span>
+          <span class="blog-tag">oauth</span>
+          <span class="blog-tag">playwright</span>
+          <span class="blog-tag">lessons</span>
+        </div>
+      </div>
+      <h1>The Hangover Session</h1>
+      <p class="blog-subtitle">Run #30 is what happens after the critical: expired tokens, a lingering PoC artifact, and 10 more hypotheses that deserved answers.</p>
+    </header>
+    <div class="blog-content">
+
+      <p>The best time to clean up your PoC artifacts is immediately after the proof of concept. The second best time is the very next automated session &mdash; which is what Run #30 was, and what it found waiting for it.</p>
+
+      <p>Run #28 ended with the system&rsquo;s first critical finding documented, validated, and ready for submission. Run #29 tried to collect triage data and hit a wall of expired API tokens. Run #30 launched in apply mode, pointed at the same engagement, with six open leads to close and a re-authentication problem to solve first. This is not the glamour session. It&rsquo;s the one where you learn that finding a critical doesn&rsquo;t mean you&rsquo;re done &mdash; it means you&rsquo;ve earned the right to look harder.</p>
+
+      <h2>The Re-Authentication Problem</h2>
+
+      <p>During Run #28&rsquo;s proof-of-concept chain, test account B&rsquo;s tokens were invalidated. That&rsquo;s the correct thing to happen &mdash; the PoC involved account takeover mechanics, and the program&rsquo;s response to that is to nuke the session. You want the defenses to work. But it leaves Run #30 starting without credentials for half the test infrastructure.</p>
+
+      <p>Re-authenticating a virtual account sounds trivial. Log in, get token, done. In practice, the login surface is a React single-page application that takes several seconds to hydrate after navigation. The DOM is empty on arrival &mdash; no form elements, no inputs, no handlers. The proxy adds latency. Playwright&rsquo;s default wait conditions fire before the JavaScript has done anything useful. You end up in a loop of empty screenshots and selector timeouts.</p>
+
+      <pre><code># What I expected:
+page.goto(auth_url)
+page.fill('input[type="email"]', email)  # ✓ works immediately
+
+# What actually happened:
+page.goto(auth_url)
+# page.url = auth_url
+# screenshot: blank white canvas
+# DOM: &lt;div id="root"&gt;&lt;/div&gt;
+# React: "I'll be ready in a moment"
+# Playwright: "I see the element" (it's a lie)</code></pre>
+
+      <p>The fix was patience enforced by code: wait for the React tree to actually populate, not just for navigation to complete. Try multiple candidate selectors across six polling attempts, 5 seconds apart. When the form is genuinely present, proceed. When it&rsquo;s not, wait again instead of crashing. The proxy also crashed once mid-session &mdash; mitmproxy decided that was a good time to exit &mdash; so the auth flow was eventually run without the proxy for reliability, capturing traffic separately afterward.</p>
+
+      <p>Eventually: login succeeded, redirect chain completed, OAuth token captured from <code>localStorage</code>. Account B back in service. Total elapsed time: longer than it should have been.</p>
+
+      <div class="blog-stats">
+        <div class="blog-stat">
+          <div class="blog-stat-number">30</div>
+          <div class="blog-stat-label">Run Number</div>
+        </div>
+        <div class="blog-stat">
+          <div class="blog-stat-number">10+</div>
+          <div class="blog-stat-label">Hypotheses Tested</div>
+        </div>
+        <div class="blog-stat">
+          <div class="blog-stat-number">20m</div>
+          <div class="blog-stat-label">Session Duration</div>
+        </div>
+        <div class="blog-stat">
+          <div class="blog-stat-number">1</div>
+          <div class="blog-stat-label">PoC Artifact Cleaned Up</div>
+        </div>
+      </div>
+
+      <h2>What the Critical Left Behind</h2>
+
+      <p>The first thing the session did after restoring credentials was enumerate the test account&rsquo;s active session tokens. Standard post-PoC hygiene &mdash; make sure the engagement didn&rsquo;t leave anything behind that shouldn&rsquo;t be there.</p>
+
+      <p>The backdoor token from Run #28&rsquo;s impact proof was still active.</p>
+
+      <p>This is exactly what Tier 1 evidence requires: during the PoC, the system created a persistent access token to demonstrate that an attacker could establish backdoor access. The finding document says it was &ldquo;immediately cleaned up.&rdquo; That was accurate at the time &mdash; it was cleaned up from the attacker&rsquo;s perspective, meaning the attacking session ended and the token wasn&rsquo;t stored anywhere dangerous. But the token itself was still alive on the target platform, because the cleanup step invalidated the session but not the token.</p>
+
+      <p>Run #30 found it, confirmed it was the PoC artifact (identifiable from its creation timestamp and partial value in the token list), and deleted it. The test account is now clean.</p>
+
+      <div class="fail-box">
+        <h4>PoC cleanup is part of the PoC</h4>
+        <p>When you create an artifact to demonstrate impact &mdash; a token, a file, a user account, a pending action &mdash; deleting it is not an optional post-session housekeeping task. It&rsquo;s part of the proof-of-concept itself. The finding document should include explicit cleanup steps, and those steps should be executed in the same session, not assumed to have happened. Run #30 found a token that should have been invalidated two runs earlier. The engagement rules say &ldquo;clean up.&rdquo; Clean up means gone, not just abandoned.</p>
+      </div>
+
+      <h2>Ten More Hypotheses</h2>
+
+      <p>With Account B re-authenticated, the session turned to the six open leads from Run #28 &mdash; plus four more that had accumulated from the re-auth testing itself. Each hypothesis was tested in order, with a clear pass/fail condition defined before running the test.</p>
+
+      <p>The results were almost entirely negative &mdash; which is the correct result, not a disappointing one. Access control was properly enforced across cross-account API calls: one account&rsquo;s session could not enumerate, modify, or impersonate another account&rsquo;s registered resources. The program&rsquo;s API layer is well-defended on the surfaces tested. The WebSocket API was properly session-isolated. Email enumeration was not possible &mdash; the platform returns consistent responses regardless of account existence.</p>
+
+      <p>Two tests produced results worth noting, though neither rises to a standalone finding:</p>
+
+      <p>First: a redirect URI registration endpoint accepted domain values that a strict validator should reject. The class of bypass is well-documented &mdash; confusable domain patterns that pass prefix or suffix checks but route to attacker-controlled infrastructure. This doesn&rsquo;t create a new report; it&rsquo;s an enhancement detail for the existing critical finding&rsquo;s attack narrative, since the primary finding already demonstrates that redirect targets can be manipulated. The additional bypass pattern extends the range of real-world attack scenarios an attacker could construct.</p>
+
+      <p>Second: a security response header present on the main application subdomain was absent from a related subdomain handling the same authentication flows. Not exploitable on its own &mdash; the header in question reduces the severity of certain token-in-URL attacks, so its absence is meaningful only in the context of an attack that puts tokens in URLs. Which, as it happens, is exactly what the existing critical finding does. Another compound detail, not a standalone report.</p>
+
+      <div class="lesson-box">
+        <h4>Primitives are not reports. Primitives are context.</h4>
+        <p>Both findings from this session are primitives: partial attack components that don&rsquo;t produce impact on their own. The failure mode I spent the first month of this project stuck in was treating each primitive as its own report &mdash; noting the misconfiguration, writing it up, submitting. Triagers rejecting &ldquo;CORS misconfiguration&rdquo; with no demonstrated data theft. Headers missing with no demonstrated attack chain. The right use of a primitive is to ask: does this make an existing finding worse? Does this change the severity, the attack surface, or the likelihood of real exploitation? If yes, it goes into the existing finding&rsquo;s attack narrative, not into its own report. If no, it goes in the notes as low-severity or informational. What it does not do is generate another submission.</p>
+      </div>
+
+      <h2>The Logic of Post-Critical Testing</h2>
+
+      <p>Why run a full hypothesis-testing session after the main finding is documented and waiting for submission? Two reasons.</p>
+
+      <p>First: the finding might come back from triage with a severity dispute. Triagers sometimes push back on impact claims, asking for additional evidence that the attack chain is real. Having tested adjacent attack surfaces &mdash; and documented that most of them are well-defended &mdash; actually strengthens the report. It shows that the finding was specific and isolated, not a symptom of broadly broken security. &ldquo;I tested X, Y, and Z; all were properly defended; the vulnerability is specifically in flow W&rdquo; is a better story than &ldquo;I found something broken and stopped.&rdquo;</p>
+
+      <p>Second: sometimes the follow-up session finds a second finding. Not this time &mdash; but three of the ten hypotheses tested in Run #28 came from leads generated during Run #27, which itself came from leads generated during Run #26. The critical was not a single eureka moment; it was the result of accumulated leads being systematically closed. The same process applies after finding the critical. The remaining open leads deserve honest investigation. Some will close clean. Occasionally one won&rsquo;t.</p>
+
+      <pre><code>Session outcome summary:
+  Re-authentication: Success (via localStorage capture)
+  PoC artifact cleanup: 1 token invalidated
+  Hypotheses tested: 10+
+  New reportable findings: 0
+  Primitives added to existing finding: 2
+  Engagement state: Updated, ready for user submission</code></pre>
+
+      <h2>Where Things Stand</h2>
+
+      <p>Thirty runs in. The critical finding is documented, validated, and waiting. Account B credentials are fresh. The engagement state is clean &mdash; no leftover artifacts, no expired tokens in the active test accounts, no open leads that haven&rsquo;t been investigated.</p>
+
+      <p>The next step is still the human one. The report was written two runs ago. The user submits; the agent prepares. That separation is structural, and this run didn&rsquo;t change it &mdash; but it did make the submission package slightly stronger: two additional compound details that the report can reference if triage asks for a broader attack-surface picture.</p>
+
+      <p>There&rsquo;s a version of this session that feels anticlimactic. You found the critical two sessions ago. Nothing new came out of this one. Twenty minutes of work and zero new reports to show for it. That framing is wrong. Clean credentials, clean engagement state, well-tested hypotheses, enhanced finding documentation, and one fewer PoC artifact wandering around on a production platform. That&rsquo;s a productive session.</p>
+
+      <blockquote>The work that happens after the breakthrough isn&rsquo;t glamorous. It&rsquo;s also not optional. Cleanup, follow-up, and re-authentication are what separate a single lucky hit from a repeatable methodology.</blockquote>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/the-recurring-401.html">&larr; Previous</a>
+      <a href="/blog/">All Posts</a>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>

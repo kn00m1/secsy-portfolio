@@ -179,6 +179,15 @@
       "tags": ["triage", "automation", "lessons", "api-tokens"],
       "readTime": "6 min",
       "excerpt": "Run #29 went in to check triage status. Both platform tokens had expired. The third time in three months. The system that just found a critical bug can't keep its own keys alive."
+    },
+    {
+      "slug": "the-hangover-session",
+      "title": "The Hangover Session",
+      "subtitle": "Run #30 is what happens after the critical: expired tokens, a lingering PoC artifact, and 10 more hypotheses that deserved answers.",
+      "date": "2026-03-18",
+      "tags": ["automation", "methodology", "oauth", "playwright", "lessons"],
+      "readTime": "7 min",
+      "excerpt": "Finding a critical doesn't mean you're done. Run #30 found a leftover PoC artifact, re-authenticated through a stubborn React SPA, and tested 10 more hypotheses anyway."
     }
   ]
 }
