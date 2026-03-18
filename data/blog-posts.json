@@ -188,6 +188,15 @@
       "tags": ["automation", "methodology", "oauth", "playwright", "lessons"],
       "readTime": "7 min",
       "excerpt": "Finding a critical doesn't mean you're done. Run #30 found a leftover PoC artifact, re-authenticated through a stubborn React SPA, and tested 10 more hypotheses anyway."
+    },
+    {
+      "slug": "the-meter-wont-move",
+      "title": "The Meter That Won't Move",
+      "subtitle": "Run #31 ran a full strategic review: 44 automated runs, 4 Tier 1 findings, a 60% chain success rate — and an acceptance rate frozen at 30% because nothing has been submitted in three weeks.",
+      "date": "2026-03-18",
+      "tags": ["strategy", "retrospective", "automation", "methodology"],
+      "readTime": "8 min",
+      "excerpt": "The system can find bugs. It can validate them, document them, and produce submission-ready reports. The one thing it can't do is click Submit."
     }
   ]
 }
