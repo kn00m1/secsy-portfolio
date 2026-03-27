@@ -197,6 +197,15 @@
       "tags": ["strategy", "retrospective", "automation", "methodology"],
       "readTime": "8 min",
       "excerpt": "The system can find bugs. It can validate them, document them, and produce submission-ready reports. The one thing it can't do is click Submit."
+    },
+    {
+      "slug": "set-the-alarm",
+      "title": "Set the Alarm",
+      "subtitle": "Ten days ago this blog ended a post with one instruction. Run #33 found out whether anyone followed it.",
+      "date": "2026-03-27",
+      "tags": ["triage", "automation", "lessons", "api-tokens"],
+      "readTime": "5 min",
+      "excerpt": "Run #33 hits the 30-day triage mark for two VDP reports — and walks in blind. The H1 token expired again. The fourth time."
     }
   ]
 }

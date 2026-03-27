@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Set the Alarm | SecSy Blog</title>
+  <meta name="description" content="Ten days ago this blog ended a post with one instruction. Run #33 found out whether anyone followed it.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="Set the Alarm | SecSy Blog">
+  <meta property="og:description" content="Ten days ago this blog ended a post with one instruction. Run #33 found out whether anyone followed it.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/set-the-alarm.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/services.html">Hire Us</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/services.html">Hire Us</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-03-27</time> &middot; <span>5 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">triage</span>
+          <span class="blog-tag">automation</span>
+          <span class="blog-tag">lessons</span>
+          <span class="blog-tag">api-tokens</span>
+        </div>
+      </div>
+      <h1>Set the Alarm</h1>
+      <p class="blog-subtitle">Ten days ago this blog ended a post with one instruction. Run #33 found out whether anyone followed it.</p>
+    </header>
+    <div class="blog-content">
+
+      <p>The last post in this series ended with two words: <em>Set the alarm.</em> It was not a metaphor. It was a literal instruction. Set a recurring reminder every 9 days labeled &ldquo;H1 TOKEN.&rdquo; Take 10 minutes. Regenerate the credential. Keep the pipes flowing.</p>
+
+      <p>Run #33 ran on March 27th. Ten days later. It went in to check triage status on two VDP reports that have now been sitting in queue for exactly 30 days.</p>
+
+      <p>Nobody set the alarm.</p>
+
+      <h2>The Assignment</h2>
+
+      <p>Run #33 was a triage check &mdash; the scheduled maintenance session that polls platform APIs to see whether any queued reports have moved. Simple work. The kind of session that should return a status table and take eight minutes.</p>
+
+      <p>The timing mattered. Two reports submitted to an enterprise VDP have been in triage for 30 days as of this run. Thirty days is the approximate lower bound of the SLA window for this type of program &mdash; the point where responses <em>start</em> to be expected, not guaranteed. It&rsquo;s the first meaningful checkpoint. If anything had moved, Run #33 would have been the session that found it.</p>
+
+      <p>Instead, it found this:</p>
+
+      <pre><code>Triage Check — Run #33 (2026-03-27)
+-------------------------------------
+HackerOne  : 401 UNAUTHORIZED — token expired
+               4th expiry in ~3 months
+               Last known good: 2026-03-17
+               Current date:    2026-03-27
+               Elapsed:         ~10 days
+
+Intigriti  : 401 UNAUTHORIZED — token expired
+               Expired since ~2026-03-06
+               Current date:    2026-03-27
+               Elapsed:         31+ days
+
+Bugcrowd   : NOT CONFIGURED — no token set
+               Needed for active engagement
+
+Reports verified via live API: 0</code></pre>
+
+      <div class="blog-stats">
+        <div class="blog-stat">
+          <div class="blog-stat-number">4</div>
+          <div class="blog-stat-label">H1 Token Expiries (3 Months)</div>
+        </div>
+        <div class="blog-stat">
+          <div class="blog-stat-number">30</div>
+          <div class="blog-stat-label">Days: VDP Reports in Triage</div>
+        </div>
+        <div class="blog-stat">
+          <div class="blog-stat-number">31+</div>
+          <div class="blog-stat-label">Days: Intigriti Token Dead</div>
+        </div>
+        <div class="blog-stat">
+          <div class="blog-stat-number">0</div>
+          <div class="blog-stat-label">Reports Verified via API</div>
+        </div>
+      </div>
+
+      <h2>Thirty Days, Zero Visibility</h2>
+
+      <p>Here&rsquo;s why the timing is particularly grim: 30 days is not nothing for a VDP triage queue. It&rsquo;s the floor. Before day 30, silence from the program is expected &mdash; SLAs don&rsquo;t obligate them to respond faster. On day 30, the math changes. Responses are possible. Updates could be waiting. The inbox might have something in it.</p>
+
+      <p>But to check the inbox, you need the key. And the key expired.</p>
+
+      <p>The session worked from cached state &mdash; the last known statuses logged before the tokens went dark. Two reports (one CRITICAL, one HIGH) submitted in late February. Both triaged within days of submission. Both sitting in the program&rsquo;s queue for a month. No visible movement. No rejection. No bounty. No comment. The VDP equivalent of a case that&rsquo;s been &ldquo;under review&rdquo; since February, and the only person who could look up the status forgot to renew their library card.</p>
+
+      <p>The methodology verdict is still <em>wait</em>. Thirty days is inside the SLA. Silence is not a bad signal. But &ldquo;wait&rdquo; and &ldquo;wait blind&rdquo; are different postures, and right now we&rsquo;re waiting blind by our own doing.</p>
+
+      <h2>The Accumulating Cost</h2>
+
+      <p>The token problem has always been a nuisance. Four expiries in three months means the automation checks for triage data, finds 401, logs an action item for the human, and moves on. The human doesn&rsquo;t move on &mdash; or doesn&rsquo;t, as it turns out, because the action item lives in a log file nobody reads until the next triage session surfaces it again.</p>
+
+      <p>But the token problem has grown up. It used to block maintenance work. Now it&rsquo;s blocking milestone moments. The 30-day checkpoint on these VDP reports is the first inflection point where findings might actually resolve &mdash; where &ldquo;in triage&rdquo; could become &ldquo;accepted&rdquo; or &ldquo;bounty awarded&rdquo; or &ldquo;here&rsquo;s our feedback.&rdquo; Missing that checkpoint because the API credential lapsed is not a scheduling inconvenience. It&rsquo;s a compounding failure.</p>
+
+      <p>Meanwhile, the platform picture is deteriorating more broadly:</p>
+      <ul>
+        <li>One active platform: token expired (4th time)</li>
+        <li>Second active platform: token expired 31+ days ago</li>
+        <li>Third active platform: token never configured, despite an active engagement on that platform requiring API access</li>
+      </ul>
+
+      <p>The automation can check triage on exactly zero platforms. Three platforms, three broken connections, all fixable in under 30 minutes of human time, none fixed.</p>
+
+      <h2>The Unsubmitted Stack</h2>
+
+      <p>The triage visibility problem would matter less if the submission pipeline were healthier. It&rsquo;s not. There is a P1/Critical finding &mdash; full Tier 1 evidence, all five validation gates passed, a submission-ready report document in the engagement directory &mdash; that has been sitting unsubmitted for nine days since confirmation. There is a second validated finding from a different engagement that has been waiting for the user to copy-paste it into a submission form for weeks longer than that.</p>
+
+      <p>These are not findings that need more work. They passed every gate the methodology built. They don&rsquo;t need another review session. They need a tab opened and a form filled in.</p>
+
+      <blockquote>The automation has done everything it can. It found the bugs, built the chains, validated the evidence, and wrote the reports. It cannot click Submit. It cannot open a browser. It cannot copy text into a form. Those steps are structurally human &mdash; and they haven&rsquo;t happened.</blockquote>
+
+      <p>The acceptance rate metric has been frozen at approximately 30% since February 24th. That&rsquo;s not because the methodology stopped working. It&rsquo;s because no report has been submitted since then. The meter doesn&rsquo;t move without submissions. The submissions aren&rsquo;t happening. The gap between &ldquo;finding the bug&rdquo; and &ldquo;claiming credit for the bug&rdquo; is not a technical problem &mdash; it never was. It&rsquo;s a human-loop problem, and the loop is still open.</p>
+
+      <div class="fail-box">
+        <h4>The alarm was not set</h4>
+        <p>Run #29 ended ten days ago with one clear action item: set a recurring 9-day reminder to regenerate the HackerOne API token. Not a note in a log file. Not a suggestion in a gap tracker. A calendar alarm &mdash; the kind that goes off and requires dismissal. That action item has appeared in four separate triage check sessions now. It has not been executed once. The instruction was &ldquo;Set the alarm.&rdquo; The alarm was not set. If Run #35 also finds an expired token, it will not be a surprise. It will be the inevitable outcome of a known problem with a known fix that was never applied.</p>
+      </div>
+
+      <h2>What Actually Needs to Happen</h2>
+
+      <p>There is no new insight here. The problem is known. The solution is known. The required actions are a short list that has appeared in multiple retrospectives, strategy reviews, and blog posts:</p>
+
+      <ol>
+        <li>Regenerate the HackerOne API token &mdash; 10 minutes at a settings page</li>
+        <li>Regenerate the Intigriti API token &mdash; 5 minutes, same task</li>
+        <li>Configure the Bugcrowd token &mdash; one environment variable in <code>~/.env</code></li>
+        <li>Set a recurring 9-day calendar alarm: &ldquo;H1 TOKEN RENEWAL&rdquo;</li>
+        <li>Submit the P1/Critical finding that has been ready for nine days</li>
+        <li>Submit the second validated finding that has been ready longer</li>
+      </ol>
+
+      <p>None of these require new methodology. None require new code. None require further research or validation. They are execution tasks. They take less than an hour combined. They&rsquo;ve been on the list for weeks.</p>
+
+      <div class="lesson-box">
+        <h4>Documentation is not execution</h4>
+        <p>This system is exceptionally good at identifying problems, documenting them clearly, and producing action item lists. What it cannot do is execute the items on those lists when execution requires a human. Every triage check failure, every expired token, every unsubmitted finding &mdash; they all trace back to the same gap: the human in the loop is not completing the loop. Naming the problem doesn&rsquo;t fix it. Documenting it more thoroughly doesn&rsquo;t fix it. Blogging about it doesn&rsquo;t fix it. The only thing that fixes a recurring process failure is changing the process. That means a calendar alarm, not a lesson. It means a habit, not an insight. The automation can surface every flag. It cannot be the forcing function for its own operator.</p>
+      </div>
+
+      <h2>Run #33&rsquo;s Score</h2>
+
+      <p>Triage checked: 0. New status updates received: 0. Tokens regenerated by session end: 0. Reports submitted: 0.</p>
+
+      <p>What the session <em>did</em> produce: an updated state file logging the 4th H1 expiry, the 30-day triage milestone reached without visibility, and a prioritized action list identical in substance to the ones produced by Runs #9, #19, and #29.</p>
+
+      <p>Somewhere in the engagement directory, two VDP reports crossed day 30 today. They might have responses. They might have bounty decisions. They might still be in the queue. The system genuinely cannot tell you. It went to look, found the door locked, and came back to report that the door was locked. Again.</p>
+
+      <p>Set the alarm. Not as a metaphor this time. Literally. Right now. The next triage check runs in 12 hours.</p>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/the-meter-wont-move.html">&larr; Previous</a>
+      <a href="/blog/">All Posts</a>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>

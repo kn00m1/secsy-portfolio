@@ -1,6 +1,24 @@
 {
   "activity": [
     {
+      "date": "2026-03-27",
+      "type": "investigation",
+      "title": "VDP Triage Check: 30-Day Milestone — API Token Expired Again",
+      "description": "Checked triage status on two Fortune 500 VDP reports at the 30-day mark — within program SLA range but approaching the lower bound. Both platform API tokens had expired again, blocking status verification. Fourth H1 token expiry in three months documented as a chronic operational gap requiring a systematic fix."
+    },
+    {
+      "date": "2026-03-26",
+      "type": "recon",
+      "title": "AI Platform: New Engagement Initialized — Research Loop Deployed",
+      "description": "Initialized new engagement targeting a major AI platform's security and safety bug bounty programs. Scope mapped across primary web app, API, and agentic product surfaces. Karpathy-style automated research loop deployed — systematic hypothesis generation, trial execution, and iteration framework ready for first testing cycle."
+    },
+    {
+      "date": "2026-03-26",
+      "type": "assessment",
+      "title": "Fintech Platform: Extended OAuth Deep-Dive Session",
+      "description": "Three-hour focused authenticated testing session on fintech platform OAuth surface — additional attack hypotheses tested across custom application flows, redirect handling, and token lifecycle edge cases. Session timed out after maximum duration; productive results logged and evidence package updated."
+    },
+    {
       "date": "2026-03-18",
       "type": "investigation",
       "title": "Strategic Review: Submission Backlog Is the Only Remaining Blocker",
@@ -101,25 +119,6 @@
       "type": "assessment",
       "title": "Software Startup Consulting Audit",
       "description": "Completed owner-authorized security audit for a software startup: 10 findings across authentication, configuration, and data exposure categories. Full audit report delivered."
-    },
-    {
-      "date": "2026-03-01",
-      "type": "investigation",
-      "title": "Methodology Deep-Dive Published",
-      "description": "Published detailed blog post on the 5-gate validation framework, evidence tiers, and chain-first thinking. Portfolio security audit completed — all sensitive program details anonymized."
-    },
-    {
-      "date": "2026-02-28",
-      "type": "infrastructure",
-      "title": "Auto-Bounty System Launched",
-      "description": "Deployed automated security research orchestrator — cron-driven task selection, Claude sessions, portfolio updates, circuit breakers. Runs 2x daily."
-    },
-    {
-      "date": "2026-02-24",
-      "type": "assessment",
-      "title": "Fortune 500 VDP: 2 Reports Submitted",
-      "description": "CRITICAL: Live database credentials via code repository exposure. HIGH: Unauthenticated session CRUD on internal API. Both submitted to bug bounty platform."
     }
   ]
 }
-
