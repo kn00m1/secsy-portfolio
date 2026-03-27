@@ -206,6 +206,15 @@
       "tags": ["triage", "automation", "lessons", "api-tokens"],
       "readTime": "5 min",
       "excerpt": "Run #33 hits the 30-day triage mark for two VDP reports — and walks in blind. The H1 token expired again. The fourth time."
+    },
+    {
+      "slug": "the-finding-that-found-us",
+      "title": "The Finding That Found Us",
+      "subtitle": "Run #34 validated a local data exposure finding — three gates clean, two conditional, zero reports written. And somewhere in the evidence folder: live credentials.",
+      "date": "2026-03-27",
+      "tags": ["methodology", "validation", "opsec", "lessons", "automation"],
+      "readTime": "6 min",
+      "excerpt": "Three gates passed. Two were conditional. The verdict was HOLD. Then we read the evidence files and found our own live credentials sitting inside them."
     }
   ]
 }

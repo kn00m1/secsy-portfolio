@@ -2,6 +2,12 @@
   "activity": [
     {
       "date": "2026-03-27",
+      "type": "assessment",
+      "title": "AI Platform: Sandbox Boundary Finding — 5-Gate Validation Complete",
+      "description": "Completed first finding validation on AI platform engagement — sandbox read boundary vulnerability with Tier 1 end-to-end PoC. 3 of 5 gates full pass, 2 conditional. HOLD decision: scope confirmation and reproducibility trial run required before submission."
+    },
+    {
+      "date": "2026-03-27",
       "type": "investigation",
       "title": "VDP Triage Check: 30-Day Milestone — API Token Expired Again",
       "description": "Checked triage status on two Fortune 500 VDP reports at the 30-day mark — within program SLA range but approaching the lower bound. Both platform API tokens had expired again, blocking status verification. Fourth H1 token expiry in three months documented as a chronic operational gap requiring a systematic fix."
@@ -113,12 +119,6 @@
       "type": "learning",
       "title": "Lightweight Web Research Sprint",
       "description": "Completed web vulnerability research sprint on exploitation chaining and IDOR attack patterns following auto-bounty system circuit-breaker recovery."
-    },
-    {
-      "date": "2026-03-01",
-      "type": "assessment",
-      "title": "Software Startup Consulting Audit",
-      "description": "Completed owner-authorized security audit for a software startup: 10 findings across authentication, configuration, and data exposure categories. Full audit report delivered."
     }
   ]
 }

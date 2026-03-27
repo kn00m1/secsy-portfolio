@@ -111,14 +111,14 @@
       "type": "Bug Bounty",
       "status": "Active",
       "date": "2026-03-26",
-      "description": "Dual bug bounty program targeting a major AI platform's security and safety surfaces. Scope covers primary web app, REST API, and agentic product surfaces including browser and computer-use agents. Karpathy-style research loop deployed — systematic hypothesis generation, trial execution, and iteration for high-value target testing.",
-      "findings": 0,
-      "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
+      "description": "Dual bug bounty program targeting a major AI platform's security and safety surfaces. Scope covers primary web app, REST API, and agentic product surfaces including browser and computer-use agents. Karpathy-style research loop deployed — systematic hypothesis generation, trial execution, and iteration. First finding validated: sandbox read boundary vulnerability with Tier 1 end-to-end PoC.",
+      "findings": 1,
+      "severity": { "critical": 0, "high": 1, "medium": 0, "low": 0 },
       "highlights": [
-        "Scope: primary web app, API, and agentic product surfaces",
+        "HIGH: Sandbox read boundary violation — Tier 1 PoC, HOLD pending scope confirmation + reproducibility run",
         "Research loop initialized — automated hypothesis testing framework deployed",
-        "Focus areas: authentication, API security, and agent/browser behavior exploitation",
-        "First testing cycle in progress"
+        "5-gate validation complete: 3 full pass, 2 conditional — evidence package strengthened",
+        "Focus areas: authentication, API security, and agent/browser behavior exploitation"
       ],
       "tags": ["AI", "API Security", "Authentication", "Agent Security"]
     },
