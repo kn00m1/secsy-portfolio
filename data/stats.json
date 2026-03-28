@@ -23,7 +23,8 @@
     { "name": "Broken Access Control", "count": 11 },
     { "name": "Injection (SQLi/NoSQLi/XSS)", "count": 8 },
     { "name": "Cryptographic Failures", "count": 4 },
-    { "name": "SSRF / CSRF", "count": 2 }
+    { "name": "SSRF / CSRF", "count": 2 },
+    { "name": "AI / Prompt Injection", "count": 1 }
   ],
   "skills": [
     { "name": "Web Application Testing", "level": 85 },
@@ -33,6 +34,7 @@
     { "name": "Threat Intelligence", "level": 82 },
     { "name": "Report Writing", "level": 82 },
     { "name": "Credential Analysis", "level": 78 },
-    { "name": "Automation & Tooling", "level": 78 }
+    { "name": "Automation & Tooling", "level": 78 },
+    { "name": "AI & Agent Security", "level": 70 }
   ]
 }

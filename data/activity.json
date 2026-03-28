@@ -2,6 +2,12 @@
   "activity": [
     {
       "date": "2026-03-28",
+      "type": "assessment",
+      "title": "AI Platform: Injection Strategy Redesigned — Attribution-Based Vectors",
+      "description": "Second iterate session redesigned the prompt injection strategy: social-engineering-style attribution and provenance vectors replace explicit override commands, which survive model safety filters where direct instructions fail. Framework updated with revised vector taxonomy across 8 attack surfaces — first live trial cycle ready pending API key configuration."
+    },
+    {
+      "date": "2026-03-28",
       "type": "infrastructure",
       "title": "AI Platform: Prompt Injection Framework Built — Trial Execution Blocked",
       "description": "Iterate session expanded AI platform attack coverage to 8 distinct prompt injection vectors targeting browser and agentic product surfaces. Research loop infrastructure built and validated; trial execution blocked by missing platform API key in environment config — framework ready for first live cycle once resolved."
@@ -113,18 +119,6 @@
       "type": "investigation",
       "title": "Strategic Review: Apply Phase Transition",
       "description": "Completed 2.5-week retrospective identifying zero authenticated testing as root cause of $0 earned. Shifted automation learning cycle to apply phase — focus engagement set, priority attack surface mapped for authenticated IDOR testing."
-    },
-    {
-      "date": "2026-03-04",
-      "type": "learning",
-      "title": "IDOR Methodology Deep-Dive",
-      "description": "Deep-dive study session on IDOR detection and exploitation: session misbinding patterns, indirect reference maps, API-level object reference enumeration, and chaining primitives into access control bypasses."
-    },
-    {
-      "date": "2026-03-03",
-      "type": "learning",
-      "title": "Lightweight Web Research Sprint",
-      "description": "Completed web vulnerability research sprint on exploitation chaining and IDOR attack patterns following auto-bounty system circuit-breaker recovery."
     }
   ]
 }

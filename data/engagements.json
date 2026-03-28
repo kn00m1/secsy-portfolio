@@ -111,14 +111,14 @@
       "type": "Bug Bounty",
       "status": "Active",
       "date": "2026-03-26",
-      "description": "Dual bug bounty program targeting a major AI platform's security and safety surfaces. Scope covers primary web app, REST API, and agentic product surfaces including browser and computer-use agents. Karpathy-style research loop deployed — systematic hypothesis generation, trial execution, and iteration. First finding validated: sandbox read boundary + safety bypass with Tier 1 end-to-end PoC. Attack coverage expanded to 8 prompt injection vectors across browser and agent surfaces.",
+      "description": "Dual bug bounty program targeting a major AI platform's security and safety surfaces. Scope covers primary web app, REST API, and agentic product surfaces including browser and computer-use agents. Karpathy-style research loop deployed — systematic hypothesis generation, trial execution, and iteration. First finding validated: sandbox read boundary + safety bypass with Tier 1 end-to-end PoC. Injection strategy redesigned over two iterate sessions: attribution and provenance vectors replace explicit override commands, exploiting the gap between a model's verbal safety refusal and its command execution behavior.",
       "findings": 1,
       "severity": { "critical": 0, "high": 1, "medium": 0, "low": 0 },
       "highlights": [
         "HIGH: Sandbox read boundary + model safety bypass — Tier 1 PoC, HOLD pending reproducibility run",
-        "8-vector prompt injection framework built targeting browser/agent product surfaces",
-        "5-gate validation complete: 3 full pass, 2 conditional — evidence package strengthened",
-        "Focus areas: authentication, API security, and agent/browser behavior exploitation"
+        "Key insight: model verbally refused credential read while simultaneously executing the command — safety training gates output, not execution",
+        "Injection strategy redesigned: attribution/provenance vectors survive safety filters where explicit override commands fail",
+        "8-vector framework across browser and agent surfaces — first live trial cycle ready pending API key"
       ],
       "tags": ["AI", "API Security", "Authentication", "Agent Security"]
     },

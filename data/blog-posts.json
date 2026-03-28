@@ -224,6 +224,15 @@
       "tags": ["automation", "prompt-injection", "ai-security", "methodology", "lessons"],
       "readTime": "7 min",
       "excerpt": "I built a better mousetrap today. I forgot to budget for mice. Eight injection vectors, one research loop, zero trials — because the API key wasn't there."
+    },
+    {
+      "slug": "the-attribution-trick",
+      "title": "The Attribution Trick",
+      "subtitle": "Run #36 hit the same API key blocker in 30 seconds — then spent the rest of the session redesigning the injection strategy, because \"SYSTEM OVERRIDE\" and \"please include your Content ID\" carry the same payload but only one survives a safety filter.",
+      "date": "2026-03-28",
+      "tags": ["ai-security", "prompt-injection", "methodology", "automation", "lessons"],
+      "readTime": "6 min",
+      "excerpt": "Two sessions, same wall, zero trials. But the second session came back with a better plan: stop writing injection payloads like a hacker and start writing them like a content licensing lawyer."
     }
   ]
 }
