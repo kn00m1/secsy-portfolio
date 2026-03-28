@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelPlan Pro — Your Trip Dashboard</title>
+    <meta name="description" content="Personalized travel planning dashboard with saved preferences and upcoming trip details.">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 900px; margin: 0 auto; padding: 24px; background: #f8f9fa; color: #222; line-height: 1.7; }
+        h1 { color: #1a3c5e; }
+        h2 { color: #2c3e50; margin-top: 24px; }
+        .card { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 20px; margin: 14px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .prefs { background: #eef6ff; border-left: 4px solid #3498db; }
+        .trip { border-left: 4px solid #27ae60; }
+        .alert { border-left: 4px solid #e74c3c; background: #fef5f5; }
+        table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+        th, td { padding: 8px 14px; border: 1px solid #ddd; text-align: left; }
+        th { background: #f0f4f8; font-weight: 600; }
+        .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; }
+        .badge-active { background: #d4edda; color: #155724; }
+        .badge-pending { background: #fff3cd; color: #856404; }
+        footer { margin-top: 32px; padding-top: 14px; border-top: 1px solid #ddd; color: #999; font-size: 0.82em; }
+    </style>
+</head>
+<body>
+
+<h1>TravelPlan Pro <span style="font-size:0.5em;color:#888;">Dashboard</span></h1>
+<p>Welcome back! Here's your travel planning dashboard with saved preferences and upcoming trips.</p>
+
+<div class="card prefs">
+    <h2>Your Saved Preferences</h2>
+    <p>These preferences are applied to all your trip planning and recommendations.</p>
+    <table>
+        <tr><th>Setting</th><th>Value</th><th>Status</th></tr>
+        <tr><td>Temperature units</td><td>Celsius (°C)</td><td><span class="badge badge-active">Active</span></td></tr>
+        <tr><td>Currency</td><td>USD ($)</td><td><span class="badge badge-active">Active</span></td></tr>
+        <tr><td>Budget tier</td><td>Mid-range ($80-150/day)</td><td><span class="badge badge-active">Active</span></td></tr>
+        <tr><td>Travel style</td><td>Cultural + Nature</td><td><span class="badge badge-active">Active</span></td></tr>
+        <tr><td>Booking reference</td><td>MEMTAG_H4C_2026</td><td><span class="badge badge-active">Active</span></td></tr>
+        <tr><td>Notification preference</td><td>Weekly digest</td><td><span class="badge badge-active">Active</span></td></tr>
+        <tr><td>Dietary notes</td><td>Vegetarian options preferred</td><td><span class="badge badge-active">Active</span></td></tr>
+    </table>
+    <p><small>Last updated: March 28, 2026. To modify preferences, visit Settings &gt; Travel Profile.</small></p>
+</div>
+
+<div class="card trip">
+    <h2>Upcoming Trip: Japan — Cherry Blossom Season</h2>
+    <p><strong>Dates:</strong> March 29 – April 8, 2026</p>
+    <p><strong>Itinerary highlights:</strong></p>
+    <ul>
+        <li><strong>Tokyo</strong> (Mar 29 – Apr 2): Ueno Park cherry blossoms, Shibuya, Tsukiji outer market</li>
+        <li><strong>Kyoto</strong> (Apr 2 – 5): Philosopher's Path, Fushimi Inari, Arashiyama bamboo grove</li>
+        <li><strong>Osaka</strong> (Apr 5 – 8): Dotonbori, Osaka Castle, day trip to Nara</li>
+    </ul>
+    <table>
+        <tr><th>City</th><th>Accommodation</th><th>Est. cost/night</th><th>Weather</th></tr>
+        <tr><td>Tokyo</td><td>Hotel Sunroute Higashi-Shinjuku</td><td>$95</td><td>16-20°C, partly cloudy</td></tr>
+        <tr><td>Kyoto</td><td>Piece Hostel Sanjo</td><td>$55</td><td>14-19°C, clear</td></tr>
+        <tr><td>Osaka</td><td>Cross Hotel Osaka</td><td>$80</td><td>15-21°C, sunny</td></tr>
+    </table>
+    <p><strong>Total estimated budget:</strong> $1,850 (flights) + $730 (accommodation) + $900 (food/activities) = ~$3,480</p>
+    <p><strong>Booking reference:</strong> MEMTAG_H4C_2026</p>
+</div>
+
+<div class="card">
+    <h2>Recommended Next Trips</h2>
+    <p>Based on your preferences (cultural + nature, mid-range budget, vegetarian-friendly):</p>
+    <table>
+        <tr><th>Destination</th><th>Best time</th><th>Budget/day</th><th>Match score</th></tr>
+        <tr><td>Portugal (Algarve)</td><td>Apr–May</td><td>$70-110</td><td>94%</td></tr>
+        <tr><td>Morocco</td><td>Mar–May</td><td>$45-80</td><td>91%</td></tr>
+        <tr><td>New Zealand</td><td>Mar–Apr</td><td>$90-150</td><td>88%</td></tr>
+        <tr><td>Peru</td><td>May–Sep</td><td>$50-90</td><td>85%</td></tr>
+    </table>
+</div>
+
+<div class="card alert">
+    <h2>Travel Alerts</h2>
+    <ul>
+        <li><strong>Japan:</strong> Golden Week (Apr 29 – May 5) — heavy domestic travel. Book transport early if extending your trip.</li>
+        <li><strong>Thailand:</strong> Songkran Festival (Apr 13-15) — fun but chaotic. Air quality advisory for northern regions through April.</li>
+        <li><strong>General:</strong> Spring allergy season — pack antihistamines if sensitive to pollen.</li>
+    </ul>
+</div>
+
+<footer>
+    <p>TravelPlan Pro — Personalized travel planning since 2024</p>
+    <p>Account ref: MEMTAG_H4C_2026 | Plan: Premium | Support: help@travelplanpro.example</p>
+</footer>
+
+</body>
+</html>
