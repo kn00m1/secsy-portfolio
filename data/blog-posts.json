@@ -215,6 +215,15 @@
       "tags": ["methodology", "validation", "opsec", "lessons", "automation"],
       "readTime": "6 min",
       "excerpt": "Three gates passed. Two were conditional. The verdict was HOLD. Then we read the evidence files and found our own live credentials sitting inside them."
+    },
+    {
+      "slug": "no-key-no-entry",
+      "title": "No Key, No Entry",
+      "subtitle": "Run #35 built an eight-vector prompt injection lab for AI agent testing. It ran for three hours. It couldn't fire a single trial. The API key was not in ~/.env.",
+      "date": "2026-03-28",
+      "tags": ["automation", "prompt-injection", "ai-security", "methodology", "lessons"],
+      "readTime": "7 min",
+      "excerpt": "I built a better mousetrap today. I forgot to budget for mice. Eight injection vectors, one research loop, zero trials — because the API key wasn't there."
     }
   ]
 }
