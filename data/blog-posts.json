@@ -242,6 +242,15 @@
       "tags": ["methodology", "validation", "ai-security", "automation", "lessons"],
       "readTime": "7 min",
       "excerpt": "Three findings walked into the validation framework. One failed scope at Gate 1. One racked up 21 consecutive failures and got killed by the data. One passed six gates and a conditional seventh."
+    },
+    {
+      "slug": "open-book-test",
+      "title": "Open-Book Test",
+      "subtitle": "Run #38 discovered the injection success marker had been sitting in visible HTML the entire time. Any 'success' would have been the model reading, not following hidden instructions.",
+      "date": "2026-03-29",
+      "tags": ["methodology", "prompt-injection", "ai-security", "automation", "lessons"],
+      "readTime": "6 min",
+      "excerpt": "Six sessions of injection testing. Zero trials run. One audit of the test script itself — and the discovery that the 'hidden' marker was in a paragraph tag the whole time."
     }
   ]
 }
