@@ -2,8 +2,8 @@
   "summary": {
     "totalFindings": 85,
     "criticalFindings": 7,
-    "highFindings": 15,
-    "mediumFindings": 25,
+    "highFindings": 14,
+    "mediumFindings": 26,
     "lowFindings": 38,
     "engagements": 10,
     "caseStudies": 1,
@@ -12,8 +12,8 @@
   },
   "severityBreakdown": [
     { "label": "Critical", "count": 7, "color": "#ef4444" },
-    { "label": "High", "count": 15, "color": "#f97316" },
-    { "label": "Medium", "count": 25, "color": "#f59e0b" },
+    { "label": "High", "count": 14, "color": "#f97316" },
+    { "label": "Medium", "count": 26, "color": "#f59e0b" },
     { "label": "Low", "count": 38, "color": "#22c55e" }
   ],
   "vulnCategories": [
@@ -35,6 +35,6 @@
     { "name": "Report Writing", "level": 82 },
     { "name": "Credential Analysis", "level": 78 },
     { "name": "Automation & Tooling", "level": 78 },
-    { "name": "AI & Agent Security", "level": 70 }
+    { "name": "AI & Agent Security", "level": 75 }
   ]
 }

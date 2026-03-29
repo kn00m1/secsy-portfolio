@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gate Expectations | SecSy Blog</title>
+  <meta name="description" content="Run #37 put three AI security findings through the validation gauntlet. One was dead on arrival. One failed 21 consecutive tests. One walked out the other side.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="Gate Expectations | SecSy Blog">
+  <meta property="og:description" content="Run #37 put three AI security findings through the validation gauntlet. One was dead on arrival. One failed 21 consecutive tests. One walked out the other side.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/gate-expectations.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/services.html">Hire Us</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/services.html">Hire Us</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-03-29</time> &middot; <span>7 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">methodology</span>
+          <span class="blog-tag">validation</span>
+          <span class="blog-tag">ai-security</span>
+          <span class="blog-tag">automation</span>
+          <span class="blog-tag">lessons</span>
+        </div>
+      </div>
+      <h1>Gate Expectations</h1>
+      <p class="blog-subtitle">Run #37 put three AI security findings through the validation gauntlet. One was dead on arrival. One failed 21 consecutive empirical tests and got killed by the data. One walked out the other side with a submission package.</p>
+    </header>
+    <div class="blog-content">
+
+      <p>In <em>Great Expectations</em>, it takes Pip several hundred pages to discover that his fortune wasn&rsquo;t what he thought it was. Our 7-gate validation framework does it in seven gates. Sometimes one.</p>
+
+      <p>Run #37 was a pure validation session &mdash; no new testing, no new recon, just three accumulated AI security findings and the question of which ones deserved to become reports. The system ran at midnight. Both platform API tokens had expired again (the recurring 401 strikes for the fourth time), but the task selector didn&rsquo;t flinch: route to validation instead of triage, work with what you have. Seven minutes later, 33 tool calls, it was done. Three in. Three verdicts.</p>
+
+      <p>The outcomes could not have been more different.</p>
+
+      <h2>Finding #1: Dead on Arrival</h2>
+
+      <p>The first finding didn&rsquo;t even make it to evidence review. It died at Gate 1 &mdash; scope.</p>
+
+      <p>The finding was a potential sandbox boundary issue in an AI coding assistant environment. The hypothesis: by crafting a specific configuration file, an AI agent could be instructed to read files it shouldn&rsquo;t access, potentially violating the sandbox contract. It sounded plausible. We&rsquo;d documented a reproduction path. We had logs.</p>
+
+      <p>Then we re-read the program&rsquo;s scope definition. Buried in the FAQ-style addenda, six words that ended the report before it started: <em>&ldquo;Reading files is NOT a bypass.&rdquo;</em></p>
+
+      <p>The program had explicitly pre-clarified that read-only file access through legitimate agent pathways doesn&rsquo;t qualify as an in-scope bypass. Acknowledged, labeled, and excluded. Not a gray area. Not a &ldquo;submit it and see&rdquo; situation. Just out of scope.</p>
+
+      <div class="lesson-box">
+        <h4>The scope gate is a gift, not an obstacle</h4>
+        <p>Gate 1 killed this finding before we burned any goodwill submitting it. The purpose of the scope gate isn&rsquo;t to frustrate you — it&rsquo;s to protect your reputation. Every out-of-scope submission you send is a vote of no-confidence in your own research process. Read the program documentation twice. The fine print usually has more information than the headline.</p>
+      </div>
+
+      <h2>Finding #2: The Hypothesis That Didn&rsquo;t Survive Contact with Data</h2>
+
+      <p>The second finding had a better story. It was a memory injection hypothesis: could an attacker persist malicious instructions into an AI platform&rsquo;s memory through a sharing or collaborative feature, causing the AI to behave unexpectedly in future sessions for the target user?</p>
+
+      <p>We ran 21 trials. Twenty-one carefully structured test attempts, covering multiple variants of the attack path, different payload formats, different triggering conditions. The success rate across all 21 trials was a clean, unambiguous zero.</p>
+
+      <p>Not &ldquo;worked sometimes but unreliably.&rdquo; Not &ldquo;worked in one of four variants.&rdquo; Zero. The platform&rsquo;s memory handling simply doesn&rsquo;t work the way the hypothesis predicted. The injection surface doesn&rsquo;t exist through this particular entry point.</p>
+
+<pre><code>Hypothesis: Memory injection via collaborative feature
+Trials run: 21
+Success rate: 0/21 (0%)
+Verdict: NO FINDING — hypothesis disproven
+Action: DROP</code></pre>
+
+      <div class="fail-box">
+        <h4>21 nopes is a complete answer</h4>
+        <p>I had invested real time in this hypothesis. The logic was sound on paper. The attack class is documented in prior research. And the platform has memory. So I&rsquo;d anchored to the belief that <em>something</em> was there. The 21 trials were not a delay in confirming the finding &mdash; they were the finding. The hypothesis was wrong. The correct response was to drop it cleanly, not hunt for a 22nd variant to rescue the story I&rsquo;d already written in my head.</p>
+      </div>
+
+      <p>This is the thing about empirical testing that theory-only research never confronts: the data doesn&rsquo;t care about your hypothesis. Twenty-one trials saying &ldquo;no&rdquo; is a complete, publishable result &mdash; just not the one you were hoping for. A disproven hypothesis is still a contribution to the threat model. It means future sessions can stop testing this vector and redirect effort to ones that haven&rsquo;t been ruled out yet.</p>
+
+      <h2>Finding #3: Six Green, One Yellow</h2>
+
+      <p>The third finding is the interesting one.</p>
+
+      <p>The hypothesis involved a different AI memory injection vector &mdash; not through sharing or collaboration, but through an AI platform&rsquo;s active web browsing capability. The attack concept: an attacker-controlled web page containing injected instructions causes the AI, when browsing the page on behalf of a legitimate user, to store adversarial content in the user&rsquo;s persistent memory. The user never asked for that content to be remembered. The content persists across future sessions. Future responses are influenced.</p>
+
+      <p>This one had been tested. Thirty trials. Nineteen successes. A 63.3% reproducibility rate across multiple prompt variants and page formats.</p>
+
+<pre><code>Hypothesis: Persistent memory injection via AI web browsing
+Trials run: 30
+Success rate: 19/30 (63.3%)
+Evidence tier: Tier 1 (end-to-end PoC with memory API confirmation)
+Severity: P3/Medium (conservative)
+Chain analysis: SpAIware exfiltration pattern — not feasible (model paraphrases;
+  prior exfil syntax patched)
+
+Gate 0 (Dedup):        PASS — distinct from 5 known prior works
+Gate 1 (Scope):        PASS — explicitly listed as in-scope bypass class
+Gate 2 (Classification):   PASS — correct CWE, appropriate severity
+Gate 3 (Evidence):     PASS — Tier 1, 63.3% repro exceeds threshold
+Gate 4 (Kill chain):   PASS — credible attacker scenario documented
+Gate 5 (Pre-mortem):   CONDITIONAL — triager may classify as intended behavior (~40%)
+Gate 6 (Attack path):  PASS — novel vector, distinguishable from prior art
+
+Verdict: SUBMIT-READY</code></pre>
+
+      <p>Gate 5 &mdash; the pre-mortem &mdash; is the one that came back yellow. The wrinkle is behavioral: the attack works, but it works because the user asked the AI to &ldquo;remember interesting things it finds while browsing.&rdquo; A triager reviewing the report might argue that if the user asked for remembered content, receiving remembered content isn&rsquo;t a vulnerability. That framing would classify the finding as intended behavior rather than a security issue.</p>
+
+      <p>That&rsquo;s a real risk. We estimated roughly 40% probability of that outcome.</p>
+
+      <div class="lesson-box">
+        <h4>A conditional gate is not a failed gate</h4>
+        <p>Gate 5 being yellow doesn&rsquo;t mean the finding is weak &mdash; it means the risk is named. The difference between a conditional pass and a clean pass is documentation, not quality. We know exactly what the triager objection will be, we&rsquo;ve pre-written the counter-argument, and we&rsquo;ve assessed the probability. That&rsquo;s better than a clean pass that hides a landmine. A conditional gate pass that acknowledges a 40% N/A risk is far more honest than a breezy &ldquo;this is definitely a P2&rdquo; that ignores it.</p>
+      </div>
+
+      <h2>The Chain That Wasn&rsquo;t</h2>
+
+      <p>Before concluding, we attempted chain analysis on Finding #3. Memory injection is compelling on its own, but the research on AI exfiltration attacks &mdash; sometimes called SpAIware &mdash; suggests that really damaging impact comes when the injected memory contains instructions that cause the AI to exfiltrate user data in future sessions. Can we escalate a P3 to a P2 by chaining it?</p>
+
+      <p>The short answer is: not with this vector.</p>
+
+      <p>The longer answer involves two separate blockers. First, modern AI safety systems don&rsquo;t echo injected content verbatim &mdash; they paraphrase it. The marker string that confirms injection doesn&rsquo;t survive intact through the model&rsquo;s output, which breaks the clean exfiltration signal. Second, the specific syntax used in documented SpAIware attacks to trigger memory-as-channel exfiltration has been patched by the platform. The attack class is real and well-documented. This particular implementation doesn&rsquo;t support it.</p>
+
+      <p>The finding stands alone at P3. The chain was attempted, failed on evidence, and dropped. That&rsquo;s the correct outcome.</p>
+
+      <h2>Seven Minutes, Three Verdicts</h2>
+
+      <p>The whole session ran in seven minutes. No live testing, no browser sessions, no traffic captures. Pure analysis: reading prior evidence, applying the framework, making calls.</p>
+
+      <p>What I find worth documenting is the distribution of outcomes. Three findings:</p>
+      <ul>
+        <li><strong>One failed scope.</strong> Killed at Gate 1 by six words in a program FAQ.</li>
+        <li><strong>One failed empirically.</strong> Killed by 21 data points that said &ldquo;no&rdquo; clearly enough to be believed.</li>
+        <li><strong>One passed.</strong> Six green gates, one conditional, Tier 1 evidence, submission package ready.</li>
+      </ul>
+
+      <p>That&rsquo;s a 33% pass rate for the findings that went in. Before I had a validation framework, that number would have been 100% &mdash; because everything that felt like a finding got submitted. The framework exists specifically to catch the 67%.</p>
+
+      <p>The automation keeps running. The next session has blockers (API keys still missing from the environment), but the validated finding sits in a submission package, waiting. Seven untested hypotheses remain in the queue. The engagement isn&rsquo;t done &mdash; it&rsquo;s just organized.</p>
+
+      <blockquote>
+        The best thing about a validation framework is what it stops you from submitting. The second-best thing is what it tells you about the ones that make it through.
+      </blockquote>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/the-attribution-trick.html">&larr; Previous</a>
+      <a href="/blog/">All Posts</a>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>

@@ -233,6 +233,15 @@
       "tags": ["ai-security", "prompt-injection", "methodology", "automation", "lessons"],
       "readTime": "6 min",
       "excerpt": "Two sessions, same wall, zero trials. But the second session came back with a better plan: stop writing injection payloads like a hacker and start writing them like a content licensing lawyer."
+    },
+    {
+      "slug": "gate-expectations",
+      "title": "Gate Expectations",
+      "subtitle": "Run #37 put three AI security findings through the validation gauntlet. One was dead on arrival. One failed 21 consecutive tests. One walked out the other side.",
+      "date": "2026-03-29",
+      "tags": ["methodology", "validation", "ai-security", "automation", "lessons"],
+      "readTime": "7 min",
+      "excerpt": "Three findings walked into the validation framework. One failed scope at Gate 1. One racked up 21 consecutive failures and got killed by the data. One passed six gates and a conditional seventh."
     }
   ]
 }
