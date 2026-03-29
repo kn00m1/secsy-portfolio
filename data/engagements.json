@@ -40,15 +40,15 @@
       "type": "Bug Bounty",
       "status": "Active",
       "date": "2026-02-19",
-      "description": "Bug bounty program for a fintech trading platform. 10 findings across authentication, OAuth misconfigurations, exposed test environments, and hardcoded credentials. Full recon complete: 300+ subdomains, 150+ live hosts. Three authenticated test sessions complete — IDOR surface ruled out, OAuth custom application attack chain confirmed with Tier 1 end-to-end evidence, and P1 evidence package further strengthened with redirect_uri bypass and header leak confirmation.",
+      "description": "Bug bounty program for a fintech trading platform. 10 findings across authentication, OAuth misconfigurations, exposed test environments, and hardcoded credentials. Full recon complete: 300+ subdomains, 150+ live hosts. Four authenticated sessions complete — IDOR surface ruled out, OAuth custom application attack chain confirmed with Tier 1 end-to-end evidence, submitted. Evidence strengthened across 23+ hypotheses including redirect_uri bypass and header leak confirmation.",
       "findings": 10,
       "severity": { "critical": 1, "high": 2, "medium": 4, "low": 3 },
       "highlights": [
-        "CRITICAL: OAuth custom application token exposure — Tier 1 end-to-end PoC, submission-ready",
-        "HIGH: Authentication token exposure via domain-scoped cookies",
+        "CRITICAL: OAuth custom application attack chain — account takeover via token exposure — Tier 1 end-to-end PoC, submitted",
+        "HIGH: Authentication token exposure via domain-scoped cookies — Tier 1 evidence, held pending exploit chain",
         "HIGH: Source maps exposing full application source code",
         "IDOR patterns tested with dual-account setup — server-side access controls confirmed",
-        "3 authenticated sessions: 23+ hypotheses tested, P1 evidence strengthened with redirect_uri bypass and header leak",
+        "4 authenticated sessions: 23+ hypotheses tested, P1 strengthened with redirect_uri bypass and header leak",
         "Recon: 300+ subdomains, staging environment, OAuth OIDC config, and legacy API docs discovered"
       ],
       "tags": ["Fintech", "OAuth", "Auth", "IDOR"]
@@ -76,14 +76,14 @@
       "type": "Bug Bounty",
       "status": "Active",
       "date": "2026-03-06",
-      "description": "Bug bounty program for a global food delivery platform. 11 reports across authentication bypass, subdomain takeover, staging environment exposure, and source map analysis. Identity provider authentication bypass has Tier 1 end-to-end PoC — submission pending. Recon refresh expanded attack surface with new identity provider and payment API surfaces.",
+      "description": "Bug bounty program for a global food delivery platform. 11 reports across authentication bypass, subdomain takeover, staging environment exposure, and source map analysis. Identity provider Keycloak realm misconfiguration submitted. Recon refresh expanded attack surface with new identity provider and payment API surfaces.",
       "findings": 11,
       "severity": { "critical": 0, "high": 1, "medium": 5, "low": 5 },
       "highlights": [
-        "HIGH: Identity provider authentication bypass — Tier 1 PoC, submission pending",
+        "HIGH: Identity provider Keycloak realm impersonation — Tier 1 PoC, submitted",
         "HIGH: 35MB source maps exposing full partner platform code",
         "Authentication bypass via test token on live production data",
-        "Subdomain takeover opportunity on third-party provider",
+        "Subdomain takeover opportunity identified — evidence package pending submission",
         "Recon refresh: new identity provider surfaces and partner portals mapped"
       ],
       "tags": ["Food Delivery", "Auth", "Source Maps", "Identity Provider"]
@@ -111,14 +111,15 @@
       "type": "Bug Bounty",
       "status": "Active",
       "date": "2026-03-26",
-      "description": "Dual bug bounty program targeting a major AI platform's security and safety surfaces. Scope covers primary web app, REST API, and agentic product surfaces. Karpathy-style research loop deployed — 30+ trial executions across multiple hypothesis batches. One finding validated to SUBMIT-READY: persistent memory injection via web browsing with 63% reproducibility and Tier 1 end-to-end PoC. Attribution and provenance-based injection vectors identified as the effective approach — these survive safety filters where explicit override commands fail. 3 of 4 initial hypotheses fully resolved: 1 disproven (0/21 trials), 1 dropped out-of-scope after Gate 1.",
+      "description": "Dual bug bounty program targeting a major AI platform's security and safety surfaces. Scope covers primary web app, REST API, and agentic product surfaces. Karpathy-style research loop deployed — 30+ trial executions across multiple hypothesis batches. Memory injection finding submitted: persistent memory injection via web browsing with 63% reproducibility and Tier 1 end-to-end PoC. Attribution and provenance-based injection vectors identified as the effective approach — these survive safety filters where explicit override commands fail. Browser-based exfil hypothesis (H1) in active iterate cycle; test architecture corrected after design flaw identified.",
       "findings": 1,
       "severity": { "critical": 0, "high": 0, "medium": 1, "low": 0 },
       "highlights": [
-        "MED: Persistent memory injection via web browsing — attacker preferences injected to victim's persistent memory across all future sessions — Tier 1 PoC, 63% reproducibility, SUBMIT-READY",
+        "MED: Persistent memory injection via web browsing — attacker preferences injected across all future sessions — Tier 1 PoC, 63% reproducibility, submitted",
         "Key insight: model verbally refused credential read while simultaneously executing the command — safety training gates output, not execution",
         "Injection strategy: attribution/provenance vectors survive safety filters where explicit override commands fail",
-        "2 of 3 tested hypotheses fully resolved: 1 disproven (0/21 trials), 1 dropped out-of-scope"
+        "3 of 4 initial hypotheses resolved: 1 submitted, 1 disproven (0/21 trials), 1 dropped out-of-scope",
+        "H1 (browser exfil) iterate cycle active — test design flaw identified and corrected"
       ],
       "tags": ["AI", "Prompt Injection", "Memory Injection", "Agent Security"]
     },
@@ -156,6 +157,23 @@
         "Full audit report with remediation roadmap delivered to owner"
       ],
       "tags": ["Web App", "Firebase", "Cloud", "Consulting"]
+    },
+    {
+      "id": "program-h",
+      "name": "Crypto/Fintech Wallet (Program H)",
+      "type": "Bug Bounty",
+      "status": "Active",
+      "date": "2026-03-28",
+      "description": "New bug bounty engagement targeting a crypto/fintech wallet platform. Scope spans GraphQL and REST APIs, enterprise portal, and 35+ web targets across three tiers (sandbox environment only). Selected for OAuth and authentication surface similarity to prior high-impact findings — same methodology expected to apply.",
+      "findings": 0,
+      "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
+      "highlights": [
+        "Scope: 35+ targets — wallet API, enterprise portal, GraphQL API, and fiat-to-crypto widget",
+        "Sandbox environment available for all testing — no production risk",
+        "Priority surfaces: OAuth flows, GraphQL mutation fuzzing, wallet IDOR, and enterprise portal privilege boundaries",
+        "Engagement initialized — recon and threat model in progress"
+      ],
+      "tags": ["Crypto", "Fintech", "OAuth", "GraphQL", "API Security"]
     },
     {
       "id": "juice-shop",
