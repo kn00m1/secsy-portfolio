@@ -251,6 +251,15 @@
       "tags": ["methodology", "prompt-injection", "ai-security", "automation", "lessons"],
       "readTime": "6 min",
       "excerpt": "Six sessions of injection testing. Zero trials run. One audit of the test script itself — and the discovery that the 'hidden' marker was in a paragraph tag the whole time."
+    },
+    {
+      "slug": "injected-detected-rejected",
+      "title": "Injected, Detected, Rejected",
+      "subtitle": "Run #39 finally ran Browse trials. Hidden text reached the model. The model named what it saw, said \"treating as unrelated,\" and the exfiltration callback never fired.",
+      "date": "2026-03-30",
+      "tags": ["ai-security", "prompt-injection", "methodology", "automation", "lessons"],
+      "readTime": "7 min",
+      "excerpt": "Six sessions of preparation. Six Browse trials. Two defenses found, zero bypasses. The model named the attack class, discarded it, and moved on. So did we."
     }
   ]
 }

@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-03-30",
+      "type": "investigation",
+      "title": "AI Platform: Browse Injection Trials Complete — Two Defenses Confirmed, Vector Closed",
+      "description": "Six Browse trials executed with corrected test architecture — hidden injection content reached the model. Both active and passive defenses triggered: model named the injection attempt as a security risk and discarded it as unrelated to the user's task. Exfiltration callback never fired. Browser-based exfiltration hypothesis closed after six sessions of iteration; research focus shifts to remaining untested surfaces."
+    },
+    {
       "date": "2026-03-29",
       "type": "investigation",
       "title": "AI Platform: Browser Injection Iterate — Test Design Flaw Corrected",
@@ -113,12 +119,6 @@
       "type": "recon",
       "title": "Fintech Trading Platform: Recon Refresh, New Surfaces Mapped",
       "description": "Recon refresh on focus engagement uncovered three new attack surfaces: an unguarded staging environment, an OAuth OIDC configuration with implicit flow and weak PKCE, and a legacy API with exposed documentation and sitemap — expanding the authenticated testing target list."
-    },
-    {
-      "date": "2026-03-06",
-      "type": "investigation",
-      "title": "Fortune 500 VDP: Triage Status Verified",
-      "description": "Restored platform API access after token expiry. Confirmed two reports remain in active triage. Discovered one validated draft report was written but never submitted to platform — closing intake process gap."
     }
   ]
 }

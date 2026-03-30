@@ -1,9 +1,9 @@
 {
   "summary": {
-    "totalFindings": 85,
+    "totalFindings": 86,
     "criticalFindings": 7,
     "highFindings": 14,
-    "mediumFindings": 26,
+    "mediumFindings": 27,
     "lowFindings": 38,
     "engagements": 11,
     "caseStudies": 1,
@@ -13,7 +13,7 @@
   "severityBreakdown": [
     { "label": "Critical", "count": 7, "color": "#ef4444" },
     { "label": "High", "count": 14, "color": "#f97316" },
-    { "label": "Medium", "count": 26, "color": "#f59e0b" },
+    { "label": "Medium", "count": 27, "color": "#f59e0b" },
     { "label": "Low", "count": 38, "color": "#22c55e" }
   ],
   "vulnCategories": [
@@ -24,7 +24,7 @@
     { "name": "Injection (SQLi/NoSQLi/XSS)", "count": 8 },
     { "name": "Cryptographic Failures", "count": 4 },
     { "name": "SSRF / CSRF", "count": 2 },
-    { "name": "AI / Prompt Injection", "count": 1 }
+    { "name": "AI / Prompt Injection", "count": 2 }
   ],
   "skills": [
     { "name": "Web Application Testing", "level": 85 },

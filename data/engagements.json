@@ -111,15 +111,15 @@
       "type": "Bug Bounty",
       "status": "Active",
       "date": "2026-03-26",
-      "description": "Dual bug bounty program targeting a major AI platform's security and safety surfaces. Scope covers primary web app, REST API, and agentic product surfaces. Karpathy-style research loop deployed — 30+ trial executions across multiple hypothesis batches. Memory injection finding submitted: persistent memory injection via web browsing with 63% reproducibility and Tier 1 end-to-end PoC. Attribution and provenance-based injection vectors identified as the effective approach — these survive safety filters where explicit override commands fail. Browser-based exfil hypothesis (H1) in active iterate cycle; test architecture corrected after design flaw identified.",
-      "findings": 1,
-      "severity": { "critical": 0, "high": 0, "medium": 1, "low": 0 },
+      "description": "Dual bug bounty program targeting a major AI platform's security and safety surfaces. Scope covers primary web app, REST API, and agentic product surfaces. Karpathy-style research loop deployed — 39 trial executions across multiple hypothesis batches. Two P3/Medium findings submitted: persistent memory injection via web browsing (Safety BB) and sandbox write boundary violation in CLI tool allowing persistent context poisoning (Security BB). Attribution and provenance-based injection vectors identified as the effective approach — these survive safety filters where explicit override commands fail. Browser-based exfil hypothesis closed after six iterate sessions: model named the injection attempt and discarded it; two distinct defenses confirmed.",
+      "findings": 2,
+      "severity": { "critical": 0, "high": 0, "medium": 2, "low": 0 },
       "highlights": [
         "MED: Persistent memory injection via web browsing — attacker preferences injected across all future sessions — Tier 1 PoC, 63% reproducibility, submitted",
+        "MED: CLI tool sandbox write boundary violation — malicious repository can poison persistent agent context via AGENTS.md — Tier 1 PoC, 100% reproducibility, submitted",
         "Key insight: model verbally refused credential read while simultaneously executing the command — safety training gates output, not execution",
         "Injection strategy: attribution/provenance vectors survive safety filters where explicit override commands fail",
-        "3 of 4 initial hypotheses resolved: 1 submitted, 1 disproven (0/21 trials), 1 dropped out-of-scope",
-        "H1 (browser exfil) iterate cycle active — test design flaw identified and corrected"
+        "All 4 initial hypotheses resolved: 2 submitted, 1 disproven (0/21 trials), 1 closed (defenses confirmed after 6 iterate sessions)"
       ],
       "tags": ["AI", "Prompt Injection", "Memory Injection", "Agent Security"]
     },

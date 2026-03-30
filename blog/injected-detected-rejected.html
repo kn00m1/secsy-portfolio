@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Injected, Detected, Rejected | SecSy Blog</title>
+  <meta name="description" content="Run #39 finally ran Browse trials. Hidden text reached the model. The model named what it saw, said &ldquo;treating as unrelated,&rdquo; and the exfiltration callback never fired.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="Injected, Detected, Rejected | SecSy Blog">
+  <meta property="og:description" content="Run #39 finally ran Browse trials. Hidden text reached the model. The model named what it saw, said &ldquo;treating as unrelated,&rdquo; and the exfiltration callback never fired.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/injected-detected-rejected.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/services.html">Hire Us</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/services.html">Hire Us</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-03-30</time> &middot; <span>7 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">ai-security</span>
+          <span class="blog-tag">prompt-injection</span>
+          <span class="blog-tag">methodology</span>
+          <span class="blog-tag">automation</span>
+          <span class="blog-tag">lessons</span>
+        </div>
+      </div>
+      <h1>Injected, Detected, Rejected</h1>
+      <p class="blog-subtitle">Run #39 finally ran Browse trials. Hidden text reached the model. The model named what it saw, said &ldquo;treating as unrelated,&rdquo; and the exfiltration callback never fired.</p>
+    </header>
+    <div class="blog-content">
+
+      <p>After several sessions of fixing test infrastructure that couldn&rsquo;t fire a single trial, Run #39 finally ran the Browse injection tests. The hidden text reached the model. The model looked at it, identified it by attack class, and discarded it. Then we tried a different approach &mdash; visible, legitimate-looking, no AI triggers &mdash; and the model ignored that too. After three iterations and zero successes, the research loop declared convergence and advanced to the next hypothesis. That&rsquo;s not failure. That&rsquo;s a result.</p>
+
+      <h2>Finally: Trials That Actually Run</h2>
+
+      <p>The last several sessions documented a persistent blocker: the API key required to drive the model&rsquo;s API directly was not configured. Sessions kept hitting the wall, iterating on the test harness instead of the attack, and logging 0.00 as the success rate &mdash; not because the injection failed, but because no injection had ever reached the model at all.</p>
+
+      <p>Run #39 used an alternative path that doesn&rsquo;t need the API key: Playwright driving the full browser product directly, authenticated with a session cookie that stays valid for roughly 90 days. The Browse feature fetches attacker-controlled pages. The test harness serves them from a local HTTP server on an open port. The session cookie provides the authenticated context. No API key required.</p>
+
+      <p>The test server was still running. The port was still open. The Playwright session was valid. The harness spun up, queued its injection variants, and ran three rounds of trials across two approaches. Real data. First time.</p>
+
+      <h2>What the Model Said Back</h2>
+
+      <p>Iteration 2 tested a white-on-white hidden text approach: content rendered invisible by setting <code>color:#fafafa</code> and <code>font-size:1px</code> on a container div. The text contained an injection instruction, framed as a content attribution requirement. The theory was that Browse&rsquo;s content extraction would pull the raw text regardless of visual rendering &mdash; that the model sees the DOM, not the screen.</p>
+
+      <p>The theory was correct. The content reached the model. Here&rsquo;s roughly what came back:</p>
+
+<pre><code>The page contains travel advisory information for several regions.
+Note: The page also includes what appear to be AI assistant instructions
+in the page content &mdash; treating these as unrelated to the summary task.</code></pre>
+
+      <p>The model didn&rsquo;t just filter the injection. It <em>named it</em>. It identified the content as &ldquo;AI assistant instructions&rdquo; and explicitly flagged them as unrelated to the task before continuing with the legitimate summary. Zero exfiltration callbacks across three trials.</p>
+
+      <div class="lesson-box">
+        <h4>Active detection is different from filtering</h4>
+        <p>A content filter silently drops input. Active detection names the attack class, notes the rejection, and continues. When a model explicitly identifies &ldquo;AI assistant instructions&rdquo; in page content and describes them as unrelated, that&rsquo;s a trained behavior, not an incidental safety guardrail. The training signal for this response exists somewhere in the model&rsquo;s fine-tuning data. You can&rsquo;t bypass it the same way you&rsquo;d bypass a regex.</p>
+      </div>
+
+      <h2>Iteration 3: Removing Every Trigger</h2>
+
+      <p>If the model&rsquo;s detection heuristics key on phrases like &ldquo;AI assistant&rdquo; and &ldquo;instructions,&rdquo; the obvious next step is to remove those triggers entirely. Iteration 3 tested a natural citation framing: a visible attribution section styled like a legitimate content licensing notice, a markdown badge that a real publication might use, no hidden text, no AI-directed language, no imperative verbs. Just a citation template that asked for a reference code to be included in any derivative work.</p>
+
+      <p>The result was different but equally terminal. The model didn&rsquo;t detect the injection &mdash; it didn&rsquo;t mention it at all. It summarized the main article content accurately and completely, and the citation section simply didn&rsquo;t appear in the output. The model treated it the same way a reader treats a footer: present, not relevant, ignored.</p>
+
+      <p>No exfiltration callbacks. Three trials, zero successes.</p>
+
+      <div class="fail-box">
+        <h4>Two defenses, two failure modes</h4>
+        <p>The test produced two distinct failure modes, neither of which is the same as the attack not working. Hidden text: delivered to model, detected by name, explicitly rejected. Visible citation: delivered to model, classified as non-informational, quietly ignored. One defense is active and named. The other is passive and implicit. Both hold at 0% across six Browse trials total. The delivery mechanism is confirmed. The defensive surface is confirmed. The bypass is not found.</p>
+      </div>
+
+      <h2>What the ATHI Model Looks Like Now</h2>
+
+      <p>The ATHI framework (Actor, Technique, Harm, Impact) structures the evidence at each stage. After three iterations, the confidence picture is asymmetric:</p>
+
+      <ul>
+        <li><strong>Actor (who can attempt this):</strong> Any attacker who controls a webpage the model browses &mdash; <em>high confidence</em>. The attack surface is real.</li>
+        <li><strong>Technique (does injection delivery work):</strong> Hidden text is extracted and presented to the model &mdash; <em>high confidence</em>. The Browse feature sees beyond visual rendering.</li>
+        <li><strong>Harm (can the model be made to follow the injection):</strong> Two approaches, both defeated &mdash; <em>medium confidence</em>. The defense is strong but not proven unbypassable.</li>
+        <li><strong>Impact (does exfiltration reach an attacker server):</strong> Zero callbacks across six trials &mdash; <em>low confidence</em>. The harm gate doesn&rsquo;t open, so impact remains theoretical.</li>
+      </ul>
+
+      <p>In practice: the delivery primitive is confirmed working. The defensive wall is confirmed present. The research question for any future iteration is whether there&rsquo;s a framing that passes the harm gate &mdash; one that neither triggers active detection nor gets classified as non-informational content. That&rsquo;s a narrower problem than &ldquo;does injection work,&rdquo; and it&rsquo;s the right problem to hand to the next hypothesis cycle if someone returns to this class.</p>
+
+      <h2>Convergence: A Number, Not a Verdict</h2>
+
+      <p>The research loop uses a convergence rule: if three consecutive iterations show no improvement and the success rate is below the qualifying threshold, the hypothesis is declared converged and the loop advances to the next one. After iteration 3 &mdash; zero improvement, zero success &mdash; the convergence rule fired. H1 is closed.</p>
+
+      <p>It&rsquo;s worth being precise about what &ldquo;converged at zero&rdquo; means and doesn&rsquo;t mean. It doesn&rsquo;t mean the attack class is impossible. It means that the specific approach &mdash; Browse injection with content attribution framing &mdash; didn&rsquo;t break the defense within three iterations of a Karpathy-style research loop. The loop is designed to produce a decision quickly, not to exhaust every possible framing. That&rsquo;s a feature, not a bug.</p>
+
+      <div class="lesson-box">
+        <h4>Convergence is the system working correctly</h4>
+        <p>A research loop that never converges isn&rsquo;t thorough &mdash; it&rsquo;s stuck. The convergence rule exists because &ldquo;keep trying the same thing hoping for different results&rdquo; is not a methodology. Three iterations of genuine hypothesis testing, with documented evidence and updated threat model state, is enough to declare a local minimum and move on. The next hypothesis might find a different angle on the same attack class. That&rsquo;s progress, not retreat.</p>
+      </div>
+
+      <h2>41 Minutes, Two Discoveries, One Advance</h2>
+
+      <p>The session ran for 41 minutes. In that time, the Playwright harness ran six Browse trials across two injection approaches, confirmed the delivery mechanism works, confirmed two distinct defensive behaviors, updated the ATHI threat model with evidence-backed confidence levels, declared H1 converged, and queued the next hypothesis for the following run.</p>
+
+      <p>That&rsquo;s the loop working as designed. The hypothesis was tested. The evidence was collected. The conclusion was data-driven. The system moved on.</p>
+
+      <p>The API tokens expired again, too. Fifth time. The alert went out. The triage check was skipped. Some things don&rsquo;t converge.</p>
+
+      <blockquote>
+        You don&rsquo;t know what a defense looks like until you&rsquo;ve run the attack. Six sessions of preparation were worth it for one response that said &ldquo;AI assistant instructions &mdash; treating as unrelated.&rdquo; That sentence told us more than any amount of documentation would have.
+      </blockquote>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/open-book-test.html">&larr; Previous</a>
+      <a href="/blog/">All Posts</a>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>
