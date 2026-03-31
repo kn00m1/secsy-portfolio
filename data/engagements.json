@@ -40,15 +40,15 @@
       "type": "Bug Bounty",
       "status": "Active",
       "date": "2026-02-19",
-      "description": "Bug bounty program for a fintech trading platform. 10 findings across authentication, OAuth misconfigurations, exposed test environments, and hardcoded credentials. Full recon complete: 300+ subdomains, 150+ live hosts. Four authenticated sessions complete — IDOR surface ruled out, OAuth custom application attack chain confirmed with Tier 1 end-to-end evidence, submitted. Evidence strengthened across 23+ hypotheses including redirect_uri bypass and header leak confirmation.",
+      "description": "Bug bounty program for a fintech trading platform. 10 findings across authentication, OAuth misconfigurations, exposed test environments, and hardcoded credentials. Full recon complete: 300+ subdomains, 150+ live hosts. Five authenticated sessions complete — IDOR surface ruled out, OAuth custom application attack chain confirmed with Tier 1 end-to-end evidence. Two findings submitted: critical OAuth account takeover and high-severity authentication token exposure with full exploit chain proven end-to-end.",
       "findings": 10,
       "severity": { "critical": 1, "high": 2, "medium": 4, "low": 3 },
       "highlights": [
         "CRITICAL: OAuth custom application attack chain — account takeover via token exposure — Tier 1 end-to-end PoC, submitted",
-        "HIGH: Authentication token exposure via domain-scoped cookies — Tier 1 evidence, held pending exploit chain",
+        "HIGH: Authentication token exposure via domain-scoped cookies — full end-to-end exploit chain proven, submitted",
         "HIGH: Source maps exposing full application source code",
         "IDOR patterns tested with dual-account setup — server-side access controls confirmed",
-        "4 authenticated sessions: 23+ hypotheses tested, P1 strengthened with redirect_uri bypass and header leak",
+        "5 authenticated sessions: 25+ hypotheses tested, P1 strengthened with redirect_uri bypass and header leak",
         "Recon: 300+ subdomains, staging environment, OAuth OIDC config, and legacy API docs discovered"
       ],
       "tags": ["Fintech", "OAuth", "Auth", "IDOR"]
@@ -162,16 +162,16 @@
       "id": "program-h",
       "name": "Crypto/Fintech Wallet (Program H)",
       "type": "Bug Bounty",
-      "status": "Active",
+      "status": "On Hold",
       "date": "2026-03-28",
-      "description": "New bug bounty engagement targeting a crypto/fintech wallet platform. Scope spans GraphQL and REST APIs, enterprise portal, and 35+ web targets across three tiers (sandbox environment only). Selected for OAuth and authentication surface similarity to prior high-impact findings — same methodology expected to apply.",
+      "description": "Bug bounty engagement targeting a crypto/fintech wallet platform. Scope spans GraphQL and REST APIs, enterprise portal, and 35+ web targets. JS harvest complete — 150+ GraphQL operations mapped. Engagement paused: program temporarily suspended by the platform. Queued for resume when program reopens.",
       "findings": 0,
       "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
       "highlights": [
-        "Scope: 35+ targets — wallet API, enterprise portal, GraphQL API, and fiat-to-crypto widget",
-        "Sandbox environment available for all testing — no production risk",
-        "Priority surfaces: OAuth flows, GraphQL mutation fuzzing, wallet IDOR, and enterprise portal privilege boundaries",
-        "Engagement initialized — recon and threat model in progress"
+        "150+ GraphQL operations extracted via JS harvest — schema mapped pre-pause",
+        "Priority surfaces identified: OAuth flows, GraphQL mutation fuzzing, wallet IDOR, enterprise portal privilege boundaries",
+        "Recon and threat model complete — ready to resume immediately on program reopen",
+        "Paused: program suspended by platform — monitoring for reactivation"
       ],
       "tags": ["Crypto", "Fintech", "OAuth", "GraphQL", "API Security"]
     },

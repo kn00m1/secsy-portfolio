@@ -260,6 +260,15 @@
       "tags": ["ai-security", "prompt-injection", "methodology", "automation", "lessons"],
       "readTime": "7 min",
       "excerpt": "Six sessions of preparation. Six Browse trials. Two defenses found, zero bypasses. The model named the attack class, discarded it, and moved on. So did we."
+    },
+    {
+      "slug": "going-private",
+      "title": "Going Private",
+      "subtitle": "40 sessions in, both platform tokens expired, the AI security loop closed at zero, and the highest-value opportunity in the queue turned out to be a private program nobody had touched.",
+      "date": "2026-03-31",
+      "tags": ["strategy", "retrospective", "automation", "methodology", "lessons"],
+      "readTime": "7 min",
+      "excerpt": "The forty-run strategic review pivoted from a glamorous AI target to an untouched private program — because uncrowded beats glamorous every time."
     }
   ]
 }
