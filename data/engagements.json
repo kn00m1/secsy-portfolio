@@ -176,6 +176,40 @@
       "tags": ["Crypto", "Fintech", "OAuth", "GraphQL", "API Security"]
     },
     {
+      "id": "program-i",
+      "name": "Digital Wealth Manager (Program I)",
+      "type": "Bug Bounty",
+      "status": "Active",
+      "date": "2026-03-30",
+      "description": "Private bug bounty program for a digital wealth management platform. Recon complete: 80+ subdomains, 20+ live hosts, 100+ API operations mapped via JS harvest. First authenticated session complete — privilege escalation surface eliminated via direct testing; IDOR and financial endpoint testing in progress with multi-account setup.",
+      "findings": 0,
+      "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
+      "highlights": [
+        "Private program: invitation-only, up to $1,500 per finding, 99% response efficiency",
+        "Recon: 80+ subdomains, 20+ live endpoints, 100+ API operations mapped via JS harvest",
+        "First authenticated session: privilege escalation surface eliminated via direct testing",
+        "IDOR and financial endpoint testing queued — dual verified test accounts set up"
+      ],
+      "tags": ["Fintech", "Wealth Management", "API Security", "IDOR"]
+    },
+    {
+      "id": "program-j",
+      "name": "Digital Payments Platform (Program J)",
+      "type": "VDP",
+      "status": "Active",
+      "date": "2026-03-29",
+      "description": "Vulnerability disclosure program for a major digital payments platform. Blind SSRF discovered via merchant API webhook URL validation — out-of-band DNS and HTTP callbacks confirmed from platform cloud infrastructure. 10 OOB callbacks received, internal service name and observability metadata exposed. Full 7-gate validation passed at P2/High. Report written, submission pending.",
+      "findings": 1,
+      "severity": { "critical": 0, "high": 1, "medium": 0, "low": 0 },
+      "highlights": [
+        "HIGH: Blind SSRF via webhook URL parameter — OOB callbacks confirmed from cloud infrastructure (10 deliveries)",
+        "Internal service identity and observability platform metadata exposed via request headers",
+        "DNS rebinding and IP encoding bypass vectors enumerated",
+        "Tier 1 evidence: end-to-end PoC with OOB callback log, payment flow, and curl commands"
+      ],
+      "tags": ["Fintech", "SSRF", "API Security", "Webhook"]
+    },
+    {
       "id": "juice-shop",
       "name": "OWASP Juice Shop",
       "type": "Practice Lab",

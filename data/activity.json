@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-01",
+      "type": "assessment",
+      "title": "Private Wealth Platform: First Authenticated Session — Infrastructure Resolved",
+      "description": "Resolved mail server configuration blocking account verification on a private wealth management bug bounty program — first authenticated API test session completed. Initial threat model hypothesis eliminated via direct testing; authenticated API surface mapped across 20+ endpoints, IDOR and financial endpoint testing queued."
+    },
+    {
       "date": "2026-03-31",
       "type": "investigation",
       "title": "Strategic Review: AI Testing Loop Closed, Focus Shifts to Private Program",
@@ -113,12 +119,6 @@
       "type": "investigation",
       "title": "Strategic Review: Authenticated Testing Transition",
       "description": "Completed 3.5-week retrospective identifying zero authenticated testing as the root cause of stalled progress. Defined prioritized session plan: Deriv WebSocket IDOR, Just-Eat Keycloak submission, and automated pipeline repair."
-    },
-    {
-      "date": "2026-03-10",
-      "type": "assessment",
-      "title": "E-Commerce Store: Security Assessment Complete",
-      "description": "Owner-authorized assessment of a Shopify-based e-commerce store. 6 findings across email security, HTTPS configuration, and content policy — actionable remediation roadmap delivered."
-    },
+    }
   ]
 }
