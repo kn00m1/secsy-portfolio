@@ -269,6 +269,15 @@
       "tags": ["strategy", "retrospective", "automation", "methodology", "lessons"],
       "readTime": "7 min",
       "excerpt": "The forty-run strategic review pivoted from a glamorous AI target to an untouched private program — because uncrowded beats glamorous every time."
+    },
+    {
+      "slug": "youve-got-otp",
+      "title": "You've Got OTP",
+      "subtitle": "Four sessions. One dead mail server. A 47-minute sliding window. And then, finally: a Bearer token in hand and a target wide open.",
+      "date": "2026-04-01",
+      "tags": ["authentication", "methodology", "automation", "infrastructure", "lessons"],
+      "readTime": "8 min",
+      "excerpt": "The hardest authentication problem in this engagement wasn't on the target. It was in /etc/exim4/update-exim4.conf.conf."
     }
   ]
 }

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You've Got OTP | SecSy Blog</title>
+  <meta name="description" content="Four sessions. One dead mail server. A 47-minute sliding window. And then: a Bearer token.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="You've Got OTP | SecSy Blog">
+  <meta property="og:description" content="Four sessions. One dead mail server. A 47-minute sliding window. And then: a Bearer token.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/youve-got-otp.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/services.html">Hire Us</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/services.html">Hire Us</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-04-01</time> &middot; <span>8 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">authentication</span>
+          <span class="blog-tag">methodology</span>
+          <span class="blog-tag">automation</span>
+          <span class="blog-tag">infrastructure</span>
+          <span class="blog-tag">lessons</span>
+        </div>
+      </div>
+      <h1>You&rsquo;ve Got OTP</h1>
+      <p class="blog-subtitle">Four sessions. One dead mail server. A 47-minute sliding window. And then, finally: a Bearer token in hand and a target wide open.</p>
+    </header>
+    <div class="blog-content">
+
+      <p>There is a specific irony in being a security researcher &mdash; someone whose entire job is getting past authentication systems &mdash; and spending three consecutive automated sessions unable to authenticate to your own email server to collect a one-time password. Run #44 ended that streak. It also taught me more about IP-based rate limiting, mail transfer agent configuration, and local alias resolution than I expected to learn before logging in to anything.</p>
+
+      <h2>The Startup Conditions</h2>
+
+      <p>The session opened with a familiar problem: low memory. At launch time the system had 443MB RAM free and zero swap available &mdash; a stale process had consumed it overnight. The orchestrator fired the swap-clearing routine, killed two leftover processes from the previous session, and recovered 2GB of swap in about a minute. Resources green. Proceeding.</p>
+
+      <p>Both platform API tokens were expired. Again. This is four expiries in roughly three months on one platform, three on the other. The alert system fired but noted &ldquo;already sent today&rdquo; &mdash; the morning run had already seen the 401s and notified the inbox. The task selector ran the numbers anyway and landed on the right call: the private fintech program, apply task, test the hypotheses that three sessions of infrastructure work had been building toward. The tokens being expired doesn&rsquo;t block testing; it just means triage status remains unknown until someone renews them manually.</p>
+
+      <h2>The Mail Room Problem</h2>
+
+      <p>The private program uses email verification before login. That sentence sounds simple. In practice, it means every test account you register is locked behind an OTP sent to an email address you can actually receive. The system had registered ten accounts across three sessions before someone bothered to check whether the local mail transfer agent was running.</p>
+
+      <p>It wasn&rsquo;t.</p>
+
+      <p>Exim4 &mdash; the mail daemon responsible for local delivery &mdash; had been stopped. Not crashed, not misconfigured from the start: stopped. A systemctl start fixed it in two seconds. The subsequent debugging took considerably longer. The daemon was running but configured for local delivery only, meaning it would accept email for local system users and not forward anything to the actual inbox. Fixing that required switching from local-only mode to internet mode, opening port 25 in the firewall, and updating the hostname list so the daemon knew which addresses to accept. Three separate config files, two service restarts, one &ldquo;why didn&rsquo;t we check this first&rdquo; moment.</p>
+
+      <p>Then there were the aliases. The /etc/aliases file maps local usernames to real delivery addresses. The test account registrations were using addresses in the format <code>bountytest@[domain]</code>. Aliases were pointing the wrong direction &mdash; some to root, some nowhere. After fixing the aliases you have to run <code>sudo newaliases</code> to rebuild the alias database. That command is not obvious and not automatic. It is also not in any of the setup notes from the original VPS hardening session, because nobody was thinking about email delivery when they were configuring fail2ban and auditd.</p>
+
+      <p>The final discovery was the one that actually matters for test-account strategy: the VPS receives external email at exactly one address. The mail server handling inbound delivery for the domain is at a completely separate IP from this machine. Aliases on this VPS route to local delivery only &mdash; which then forwards to the real inbox. But only if the alias is set correctly, only if exim4 is configured to relay properly, and only if the target program can actually route email to the domain. In practice: one address works. All the others were false hope.</p>
+
+      <div class="fail-box">
+        <h4>Three sessions of account registration before checking if the mail server was on</h4>
+        <p>In three sessions, the system registered ten accounts, encountered rate limiting on OTP generation, tried IPv6, tried Tor, tried header injection to spoof the client IP, and explored forgot-password flows as an alternative verification path. It did not check whether exim4 was running until session four. The debugging time for &ldquo;is the daemon started&rdquo; is measured in seconds. The debugging time for everything else is measured in hours across multiple sessions. Check the obvious things first.</p>
+      </div>
+
+      <h2>Rate Limit Cartography</h2>
+
+      <p>The program&rsquo;s authentication layer has multiple rate limit buckets, and mapping them turned out to be its own research task. Three separate codes correspond to three different enforcement layers:</p>
+
+      <pre><code>Code 42911 — Login endpoint, IP-based, ~30 min sliding window
+Code 42912 — OTP generation/validation + forgot-password, IP-based, &gt;47 min sliding window
+Code 61003 — Per-token OTP re-generation, 1 min cooldown</code></pre>
+
+      <p>The sliding window behavior is the important part. A sliding window rate limit doesn&rsquo;t reset after a fixed interval from the first trigger &mdash; it resets based on the most recent attempt. Every time you hit the endpoint during the window, the timer resets from that moment. This means that if you try once, wait 20 minutes, try again, you&rsquo;re not 20 minutes into a 30-minute window &mdash; you just started a new 30-minute window from the second attempt. Aggressive retrying doesn&rsquo;t burn through the window faster; it just extends it indefinitely.</p>
+
+      <p>The two limit codes do not share a bucket. Login attempts (42911) have no effect on OTP generation (42912) and vice versa. This matters because login for an unverified account returns an HTTP 401 with a fresh email verification token in the response body. That token can be used to generate a new OTP without re-registering the account &mdash; and crucially, that login attempt does not appear to trigger 42911. The existence of this path means token expiry on unverified accounts is a recoverable state, not a registration dead-end.</p>
+
+      <p>IP-based enforcement proved genuinely robust. The test surface included X-Forwarded-For header injection, X-Real-IP, CF-Connecting-IP, Tor exit nodes, and IPv6 address variants. None of them bypassed the limit. The CDN layer correlates IPv4 and IPv6 traffic from the same source and applies the same rate limit across both. Tor exits are identified and blocked separately from the rate limiting entirely. This is well-implemented protection, not a misconfiguration waiting to be exploited.</p>
+
+      <h2>Authenticated, Finally</h2>
+
+      <p>The authentication sequence that worked:</p>
+
+      <pre><code>1. POST /auth/login (unverified account)
+   → 401 with fresh emailToken in response body
+
+2. POST /auth/email-verification/generate-otp (using fresh emailToken)
+   → 200, OTP sent to inbox
+
+3. IMAP fetch via email client script
+   → 4-digit OTP retrieved from inbox
+
+4. POST /auth/email-verification/validate-otp (emailToken + OTP)
+   → Email verified
+
+5. POST /auth/login (now verified)
+   → Bearer token</code></pre>
+
+      <p>Session token format: UUID v4, approximately 30-minute TTL. Not a JWT &mdash; no header/payload/signature structure to inspect or tamper with. The token grants access to the standard API surface. What that surface looks like from the inside of a fresh account turned out to be the interesting part.</p>
+
+      <h2>The View From Inside</h2>
+
+      <p>With a Bearer token in hand, the first task was API surface mapping: walk every endpoint from the threat model, record what it returns, note what&rsquo;s empty versus populated, identify what requires additional context to test. A fresh account with no financial data makes some IDOR classes harder to test (no resources of your own to swap IDs against), but it makes others easier (empty state reveals what the endpoints return when there&rsquo;s nothing to hide).</p>
+
+      <p>The first hypothesis on the threat model was advisor privilege escalation &mdash; whether a regular user account could call endpoints designated for financial advisors, or whether meta-data manipulation could alter the account&rsquo;s role. The answer was clean: no. Advisor endpoints are role-gated at the authentication layer, not just at the application layer. PUT requests to meta-data endpoints accept arbitrary JSON without error, but the server ignores role and privilege fields entirely &mdash; they don&rsquo;t affect what the session token can do. This is the right way to implement role separation, and it means the advisor escalation hypothesis is closed.</p>
+
+      <p>Several endpoints returned 500 errors consistently, including one that should return core account information. Consistent 500s on a non-destructive GET request are worth noting &mdash; they could be a UAT environment artifact, a misconfigured environment variable, or an actual server-side bug. Documenting the behavior is the right call; drawing conclusions about severity without understanding root cause is not.</p>
+
+      <p>The MFA configuration surface contained a path that returned 501 Not Implemented. Not 403 Unauthorized, not 404 Not Found: 501. The endpoint exists, it&rsquo;s routed, and the server explicitly tells you the feature hasn&rsquo;t been built yet. This is useful as a snapshot of the development roadmap, but it&rsquo;s not a finding. &ldquo;Feature not implemented&rdquo; is not a vulnerability.</p>
+
+      <div class="lesson-box">
+        <h4>Negative results are data with a shelf life</h4>
+        <p>The advisor escalation hypothesis was eliminated in under five minutes with a Bearer token. It took four sessions to get that Bearer token. The negative result didn&rsquo;t change &mdash; the endpoint was role-gated on day one and it&rsquo;s role-gated today &mdash; but the weeks of work before getting here weren&rsquo;t wasted: they produced rate-limit maps, infrastructure fixes, and an unauthenticated finding that doesn&rsquo;t require auth at all. Not every hypothesis dies fast. The ones that do are still clearing the board for the ones that matter.</p>
+      </div>
+
+      <h2>What the Session Actually Produced</h2>
+
+      <p>Sixteen minutes from session start to session end. Seventy-three tool calls. Four files written or modified. One verified account. One eliminated hypothesis. One authenticated API surface mapped. Two rate limit buckets fully characterized. And an unauthenticated finding &mdash; discovered in a previous session, expanded here &mdash; that will go through the validation gate before anything else happens with it.</p>
+
+      <p>The session was productive in the way that quiet sessions often are: not because it found something headline-worthy, but because it cleared the structural blockage that had been in the way of everything else. The mail server is configured. The authentication sequence is documented. The rate limit windows are mapped. The first hypothesis is closed. The remaining hypotheses require a second verified account and two 60-minute windows clear of OTP attempts.</p>
+
+      <p>The next session has a clear brief: verify the second test account, then test access control between the two. IDOR on transfer and portfolio endpoints. Inter-account resource isolation. The hypotheses ranked highest in the threat model are the ones that require exactly this setup and have been waiting four sessions to run.</p>
+
+      <div class="lesson-box">
+        <h4>Infrastructure debugging is part of the engagement</h4>
+        <p>When authenticated testing requires receiving email, the mail server is in scope. Not as a target &mdash; as a prerequisite. Any engagement that involves OTP-gated test accounts should treat &ldquo;mail server configured and verified&rdquo; as a checklist item at engagement initialization, not something discovered to be broken in session three. The same logic applies to proxy setup, DNS resolution for target domains, certificate trust for HTTPS interception, and any other local dependency that will silently block work if it&rsquo;s misconfigured. Check your own plumbing before testing anyone else&rsquo;s.</p>
+      </div>
+
+      <blockquote>
+        The hardest authentication problem in this engagement so far wasn&rsquo;t on the target. It was in /etc/exim4/update-exim4.conf.conf.
+      </blockquote>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/going-private.html">&larr; Previous</a>
+      <a href="/blog/">All Posts</a>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>
