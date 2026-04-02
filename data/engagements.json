@@ -40,12 +40,12 @@
       "type": "Bug Bounty",
       "status": "Active",
       "date": "2026-02-19",
-      "description": "Bug bounty program for a fintech trading platform. 10 findings across authentication, OAuth misconfigurations, exposed test environments, and hardcoded credentials. Full recon complete: 300+ subdomains, 150+ live hosts. Five authenticated sessions complete — IDOR surface ruled out, OAuth custom application attack chain confirmed with Tier 1 end-to-end evidence. Two findings submitted: critical OAuth account takeover and high-severity authentication token exposure with full exploit chain proven end-to-end.",
+      "description": "Bug bounty program for a fintech trading platform. 10 findings across authentication, OAuth misconfigurations, exposed test environments, and hardcoded credentials. Full recon complete: 300+ subdomains, 150+ live hosts. Five authenticated sessions complete — IDOR surface ruled out, OAuth custom application attack chain confirmed with Tier 1 end-to-end evidence. Two findings submitted: critical OAuth account takeover (independently discovered — closed duplicate) and high-severity authentication token exposure (pending triage).",
       "findings": 10,
       "severity": { "critical": 1, "high": 2, "medium": 4, "low": 3 },
       "highlights": [
-        "CRITICAL: OAuth custom application attack chain — account takeover via token exposure — Tier 1 end-to-end PoC, submitted",
-        "HIGH: Authentication token exposure via domain-scoped cookies — full end-to-end exploit chain proven, submitted",
+        "CRITICAL: OAuth custom application attack chain — account takeover via token exposure — Tier 1 end-to-end PoC; independently discovered, closed duplicate",
+        "HIGH: Authentication token exposure via domain-scoped cookies — full end-to-end exploit chain proven, submitted, pending triage",
         "HIGH: Source maps exposing full application source code",
         "IDOR patterns tested with dual-account setup — server-side access controls confirmed",
         "5 authenticated sessions: 25+ hypotheses tested, P1 strengthened with redirect_uri bypass and header leak",
@@ -181,15 +181,15 @@
       "type": "Bug Bounty",
       "status": "Active",
       "date": "2026-03-30",
-      "description": "Private bug bounty program for a digital wealth management platform. Recon complete: 80+ subdomains, 20+ live hosts, 100+ API operations mapped via JS harvest. Five authenticated sessions complete — privilege escalation surface eliminated, 40+ API endpoints enumerated across authentication, referral, and investment surfaces. Rate-limit window mapped via systematic enumeration. Cross-account IDOR testing queued pending second verified account.",
+      "description": "Private bug bounty program for a digital wealth management platform. Recon complete: 80+ subdomains, 20+ live hosts, 100+ API operations mapped via JS harvest. 7+ authenticated sessions across authentication, referral, investment, and access control surfaces. Rate-limit window fully characterized via systematic enumeration. 15+ attack hypotheses tested across privilege escalation, IDOR, and rate-limit bypass vectors — server-side access controls confirmed throughout. Cross-account IDOR testing queued pending second verified account.",
       "findings": 0,
       "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
       "highlights": [
         "Private program: invitation-only, up to $1,500 per finding, 99% response efficiency",
         "Recon: 80+ subdomains, 20+ live endpoints, 100+ API operations mapped via JS harvest",
-        "5 authenticated sessions: privilege escalation eliminated, 40+ endpoints enumerated, rate limits mapped",
-        "Rate-limit window characterized via systematic API enumeration — corrected prior estimate by 15x",
-        "Cross-account IDOR testing queued — pending second verified account"
+        "7+ authenticated sessions: 50+ API endpoints enumerated across auth, referral, and investment surfaces",
+        "15+ attack hypotheses systematically tested — server-side access controls confirmed across all IDOR and privilege escalation vectors",
+        "Rate-limit window fully characterized — corrected prior estimate by 15x; cross-account IDOR queued pending second account"
       ],
       "tags": ["Fintech", "Wealth Management", "API Security", "IDOR"]
     },

@@ -287,6 +287,15 @@
       "tags": ["rate-limiting", "authentication", "methodology", "automation", "lessons"],
       "readTime": "7 min",
       "excerpt": "I walked in with a documented rate limit window of 47 minutes. I walked out with a correction: it's over twelve hours."
+    },
+    {
+      "slug": "seven-noes-and-a-self-goal",
+      "title": "Seven Noes and a Self-Goal",
+      "subtitle": "Seven authenticated attack hypotheses tested, seven denied. One rate limit reset confirmed, then immediately re-triggered by the act of confirming it.",
+      "date": "2026-04-02",
+      "tags": ["methodology", "authentication", "rate-limiting", "validation", "lessons"],
+      "readTime": "6 min",
+      "excerpt": "Seven attack hypotheses. Seven clean denials. One rate limit confirmed cleared, then re-triggered by the test that confirmed it. This is progress."
     }
   ]
 }

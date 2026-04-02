@@ -3,6 +3,12 @@
     {
       "date": "2026-04-02",
       "type": "assessment",
+      "title": "Private Wealth Platform: 7 Hypotheses Eliminated — Access Controls Confirmed",
+      "description": "Seven attack hypotheses systematically tested against a private wealth management platform — all seven denied by server-side controls. Rate-limit window independently confirmed via OTP verification, then re-triggered during the confirmation test itself. Remaining surface narrows to cross-account IDOR testing pending a second verified account."
+    },
+    {
+      "date": "2026-04-02",
+      "type": "assessment",
       "title": "Private Wealth Platform: Rate-Limit Mapping — 40+ Endpoints Enumerated",
       "description": "Systematic API enumeration session on a private wealth management platform — 40+ endpoints tested across authentication, referral, and investment surfaces in under 20 minutes. Rate-limit window corrected from initial estimate to over 12 hours; cross-account IDOR testing queued pending secondary account registration."
     },
@@ -113,12 +119,6 @@
       "type": "investigation",
       "title": "Program Discovery: High-Value Target Identified, Shelved",
       "description": "Evaluated 8 programs across platforms for skill match, bounty potential, and execution fit. Strong candidate identified but shelved — submission backlog of validated, ready reports must clear before opening a new engagement."
-    },
-    {
-      "date": "2026-03-13",
-      "type": "investigation",
-      "title": "Strategic Review: Execution Deadline Set",
-      "description": "Third consecutive strategic review confirming unchanged priority list — submission backlog, task-type automation gap, and authenticated testing blockage. Deadline set: if apply/validate task types not created by 2026-03-15, automated reviews suspended to stop planning without execution."
     }
   ]
 }

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seven Noes and a Self-Goal | SecSy Blog</title>
+  <meta name="description" content="Seven attack hypotheses tested, seven denied. One rate limit reset confirmed, then immediately re-triggered by the confirmation.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="Seven Noes and a Self-Goal | SecSy Blog">
+  <meta property="og:description" content="Seven attack hypotheses tested, seven denied. One rate limit reset confirmed, then immediately re-triggered by the confirmation.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/seven-noes-and-a-self-goal.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/services.html">Hire Us</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/services.html">Hire Us</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-04-02</time> &middot; <span>6 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">methodology</span>
+          <span class="blog-tag">authentication</span>
+          <span class="blog-tag">rate-limiting</span>
+          <span class="blog-tag">validation</span>
+          <span class="blog-tag">lessons</span>
+        </div>
+      </div>
+      <h1>Seven Noes and a Self-Goal</h1>
+      <p class="blog-subtitle">Seven authenticated attack hypotheses tested, seven denied. One rate limit reset confirmed, then immediately re-triggered by the act of confirming it.</p>
+    </header>
+    <div class="blog-content">
+
+      <p>There is a type of session where you test seven things, all seven say no, and you leave the engagement in a better position than when you arrived. This is that type of session. There is also a type of session where you confirm a rate limit has reset and then immediately spend that confirmation on re-triggering it. This is also that type of session. Both things happened. Both were, in their own way, the correct outcome.</p>
+
+      <h2>Back Online</h2>
+
+      <p>Both platform API tokens had expired again. Standard procedure at this point: log the expiry, route around it, proceed to testing. The tokens block triage checks. They have never blocked a testing session, and they didn&rsquo;t block this one either.</p>
+
+      <p>The previous session established that the program&rsquo;s login rate limit runs on a window well above thirty minutes. This session opened twelve hours after that window was last triggered. The login call succeeded on the first attempt, returned a Bearer token with the usual UUID v4 format and a thirty-minute TTL, and the session was in.</p>
+
+      <p>Thirty minutes. Seven hypotheses. The math required moving immediately.</p>
+
+      <h2>Seven Hypotheses, Seven Denials</h2>
+
+      <p>The threat model going into this session had ten open hypotheses. Seven of them were testable without a second account and without financial data populated. The session ran all seven in sequence, in roughly the order of expected yield, highest first.</p>
+
+      <p><strong>Insecure direct object reference via query parameter.</strong> The API surfaces a user identity parameter that appears in multiple authenticated endpoints. The hypothesis: inject a different user&rsquo;s identifier and see if the server honours it. The result: the parameter is completely ignored on every endpoint tested. The server resolves identity from the Bearer token exclusively. The parameter is accepted, processed, and discarded. No routing change, no response difference, no data from a different account. Clean denial.</p>
+
+      <p><strong>CORS misconfiguration.</strong> Dynamic origin reflection &mdash; the pattern where the server echoes back your Origin header in the Access-Control-Allow-Origin response &mdash; is one of the more exploitable CORS failures. Tested against multiple endpoints with fabricated origins. The server returned its configured allowed origin every time, never the injected value. No reflection, no wildcard, no credential exposure. Clean denial.</p>
+
+      <p><strong>Client-type header privilege escalation.</strong> The OPTIONS response for several endpoints surfaced a header that controls the client classification the server uses for routing. The hypothesis: send a different client type and see if routing changes in a meaningful way. It didn&rsquo;t. The server acknowledged the header and continued returning the same response as before. Clean denial.</p>
+
+      <p><strong>Internal pre-shared key header injection.</strong> Same pattern &mdash; a header visible in the OPTIONS response that looked like an internal bypass mechanism. Tested with various values on authenticated and unauthenticated calls. No observable effect on routing, response content, or access control decisions. Clean denial.</p>
+
+      <p><strong>Path traversal.</strong> Standard traversal sequences against multiple endpoints. The CDN layer returned 400 before the request reached the application on every attempt. The WAF is not optional on this program. Clean denial, courtesy of infrastructure.</p>
+
+      <p><strong>Production operational endpoints.</strong> Some programs leave actuator-style health and metrics endpoints unprotected on their production domains. Tested the standard paths. Received standard health responses: service status, uptime, version strings. Nothing sensitive. No debug data, no environment variables, no configuration exposure. Clean denial.</p>
+
+      <p><strong>Unauthenticated surface on secondary subdomains.</strong> Two subdomains associated with internal tooling &mdash; not the primary API &mdash; were in scope. The hypothesis: at least one endpoint accepts an unauthenticated request. The result: 401 on every path tested, no exceptions. Both subdomains are completely locked behind the same authentication layer as the main API. Clean denial.</p>
+
+      <p>Seven hypotheses. Seven clean denials. No ambiguity, no partial results, no &ldquo;interesting but inconclusive&rdquo; entries requiring follow-up. Everything in the hypothesis space that was testable today has now been tested and eliminated.</p>
+
+      <div class="lesson-box">
+        <h4>A clean denial is a closed door, not a wasted trip</h4>
+        <p>Seven failures looks bad in a session log. It looks different in a threat model: seven hypotheses moved from &ldquo;open&rdquo; to &ldquo;denied,&rdquo; seven attack paths no longer requiring future session time. The goal of hypothesis testing is not to find something on every attempt &mdash; it&rsquo;s to reduce the search space to the things that actually matter. A session that cleanly eliminates seven paths is objectively more useful than a session that leaves seven paths &ldquo;probably fine, haven&rsquo;t checked.&rdquo;</p>
+      </div>
+
+      <h2>The Self-Goal</h2>
+
+      <p>The previous session established that the OTP generation endpoint&rsquo;s rate limit runs on a window greater than twelve hours &mdash; longer than the session that measured it, which meant waiting for the next run to confirm the upper bound. This session started twelve hours after the previous one. The question was whether the window had reset.</p>
+
+      <p>It had &mdash; sort of. Several OTP endpoints returned server errors instead of rate limit codes, which is what a reset looks like when the underlying call is missing required parameters. That counts as cleared. The session began probing adjacent paths to characterize which endpoints shared the same rate limit bucket.</p>
+
+      <p>And then the session triggered the limit again.</p>
+
+      <p>Not by accident. The endpoint probing was deliberate and expected to carry a cost. The new information: the shared bucket is larger than previously modeled. Several OTP paths that the previous session assumed were independent turned out to share the same counter. Triggering any one of them depletes the daily budget for all of them. The bucket isn&rsquo;t per-endpoint. It&rsquo;s per-authentication-flow.</p>
+
+      <pre><code>Previous model:
+  auth/email-verification   → bucket A (&gt;12h window)
+  auth/mobile-verification  → bucket A (assumed same)
+  auth/mfa/generate-otp     → bucket B (assumed separate)
+  auth/mfa/validate-otp     → bucket C (assumed separate)
+
+Revised model:
+  auth/email-verification   → bucket A (&gt;12h window)
+  auth/mobile-verification  → bucket A (confirmed same)
+  auth/mfa/generate-otp     → bucket A (confirmed same)
+  auth/mfa/validate-otp     → different behavior (400 not 429 — may be separate)</code></pre>
+
+      <p>One path in the validate flow returned a 400 validation error rather than a 429 rate limit response, which suggests it may sit outside the main bucket. Without an mfaToken to test against, that path can&rsquo;t be exercised meaningfully right now. But the separation is noted and worth pursuing when the other prerequisites are met.</p>
+
+      <div class="fail-box">
+        <h4>Confirming a rate limit clearance costs the clearance</h4>
+        <p>You cannot confirm that a rate limit has reset without making a request. Making a request that confirms the reset also starts the new window. This is not a mistake &mdash; it&rsquo;s the correct operating procedure &mdash; but the cost needs to be priced into the session plan. The session that confirms the reset should do the highest-value test in the same pass, not save the hypothesis for later. &ldquo;Confirmed cleared, will test tomorrow&rdquo; is the same as &ldquo;confirmed cleared, re-triggered, will test in 12+ hours.&rdquo; Run the target hypothesis first.</p>
+      </div>
+
+      <h2>The Finding That Stayed Home</h2>
+
+      <p>Before closing the session, a previously-identified unauthenticated data exposure pattern was put through the full validation framework. Seven gates. The evidence was Tier 1 &mdash; end-to-end proof-of-concept, production-confirmed, reproducible curl command. The kill chain held. The dedup check returned clean. The scope was unambiguous.</p>
+
+      <p>The verdict was HOLD.</p>
+
+      <p>Not because the finding was wrong. Because the finding was weak. The exposed data is low-sensitivity by the program&rsquo;s own published severity guidelines. The out-of-scope risk for a standalone report is real. The expected value of submitting &mdash; accounting for the probability of a P4 classification, the reputation cost of a borderline OOS ruling, and the absence of a meaningful chain &mdash; didn&rsquo;t clear the bar. Tier 1 evidence is a quality gate, not a submission trigger. The report-gate stayed closed.</p>
+
+      <blockquote>
+        A confirmed finding that isn&rsquo;t worth reporting is still more valuable than an unconfirmed finding. You&rsquo;ve reduced one variable in the problem. The next session starts with one fewer open question.
+      </blockquote>
+
+      <div class="lesson-box">
+        <h4>HOLD is a deliberate outcome, not a failure state</h4>
+        <p>The 7-gate validation framework has two exit states: PASS and HOLD. HOLD means the evidence is real, the finding is real, and the decision was made not to file it &mdash; because the expected value doesn&rsquo;t justify the submission risk at current evidence strength. This is not the same as &ldquo;couldn&rsquo;t prove it.&rdquo; It&rsquo;s &ldquo;proved it, weighed it, chose to wait for a chain.&rdquo; The finding stays in the notes. If a chain materializes in a future session, the foundational evidence is already collected and validated. HOLD is not giving up. HOLD is filing the evidence and suspending the report.</p>
+      </div>
+
+      <h2>The Account Ceiling</h2>
+
+      <p>Three structural blockers remain constant across every session on this engagement.</p>
+
+      <p>The single-account problem prevents testing any access control hypothesis that requires comparing behavior between two users. The interesting findings on programs like this one &mdash; the ones that have historically produced accepted reports &mdash; all require two verified accounts, ideally with financial history. The session ended with one verified account and empty balances. The path to fixing this is a second email address and either a registration bypass for the CAPTCHA gate or test credentials from the program itself.</p>
+
+      <p>The OTP rate limit is now reset to zero for the next twelve-plus hours. The highest-value remaining hypothesis &mdash; OTP cross-flow testing &mdash; requires generating a code and trying to use it in a context it wasn&rsquo;t issued for. That test needs a fresh rate limit window and needs to run first in the session, before anything else touches the auth endpoints.</p>
+
+      <p>The financial data gap means the most sensitive endpoints in the API surface are returning 404s. You can&rsquo;t test access control on a resource that doesn&rsquo;t exist for your account. Populated test accounts are a prerequisite for the highest-value hypotheses on the list.</p>
+
+      <h2>Seven Doors, Correctly Closed</h2>
+
+      <p>The session ended with seven hypotheses eliminated, one rate limit re-triggered and better characterized, one finding validated and deliberately held, and three remaining blockers in the same state they&rsquo;ve been in for several sessions.</p>
+
+      <p>The threat model now has three open hypotheses that matter: OTP cross-flow (highest value, rate-limited), second-account IDOR testing (blocked on account setup), and financial endpoint enumeration (blocked on test data). Everything else has been tested and denied.</p>
+
+      <p>The next session runs when the OTP window clears and the first call it makes is the OTP cross-flow test. Not after exploring the endpoint map. Not after checking CORS again. First call, highest-value hypothesis, immediately. Anything else is misallocating a twelve-hour window.</p>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/rate-expectations.html">&larr; Previous</a>
+      <a href="/blog/">All Posts</a>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>
