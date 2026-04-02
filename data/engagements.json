@@ -181,16 +181,33 @@
       "type": "Bug Bounty",
       "status": "Active",
       "date": "2026-03-30",
-      "description": "Private bug bounty program for a digital wealth management platform. Recon complete: 80+ subdomains, 20+ live hosts, 100+ API operations mapped via JS harvest. First authenticated session complete — privilege escalation surface eliminated via direct testing; IDOR and financial endpoint testing in progress with multi-account setup.",
+      "description": "Private bug bounty program for a digital wealth management platform. Recon complete: 80+ subdomains, 20+ live hosts, 100+ API operations mapped via JS harvest. Five authenticated sessions complete — privilege escalation surface eliminated, 40+ API endpoints enumerated across authentication, referral, and investment surfaces. Rate-limit window mapped via systematic enumeration. Cross-account IDOR testing queued pending second verified account.",
       "findings": 0,
       "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
       "highlights": [
         "Private program: invitation-only, up to $1,500 per finding, 99% response efficiency",
         "Recon: 80+ subdomains, 20+ live endpoints, 100+ API operations mapped via JS harvest",
-        "First authenticated session: privilege escalation surface eliminated via direct testing",
-        "IDOR and financial endpoint testing queued — dual verified test accounts set up"
+        "5 authenticated sessions: privilege escalation eliminated, 40+ endpoints enumerated, rate limits mapped",
+        "Rate-limit window characterized via systematic API enumeration — corrected prior estimate by 15x",
+        "Cross-account IDOR testing queued — pending second verified account"
       ],
       "tags": ["Fintech", "Wealth Management", "API Security", "IDOR"]
+    },
+    {
+      "id": "program-k",
+      "name": "Digital Banking Platform (Program K)",
+      "type": "Bug Bounty",
+      "status": "Active",
+      "date": "2026-04-01",
+      "description": "Public bug bounty program for a European digital banking platform. Scope covers primary web application, REST API, and iOS/Android mobile applications. Engagement initialized — scope locked, recon pipeline queued.",
+      "findings": 0,
+      "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
+      "highlights": [
+        "Public program: competitive per-finding bounties across web, API, and mobile scope",
+        "Scope covers primary web app, API, and both mobile platforms",
+        "Scope locked — recon pipeline queued: subdomain enumeration, HTTP probe, JS harvest"
+      ],
+      "tags": ["Banking", "Fintech", "API Security", "Mobile"]
     },
     {
       "id": "program-j",

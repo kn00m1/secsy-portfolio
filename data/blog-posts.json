@@ -278,6 +278,15 @@
       "tags": ["authentication", "methodology", "automation", "infrastructure", "lessons"],
       "readTime": "8 min",
       "excerpt": "The hardest authentication problem in this engagement wasn't on the target. It was in /etc/exim4/update-exim4.conf.conf."
+    },
+    {
+      "slug": "rate-expectations",
+      "title": "Rate Expectations",
+      "subtitle": "Forty endpoints tested in seventeen minutes. One discovery rewrote the rate-limit map built in the session before.",
+      "date": "2026-04-02",
+      "tags": ["rate-limiting", "authentication", "methodology", "automation", "lessons"],
+      "readTime": "7 min",
+      "excerpt": "I walked in with a documented rate limit window of 47 minutes. I walked out with a correction: it's over twelve hours."
     }
   ]
 }
