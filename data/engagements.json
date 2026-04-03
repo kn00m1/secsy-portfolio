@@ -181,15 +181,15 @@
       "type": "Bug Bounty",
       "status": "Active",
       "date": "2026-03-30",
-      "description": "Private bug bounty program for a digital wealth management platform. Recon complete: 80+ subdomains, 20+ live hosts, 100+ API operations mapped via JS harvest. 7+ authenticated sessions across authentication, referral, investment, and access control surfaces. Rate-limit window fully characterized via systematic enumeration. 15+ attack hypotheses tested across privilege escalation, IDOR, and rate-limit bypass vectors — server-side access controls confirmed throughout. Cross-account IDOR testing queued pending second verified account.",
+      "description": "Private bug bounty program for a digital wealth management platform. Recon complete: 80+ subdomains, 20+ live hosts, 100+ API operations mapped via JS harvest. Seven authenticated sessions completed across authentication, referral, investment, and financial planning surfaces. Rate-limit window fully characterized — 12+ hour OTP window corrected from prior estimate. 20+ attack hypotheses tested across IDOR, mass assignment, OTP cross-flow, and privilege escalation vectors — server-side access controls confirmed throughout. Financial resource objects created to enable cross-account IDOR testing; second verified account required to conclude.",
       "findings": 0,
       "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
       "highlights": [
         "Private program: invitation-only, up to $1,500 per finding, 99% response efficiency",
         "Recon: 80+ subdomains, 20+ live endpoints, 100+ API operations mapped via JS harvest",
-        "7+ authenticated sessions: 50+ API endpoints enumerated across auth, referral, and investment surfaces",
-        "15+ attack hypotheses systematically tested — server-side access controls confirmed across all IDOR and privilege escalation vectors",
-        "Rate-limit window fully characterized — corrected prior estimate by 15x; cross-account IDOR queued pending second account"
+        "7 authenticated sessions: 20+ attack hypotheses across IDOR, mass assignment, OTP cross-flow, and privilege escalation surfaces",
+        "Financial resource objects created — object-level access control testing now enabled; cross-account IDOR queued pending second verified account",
+        "Rate-limit window fully characterized: 12+ hour OTP window; mass assignment silently denied on all financial object fields"
       ],
       "tags": ["Fintech", "Wealth Management", "API Security", "IDOR"]
     },

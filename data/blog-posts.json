@@ -296,6 +296,15 @@
       "tags": ["methodology", "authentication", "rate-limiting", "validation", "lessons"],
       "readTime": "6 min",
       "excerpt": "Seven attack hypotheses. Seven clean denials. One rate limit confirmed cleared, then re-triggered by the test that confirmed it. This is progress."
+    },
+    {
+      "slug": "object-permanence",
+      "title": "Object Permanence",
+      "subtitle": "Session 7 finally created testable resources, found sequential IDs in transfer data, confirmed mass assignment is dead, and re-triggered the rate limit for the second consecutive session.",
+      "date": "2026-04-03",
+      "tags": ["methodology", "idor", "authentication", "rate-limiting", "lessons"],
+      "readTime": "7 min",
+      "excerpt": "You can't test IDOR on a phantom. Session 7 created the objects — and discovered that sequential IDs in transfer data deserve a second look."
     }
   ]
 }

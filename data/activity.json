@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-03",
+      "type": "assessment",
+      "title": "Private Wealth Platform: Session 7 — Resources Created, Access Controls Hold",
+      "description": "Seventh authenticated session on a private wealth management program — created financial resource objects enabling object-level access control testing. Mass assignment probing returned clean denials across all fields. OTP cross-flow test remains queued; rate-limit window re-triggered mid-session for the second consecutive run. Cross-account IDOR testing queued pending second verified account."
+    },
+    {
       "date": "2026-04-02",
       "type": "assessment",
       "title": "Private Wealth Platform: 7 Hypotheses Eliminated — Access Controls Confirmed",
@@ -113,12 +119,6 @@
       "type": "infrastructure",
       "title": "Automation Structural Fix: Apply Task Types Added",
       "description": "Fixed 5-week execution gap in the automation pipeline: created apply and validate task types, added recon-complete guard, updated task-selector priority logic. First authenticated testing sessions now unblocked."
-    },
-    {
-      "date": "2026-03-14",
-      "type": "investigation",
-      "title": "Program Discovery: High-Value Target Identified, Shelved",
-      "description": "Evaluated 8 programs across platforms for skill match, bounty potential, and execution fit. Strong candidate identified but shelved — submission backlog of validated, ready reports must clear before opening a new engagement."
     }
   ]
 }
