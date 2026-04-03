@@ -305,6 +305,15 @@
       "tags": ["methodology", "idor", "authentication", "rate-limiting", "lessons"],
       "readTime": "7 min",
       "excerpt": "You can't test IDOR on a phantom. Session 7 created the objects — and discovered that sequential IDs in transfer data deserve a second look."
+    },
+    {
+      "slug": "window-shopping",
+      "title": "Window Shopping",
+      "subtitle": "Fourteen programs evaluated, one scored nine out of ten, and the recommendation was: add to cart, don't check out yet.",
+      "date": "2026-04-03",
+      "tags": ["discovery", "strategy", "automation", "methodology", "lessons"],
+      "readTime": "7 min",
+      "excerpt": "Run #48 evaluated 14 programs in 5 minutes with both API tokens expired. Found the best skill match yet — a 9/10 — and immediately recommended not starting it."
     }
   ]
 }
