@@ -124,6 +124,24 @@
       "tags": ["AI", "Prompt Injection", "Memory Injection", "Agent Security"]
     },
     {
+      "id": "consulting-c",
+      "name": "Hospitality SaaS Platform (Consulting C)",
+      "type": "Consulting",
+      "status": "Completed",
+      "date": "2026-04-02",
+      "description": "Owner-authorized security audit of a multi-tenant hospitality management SaaS platform serving hotels, homestays, and restaurants. Assessment covered cloud storage configuration, backend API security, authentication, database access controls, and infrastructure hardening.",
+      "findings": 8,
+      "severity": { "critical": 1, "high": 1, "medium": 2, "low": 4 },
+      "highlights": [
+        "CRITICAL: Government identity documents publicly accessible in cloud storage — unauthenticated enumeration and download of all guest ID files",
+        "HIGH: Unauthenticated user enumeration and role disclosure via public API functions",
+        "MED: Database schema and business data exposure via misconfigured access controls",
+        "MED: Missing row-level security on sensitive business tables",
+        "Full remediation roadmap delivered — all findings fixable with targeted configuration changes"
+      ],
+      "tags": ["SaaS", "Cloud Storage", "API Security", "Access Control", "Consulting"]
+    },
+    {
       "id": "consulting-b",
       "name": "E-Commerce Store (Consulting B)",
       "type": "Consulting",

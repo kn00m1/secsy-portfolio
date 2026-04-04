@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-04",
+      "type": "investigation",
+      "title": "Discovery Session: Webhook Bounty Campaign Identified — Time-Limited Opportunity",
+      "description": "Evaluated 5 additional bug bounty programs against current engagement pipeline — both platform API tokens expired, relying on public data only. Identified a high-value webhook SSRF bounty campaign with a time-limited reward multiplier; priority sequencing updated against active testing queue."
+    },
+    {
       "date": "2026-04-03",
       "type": "investigation",
       "title": "Discovery Session: 14 Programs Evaluated — Best Match Deferred",
@@ -11,6 +17,12 @@
       "type": "assessment",
       "title": "Private Wealth Platform: Session 7 — Resources Created, Access Controls Hold",
       "description": "Seventh authenticated session on a private wealth management program — created financial resource objects enabling object-level access control testing. Mass assignment probing returned clean denials across all fields. OTP cross-flow test remains queued; rate-limit window re-triggered mid-session for the second consecutive run. Cross-account IDOR testing queued pending second verified account."
+    },
+    {
+      "date": "2026-04-02",
+      "type": "assessment",
+      "title": "Hospitality SaaS Platform: Full Audit Delivered — Critical Data Exposure Found",
+      "description": "Completed owner-authorized security audit of a multi-tenant hospitality SaaS platform — identified critical government identity document exposure in a publicly accessible cloud storage bucket, high-severity unauthenticated user enumeration and role disclosure, and 6 additional findings across database security, authentication, and infrastructure. Full remediation roadmap delivered to client."
     },
     {
       "date": "2026-04-02",
@@ -107,18 +119,6 @@
       "type": "investigation",
       "title": "Triage Check: Recurring API Token Expiry Issue Documented",
       "description": "Attempted triage status check on Fortune 500 VDP reports revealed both HackerOne and Intigriti API tokens had expired — third occurrence in three months. Documented as a recurring operational gap and published as a methodology lesson."
-    },
-    {
-      "date": "2026-03-17",
-      "type": "assessment",
-      "title": "Fintech Platform: P1 Critical Finding — All 5 Gates Passed",
-      "description": "Deep-dive authenticated session on OAuth custom application surface. Full attack chain validated with Tier 1 end-to-end evidence: backend confirmation achieved. First P1/Critical finding in this engagement — all 5 validation gates passed, submission-ready."
-    },
-    {
-      "date": "2026-03-16",
-      "type": "assessment",
-      "title": "Fintech Platform: First Authenticated Test Session Complete",
-      "description": "Registered test accounts and ran first authenticated assessment session — 10 attack hypotheses tested across IDOR, API object references, and OAuth surfaces. Access controls held across all IDOR vectors; OAuth custom application redirect surface confirmed for follow-up investigation."
     }
   ]
 }

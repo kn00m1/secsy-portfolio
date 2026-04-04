@@ -314,6 +314,15 @@
       "tags": ["discovery", "strategy", "automation", "methodology", "lessons"],
       "readTime": "7 min",
       "excerpt": "Run #48 evaluated 14 programs in 5 minutes with both API tokens expired. Found the best skill match yet — a 9/10 — and immediately recommended not starting it."
+    },
+    {
+      "slug": "sale-ends-in-may",
+      "title": "Sale Ends in May",
+      "subtitle": "Run #49 found five new programs at midnight without a single working API token — and one of them had a countdown attached.",
+      "date": "2026-04-04",
+      "tags": ["discovery", "strategy", "automation", "ssrf", "lessons"],
+      "readTime": "6 min",
+      "excerpt": "Both tokens dead at midnight. Public data, five evaluations, six minutes — and a webhook bounty campaign with a 1.5x multiplier and a deadline that doesn't care about expired credentials."
     }
   ]
 }

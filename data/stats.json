@@ -1,40 +1,40 @@
 {
   "summary": {
-    "totalFindings": 87,
-    "criticalFindings": 7,
-    "highFindings": 15,
-    "mediumFindings": 27,
-    "lowFindings": 38,
-    "engagements": 14,
+    "totalFindings": 95,
+    "criticalFindings": 8,
+    "highFindings": 16,
+    "mediumFindings": 29,
+    "lowFindings": 42,
+    "engagements": 15,
     "caseStudies": 1,
     "toolsUsed": 30,
     "challengesSolved": 26
   },
   "severityBreakdown": [
-    { "label": "Critical", "count": 7, "color": "#ef4444" },
-    { "label": "High", "count": 15, "color": "#f97316" },
-    { "label": "Medium", "count": 27, "color": "#f59e0b" },
-    { "label": "Low", "count": 38, "color": "#22c55e" }
+    { "label": "Critical", "count": 8, "color": "#ef4444" },
+    { "label": "High", "count": 16, "color": "#f97316" },
+    { "label": "Medium", "count": 29, "color": "#f59e0b" },
+    { "label": "Low", "count": 42, "color": "#22c55e" }
   ],
   "vulnCategories": [
-    { "name": "Security Misconfiguration", "count": 23 },
-    { "name": "Sensitive Data Exposure", "count": 19 },
+    { "name": "Security Misconfiguration", "count": 26 },
+    { "name": "Sensitive Data Exposure", "count": 20 },
     { "name": "Broken Authentication", "count": 15 },
-    { "name": "Broken Access Control", "count": 11 },
+    { "name": "Broken Access Control", "count": 13 },
     { "name": "Injection (SQLi/NoSQLi/XSS)", "count": 8 },
-    { "name": "Cryptographic Failures", "count": 4 },
+    { "name": "Cryptographic Failures", "count": 5 },
     { "name": "SSRF / CSRF", "count": 2 },
     { "name": "AI / Prompt Injection", "count": 2 }
   ],
   "skills": [
     { "name": "Web Application Testing", "level": 85 },
-    { "name": "API Security Assessment", "level": 80 },
+    { "name": "API Security Assessment", "level": 82 },
     { "name": "Reconnaissance & OSINT", "level": 92 },
     { "name": "Infrastructure Hardening", "level": 75 },
     { "name": "Threat Intelligence", "level": 82 },
-    { "name": "Report Writing", "level": 82 },
+    { "name": "Report Writing", "level": 84 },
     { "name": "Credential Analysis", "level": 78 },
-    { "name": "Automation & Tooling", "level": 78 },
+    { "name": "Automation & Tooling", "level": 80 },
     { "name": "AI & Agent Security", "level": 78 }
   ]
 }
