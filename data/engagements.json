@@ -109,7 +109,7 @@
       "id": "program-g",
       "name": "AI Platform (Program G)",
       "type": "Bug Bounty",
-      "status": "Active",
+      "status": "Submitted",
       "date": "2026-03-26",
       "description": "Dual bug bounty program targeting a major AI platform's security and safety surfaces. Scope covers primary web app, REST API, and agentic product surfaces. Karpathy-style research loop deployed — 39 trial executions across multiple hypothesis batches. Two P3/Medium findings submitted: persistent memory injection via web browsing (Safety BB) and sandbox write boundary violation in CLI tool allowing persistent context poisoning (Security BB). Attribution and provenance-based injection vectors identified as the effective approach — these survive safety filters where explicit override commands fail. Browser-based exfil hypothesis closed after six iterate sessions: model named the injection attempt and discarded it; two distinct defenses confirmed.",
       "findings": 2,

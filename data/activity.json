@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-05",
+      "type": "investigation",
+      "title": "7-Week Strategic Review: Submission Velocity Is the Bottleneck",
+      "description": "51-run retrospective completed — finding quality confirmed excellent with all findings since mid-March meeting Tier 1 evidence standard. Critical bottleneck identified: 3 validated findings awaiting manual submission while active testing continues. Priority queue recalibrated around private program IDOR testing (second test account required) and two pending report write-ups."
+    },
+    {
       "date": "2026-04-04",
       "type": "investigation",
       "title": "Discovery Session: Webhook Bounty Campaign Identified — Time-Limited Opportunity",
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "Fintech Platform: P1 Evidence Strengthened — 13 Additional Hypotheses Tested",
       "description": "Third authenticated test session on fintech platform OAuth surface. 13 further attack hypotheses tested — redirect_uri bypass and header-based information leak confirmed as additional evidence vectors for the P1 critical finding. Zero new separate findings. Submission-ready evidence package complete."
-    },
-    {
-      "date": "2026-03-17",
-      "type": "investigation",
-      "title": "Triage Check: Recurring API Token Expiry Issue Documented",
-      "description": "Attempted triage status check on Fortune 500 VDP reports revealed both HackerOne and Intigriti API tokens had expired — third occurrence in three months. Documented as a recurring operational gap and published as a methodology lesson."
     }
   ]
 }
