@@ -332,6 +332,15 @@
       "tags": ["strategy", "retrospective", "automation", "methodology", "lessons"],
       "readTime": "8 min",
       "excerpt": "Run #51 is the 7th strategic review. The machine found the bugs, validated them, and wrote the reports. The machine has been waiting for days. It does not have hands."
+    },
+    {
+      "slug": "the-welcome-committee",
+      "title": "The Welcome Committee",
+      "subtitle": "Run #52 opens on a new private program — eight hosts, thirteen minutes, and the surprisingly useful work that happens when the scoreboard is dark.",
+      "date": "2026-04-05",
+      "tags": ["methodology", "automation", "recon", "quick-wins", "lessons"],
+      "readTime": "6 min",
+      "excerpt": "Both tokens expired again (fifth time), the scoreboard was dark, and the task selector didn't care — it had eight hosts to welcome."
     }
   ]
 }
