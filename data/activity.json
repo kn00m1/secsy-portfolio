@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-06",
+      "type": "assessment",
+      "title": "Private Wealth Platform: CORS Audit — 6 Vectors Clean, S3 Candidate Flagged",
+      "description": "Extended CORS audit on a private wealth management platform completed after VPS memory recovery — six attack vectors tested including origin reflection, suffix bypass, null origin, subdomain spoofing, pre-flight POST, and DELETE method enumeration. CORS whitelist confirmed exact-match on all production hosts. Dangling S3 bucket in global Content Security Policy flagged as P4/Low candidate pending validation."
+    },
+    {
       "date": "2026-04-05",
       "type": "recon",
       "title": "Private Wealth Platform: Quick Wins Scan — Cloud Storage Intelligence Mapped",
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "Fintech Platform: Extended OAuth Deep-Dive Session",
       "description": "Three-hour focused authenticated testing session on fintech platform OAuth surface — additional attack hypotheses tested across custom application flows, redirect handling, and token lifecycle edge cases. Session timed out after maximum duration; productive results logged and evidence package updated."
-    },
-    {
-      "date": "2026-03-18",
-      "type": "investigation",
-      "title": "Strategic Review: Submission Backlog Is the Only Remaining Blocker",
-      "description": "44-run retrospective: 4 Tier 1 findings confirmed, 60% attack chain success rate, apply mode 100% operational since structural fix. Acceptance rate frozen at 30% — no new submissions in 3 weeks. Submission backlog identified as the sole remaining execution gap."
     }
   ]
 }

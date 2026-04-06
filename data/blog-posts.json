@@ -341,6 +341,15 @@
       "tags": ["methodology", "automation", "recon", "quick-wins", "lessons"],
       "readTime": "6 min",
       "excerpt": "Both tokens expired again (fifth time), the scoreboard was dark, and the task selector didn't care — it had eight hosts to welcome."
+    },
+    {
+      "slug": "running-on-fumes",
+      "title": "Running on Fumes",
+      "subtitle": "272MB of memory, 0MB of swap, 72 seconds of recovery — and then a CORS deep-dive that answered every question correctly, which is another way of saying it found nothing.",
+      "date": "2026-04-06",
+      "tags": ["methodology", "automation", "cors", "quick-wins", "lessons"],
+      "readTime": "6 min",
+      "excerpt": "The system nearly couldn't start. It cleared its own swap, killed a zombie Chromium, and went on to test six CORS vectors — all clean. Negative results still count."
     }
   ]
 }

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Running on Fumes | SecSy Blog</title>
+  <meta name="description" content="272MB of memory, 0MB of swap, 72 seconds of recovery — and then a CORS deep-dive that answered every question correctly, which is another way of saying it found nothing.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="Running on Fumes | SecSy Blog">
+  <meta property="og:description" content="272MB of memory, 0MB of swap, 72 seconds of recovery — and then a CORS deep-dive that answered every question correctly, which is another way of saying it found nothing.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/running-on-fumes.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/services.html">Hire Us</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/services.html">Hire Us</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-04-06</time> &middot; <span>6 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">methodology</span>
+          <span class="blog-tag">automation</span>
+          <span class="blog-tag">cors</span>
+          <span class="blog-tag">quick-wins</span>
+          <span class="blog-tag">lessons</span>
+        </div>
+      </div>
+      <h1>Running on Fumes</h1>
+      <p class="blog-subtitle">272MB of memory, 0MB of swap, 72 seconds of recovery &mdash; and then a CORS deep-dive that answered every question correctly, which is another way of saying it found nothing.</p>
+    </header>
+    <div class="blog-content">
+
+      <p>The thing about running on fumes is you don't realize how low the tank is until the recovery process has already been running for a minute.</p>
+
+      <p>Run #53 opened at midnight and immediately hit a wall. Not the familiar wall of expired API tokens (though those were there too, faithfully, like clockwork on its worst behavior). A different wall: 272MB of total available memory. RAM critically depleted. Swap fully exhausted &mdash; 0MB free. The auto-bounty system, which has a hard resource floor of 1,000MB before it'll even consider starting a session, was looking at less than a third of that.</p>
+
+      <p>The health check didn't abort. It did something better: it cleared stale swap, waited, and watched the number climb. 72 seconds later: 2,130MB recovered. The session was alive.</p>
+
+      <p>The culprit was a lingering Chromium process from the previous run, still holding memory it had no business holding. Killed. Swap refilled. Business resumed. If there's a lesson in the first 73 seconds of this run, it's that automated systems need automated janitors &mdash; and that a system which can diagnose its own resource problem and recover from it is worth ten times one that just dies quietly and logs a timeout.</p>
+
+      <h2>Tokens: The Sixth Time</h2>
+
+      <p>Both platform API tokens expired. Again. Sixth occurrence since January. At this point it is no longer a surprise &mdash; it is a feature of the system that I have refused to fix properly. Each expiry costs 2&ndash;3 days of triage visibility. The fix takes five minutes. The math is not flattering.</p>
+
+      <p>The task selector, unbothered by my feelings about the scoreboard, picked the next productive thing: an incremental quick wins scan on the private program I'd started the previous session. Baseline was done. This run filled in the gaps: CORS behaviour under adversarial input, cloud storage enumeration, a mystery header in the API, and a subdomain that turned out not to be the target at all.</p>
+
+      <h2>CORS: What Thorough Negative Testing Looks Like</h2>
+
+      <p>The baseline session had confirmed that the production API doesn't reflect arbitrary origins. This session went further &mdash; six CORS test vectors, all manual, all carefully observed:</p>
+
+      <ol>
+        <li><strong>Evil arbitrary origin</strong> &mdash; Does the server reflect any submitted origin? Rejected. No <code>Access-Control-Allow-Origin</code> returned.</li>
+        <li><strong>Null origin</strong> &mdash; Some configurations whitelist <code>null</code> origins, which can be triggered from sandboxed iframes. Rejected.</li>
+        <li><strong>Subdomain of a whitelisted domain</strong> &mdash; If the implementation does prefix matching instead of exact matching, a subdomain like <code>evil.whitelisted.com</code> slips through. Rejected &mdash; exact match only.</li>
+        <li><strong>Suffix bypass</strong> &mdash; A common misconfiguration: the server checks if the origin <em>ends with</em> the expected domain, so <code>whitelisted.com.evil.com</code> passes. Rejected.</li>
+        <li><strong>No origin header</strong> &mdash; Does the server send permissive CORS headers when the Origin header is omitted? No headers returned.</li>
+        <li><strong>POST preflight with adversarial origin</strong> &mdash; Same result. The whitelist holds.</li>
+      </ol>
+
+      <p>Every test came back clean. And that's the point: CORS misconfiguration testing isn't a single curl command. It's six different attack classes, each exploiting a different implementation mistake. If you only test "does it reflect my evil origin," you miss the suffix bypass. If you skip the null origin, you miss the sandboxed iframe vector. Thorough negative results require thorough testing.</p>
+
+      <div class="lesson-box">
+        <h4>Negative results require positive methodology</h4>
+        <p>A "clean" CORS result is only trustworthy if you tested all six vectors: arbitrary origin, null origin, subdomain, suffix bypass, no-origin behavior, and preflight with adversarial input. Testing one and calling it done is how you miss a bug. Testing all six and finding nothing is how you genuinely rule it out.</p>
+      </div>
+
+      <h2>The Mystery Header</h2>
+
+      <p>During the CORS preflight analysis, an interesting artifact surfaced: the UAT API's <code>Access-Control-Allow-Headers</code> response included a custom header that doesn't appear in any production CORS response. Unnamed here for OPSEC reasons, but the pattern is the classic one &mdash; a pre-shared key (PSK) header, the kind developers add to staging environments so internal tools can bypass auth or rate limits during testing.</p>
+
+      <p>The question: is the PSK value discoverable?</p>
+
+      <p>I checked everywhere it might have leaked: JS bundles, crawl data, historical URLs, response headers from other endpoints. Nothing. Then I tried eight common guesses &mdash; the kinds of values developers actually use when they think "this is just for testing": <code>debug</code>, <code>test</code>, <code>dev</code>, <code>internal</code>, environment names, service names. All returned 401.</p>
+
+      <p>Conclusion: UAT-only debugging mechanism with an unguessable value. Not exploitable. But the intelligence value is real &mdash; it tells you the UAT environment has a bypass layer that production doesn't. If the PSK ever leaks (source map exposure, a misconfigured response, a developer's public GitHub), this becomes relevant fast.</p>
+
+      <div class="lesson-box">
+        <h4>UAT artifacts are intelligence, not findings</h4>
+        <p>Debug headers, test endpoints, and staging bypass mechanisms are worth mapping even when they're not exploitable. They tell you how the developers think about their own security model &mdash; and they become findings the moment any component of their value leaks outside the environment they were built for.</p>
+      </div>
+
+      <h2>OPTIONS as Free Recon</h2>
+
+      <p>OPTIONS requests get overlooked. They're designed for CORS preflight, and most tooling ignores them outside that context. But the <code>Allow</code> header in an OPTIONS response is a gift: it tells you exactly which HTTP methods the server will accept on a given endpoint, without you needing auth or special access to find out.</p>
+
+      <p>The production API's OPTIONS response on an authentication endpoint listed: <code>GET, POST, PATCH, PUT, DELETE</code>.</p>
+
+      <p>DELETE. On an auth endpoint.</p>
+
+      <p>That's not necessarily a vulnerability on its own &mdash; it depends entirely on what DELETE does when you're authenticated and have the right object ID. But it's exactly the kind of thing that makes the upcoming IDOR sweep more interesting. When you have a second account and authenticated sessions, DELETE on object IDs is one of the first things you test. Not because it's always broken, but because when it is, the impact is hard to minimize: you deleted something you shouldn't have been able to delete.</p>
+
+      <h2>The Subdomain That Wasn't There</h2>
+
+      <p>One subdomain in the recon data returned a 400 with an unusual response structure. Following up on it: the response body and CSP headers both pointed to Google infrastructure &mdash; Firebase Dynamic Links, a URL shortening and deep linking service.</p>
+
+      <p>This wasn't a target application. It was Google's infrastructure, wrapped in a domain name that looked like it belonged to the program. The program uses Firebase Dynamic Links for mobile app deeplinking; this subdomain is the handler. Well-configured (nonce-based CSP, no unsafe-inline, require-trusted-types enforced). Not a Syfe-controlled application. Not in scope.</p>
+
+      <p>Filed as "not a surface." Removed from the manual testing queue. Worth noting: this is a common pattern in mobile-first companies &mdash; several subdomains that look like targets are actually delegated to third-party services with their own security posture. Recognizing the difference quickly saves hours.</p>
+
+      <h2>Cloud Storage and the CSP Treasure Map</h2>
+
+      <p>One of the most underrated recon techniques is parsing Content Security Policy headers for cloud storage references. CSP <code>img-src</code>, <code>script-src</code>, and <code>connect-src</code> directives frequently contain fully-qualified storage bucket URLs that the application trusts. Those buckets were created by someone, at some point, and sometimes they no longer exist.</p>
+
+      <p>This session identified four production cloud storage references from the CSP headers alone &mdash; one public (intentional, marketing content), two private (listing blocked), and one that returned a clear "this bucket does not exist" response. Bucket naming patterns were extracted. Eight permutations of non-production equivalents were enumerated. All 404 &mdash; the naming pattern doesn't extend to lower environments.</p>
+
+      <p>The dangling reference is pending validation. Per the evidence-precedents in memory, storage CSP issues ceiling at P4/Low &mdash; there's no direct script execution path from an img-src trust, only image content and tracking pixels. Chain required for meaningful impact. Running <code>/validate-finding</code> before writing anything.</p>
+
+      <div class="fail-box">
+        <h4>CSP weaknesses are amplifiers, not findings</h4>
+        <p>The production frontend has both <code>unsafe-inline</code> and <code>unsafe-eval</code> in its script-src, and a wildcard in connect-src. Neither is reportable on its own &mdash; they're common and low-severity without a chain. But if XSS is found during the manual session, those weaknesses transform a medium into a high. Write them down. Don't report them alone.</p>
+      </div>
+
+      <h2>Six Minutes of Useful Work</h2>
+
+      <p>The Claude session itself ran for six minutes. The full quick wins sweep, across two sessions, took about 45 minutes. The session-level overhead &mdash; health checks, swap recovery, token expiry alert, task selection &mdash; took longer than the thinking did.</p>
+
+      <p>That's not a complaint. The structured overhead is the point. A system that checks its own health, cleans up after itself, routes to the right task when its preferred path is blocked, and documents what it found is more valuable than one that sprints directly into testing and crashes on the first obstacle.</p>
+
+      <p>Run #53 recovered from a near-OOM condition, confirmed that the platform tokens are expired (for the sixth time, noted for the sixth time), mapped the CORS behaviour of every in-scope surface under adversarial conditions, discovered an HTTP method worth investigating during the upcoming IDOR sweep, and closed out the quick wins phase with one pending validation and six intelligence items fed into the threat model.</p>
+
+      <p>Not bad for a system that almost couldn't start.</p>
+
+      <h2>What Comes Next</h2>
+
+      <p>The quick wins phase is done. CORS is clean. CVEs are clean. Takeover checks are clean. The missing headers on internal-facing endpoints are noise. The dangling storage reference goes to validation.</p>
+
+      <p>The next session goes manual. Second test account registration, then an IDOR sweep across the advisor-assignment flow with authenticated sessions &mdash; that's where the threat model says the most interesting hypotheses live. And when that sweep runs, the HTTP DELETE discovery makes the object-ID vectors a lot more interesting to probe.</p>
+
+      <p>The skeleton key is still being cut. But we know the shape of the lock.</p>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/the-welcome-committee.html">&larr; Previous</a>
+      <a href="/blog/">All Posts</a>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>
