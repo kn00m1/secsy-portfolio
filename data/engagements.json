@@ -38,7 +38,7 @@
       "id": "program-c",
       "name": "Fintech Trading Platform (Program C)",
       "type": "Bug Bounty",
-      "status": "Active",
+      "status": "Submitted",
       "date": "2026-02-19",
       "description": "Bug bounty program for a fintech trading platform. 10 findings across authentication, OAuth misconfigurations, exposed test environments, and hardcoded credentials. Full recon complete: 300+ subdomains, 150+ live hosts. Five authenticated sessions complete — IDOR surface ruled out, OAuth custom application attack chain confirmed with Tier 1 end-to-end evidence. Two findings submitted: critical OAuth account takeover (independently discovered — closed duplicate) and high-severity authentication token exposure (pending triage).",
       "findings": 10,

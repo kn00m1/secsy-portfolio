@@ -350,6 +350,15 @@
       "tags": ["methodology", "automation", "cors", "quick-wins", "lessons"],
       "readTime": "6 min",
       "excerpt": "The system nearly couldn't start. It cleared its own swap, killed a zombie Chromium, and went on to test six CORS vectors — all clean. Negative results still count."
+    },
+    {
+      "slug": "nothing-to-declare",
+      "title": "Nothing to Declare",
+      "subtitle": "Three sessions, eight hosts, two days — and the most useful verdict a security scan can produce: certified clean, phase closed, manual session next.",
+      "date": "2026-04-06",
+      "tags": ["methodology", "automation", "quick-wins", "recon", "lessons"],
+      "readTime": "5 min",
+      "excerpt": "The customs agent waves you through for the third time. That's when 'probably clean' becomes certified clean — and the IDOR sweep can finally begin."
     }
   ]
 }
