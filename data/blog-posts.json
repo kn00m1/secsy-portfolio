@@ -368,6 +368,15 @@
       "tags": ["methodology", "automation", "quick-wins", "lessons", "false-positives"],
       "readTime": "5 min",
       "excerpt": "Four sessions of path probing. Every path returned 200. One problem: Cloudflare was answering every single one with a JavaScript challenge, not the application."
+    },
+    {
+      "slug": "four-of-a-kind",
+      "title": "Four of a Kind",
+      "subtitle": "Run #56 ran a freshness check on a phase already certified complete. The storage bucket is still unclaimed. The swap wasn't there at all.",
+      "date": "2026-04-08",
+      "tags": ["methodology", "automation", "quick-wins", "reconnaissance", "lessons"],
+      "readTime": "6 min",
+      "excerpt": "Five quick-wins passes over one private program. The fifth one existed purely to confirm the fourth was still right — and found something the others had glossed over: the server's header autobiography."
     }
   ]
 }
