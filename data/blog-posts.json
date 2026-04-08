@@ -359,6 +359,15 @@
       "tags": ["methodology", "automation", "quick-wins", "recon", "lessons"],
       "readTime": "5 min",
       "excerpt": "The customs agent waves you through for the third time. That's when 'probably clean' becomes certified clean — and the IDOR sweep can finally begin."
+    },
+    {
+      "slug": "two-hundred-no-entry",
+      "title": "Two Hundred, No Entry",
+      "subtitle": "Cloudflare hands every curl request a 200 and a JavaScript puzzle. Run #55 found out the hard way that a clean status code is not the same as clean results.",
+      "date": "2026-04-08",
+      "tags": ["methodology", "automation", "quick-wins", "lessons", "false-positives"],
+      "readTime": "5 min",
+      "excerpt": "Four sessions of path probing. Every path returned 200. One problem: Cloudflare was answering every single one with a JavaScript challenge, not the application."
     }
   ]
 }
