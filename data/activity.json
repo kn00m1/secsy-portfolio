@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-08",
+      "type": "assessment",
+      "title": "Private Wealth Platform: Content Discovery — CDN False Positives Mapped",
+      "description": "Content discovery phase of quick wins audit completed — CDN JavaScript challenges returning HTTP 200 without application content caused systematic false positives across all path probes. CDN interception pattern documented; methodology updated to filter challenge responses from enumeration output. Surface characterization confirmed complete; manual proxy session queued as next phase."
+    },
+    {
       "date": "2026-04-06",
       "type": "assessment",
       "title": "Private Wealth Platform: CORS Audit — 6 Vectors Clean, S3 Candidate Flagged",
@@ -113,12 +119,6 @@
       "type": "recon",
       "title": "AI Platform: New Engagement Initialized — Research Loop Deployed",
       "description": "Initialized new engagement targeting a major AI platform's security and safety bug bounty programs. Scope mapped across primary web app, API, and agentic product surfaces. Karpathy-style automated research loop deployed — systematic hypothesis generation, trial execution, and iteration framework ready for first testing cycle."
-    },
-    {
-      "date": "2026-03-26",
-      "type": "assessment",
-      "title": "Fintech Platform: Extended OAuth Deep-Dive Session",
-      "description": "Three-hour focused authenticated testing session on fintech platform OAuth surface — additional attack hypotheses tested across custom application flows, redirect handling, and token lifecycle edge cases. Session timed out after maximum duration; productive results logged and evidence package updated."
     }
   ]
 }
