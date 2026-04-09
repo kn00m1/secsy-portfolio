@@ -386,6 +386,15 @@
       "tags": ["methodology", "automation", "quick-wins", "reconnaissance", "headers", "lessons"],
       "readTime": "6 min",
       "excerpt": "Run #57 chased an undocumented custom header across three auth endpoints and got back nothing. The nothing was worth documenting — and produced a service method diff that changed what the next session can test."
+    },
+    {
+      "slug": "twenty-200s-and-a-truth",
+      "title": "Twenty 200s and a Truth",
+      "subtitle": "Run #58 probed twenty admin paths on a private program, got 200 OK on every single one — and then checked what 200 actually meant.",
+      "date": "2026-04-09",
+      "tags": ["methodology", "automation", "quick-wins", "false-positives", "reconnaissance", "lessons"],
+      "readTime": "6 min",
+      "excerpt": "Twenty paths. Twenty 200s. One real endpoint hiding in the noise — identifiable only by its Content-Type header. HTTP status codes are opinions. Response bodies are facts."
     }
   ]
 }
