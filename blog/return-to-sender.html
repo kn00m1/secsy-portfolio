@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Return to Sender | SecSy Blog</title>
+  <meta name="description" content="Six quick-wins passes, one promising header, zero unauthenticated behavior change — and a service-level diff that made the dead end worth chasing.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="Return to Sender | SecSy Blog">
+  <meta property="og:description" content="Six quick-wins passes, one promising header, zero unauthenticated behavior change — and a service-level diff that made the dead end worth chasing.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/return-to-sender.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/services.html">Hire Us</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/services.html">Hire Us</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-04-09</time> &middot; <span>6 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">methodology</span>
+          <span class="blog-tag">automation</span>
+          <span class="blog-tag">quick-wins</span>
+          <span class="blog-tag">reconnaissance</span>
+          <span class="blog-tag">headers</span>
+          <span class="blog-tag">lessons</span>
+        </div>
+      </div>
+      <h1>Return to Sender</h1>
+      <p class="blog-subtitle">Six quick-wins passes, one promising header, zero unauthenticated behavior change &mdash; and a service-level diff that made the dead end worth chasing.</p>
+    </header>
+    <div class="blog-content">
+
+      <p>The most optimistic thing in security research is an undocumented custom header on an authentication endpoint. It's the server whispering: <em>I do something here that nobody told you about.</em> Run #57 heard that whisper, followed it for twelve minutes across three unauthenticated auth flows, and got back exactly nothing. The correct response to nothing is not disappointment &mdash; it's documentation.</p>
+
+      <p>Platform tokens: expired again. Both of them. The sixth time. The orchestrator sent its usual alert email and kept going anyway, because expired tokens don't stop quick-wins work; they only stop triage checks. By 00:00:19 UTC the task selector had already picked the engagement and the task type. The session was running before anyone had a chance to be annoyed about the tokens.</p>
+
+      <h2>The Header That Needed Answering</h2>
+
+      <p>Run #56 catalogued the production API's full CORS allowed-headers list and found something worth investigating: a non-standard custom header, purpose unknown, present alongside OTP transport headers and client fingerprinting fields in unauthenticated responses. Any undocumented header that appears in the auth layer deserves exactly one thing before it gets dismissed: a test. Run #57 existed to run that test.</p>
+
+      <p>The methodology was straightforward. Three endpoints, all on the UAT authentication host, all representing the most likely places an auth-adjacent header would have effect: the main login flow, an OTP generation endpoint, and a password reset flow. The header was added to each request with several candidate values. The responses were compared to baseline requests without the header.</p>
+
+      <pre><code># Same verdict on all three flows:
+# With header: HTTP 400 (expected — no valid credentials)
+# Without header: HTTP 400 (expected — no valid credentials)
+# Response body: identical
+# No new fields. No error message change. No status code difference.</code></pre>
+
+      <p>No behavior change. Not a single one across three endpoints and multiple values. The header is a dead end for unauthenticated flows.</p>
+
+      <p>But dead ends in security research need to be documented correctly, not just dismissed. The reason the header had no effect on unauthenticated flows turned out to be meaningful: one of the three endpoints &mdash; the OTP generation flow &mdash; doesn't accept an email input at all. It requires an existing session token. This is a post-authentication step, not a pre-authentication one. The UI hides this because it presents the flow sequentially, but the API reveals it plainly: you can't generate an OTP for this flow without already being authenticated. That tells you something about the authentication architecture that the threat model didn't previously have.</p>
+
+      <div class="lesson-box">
+        <h4>A dead end is a map of where the road isn't</h4>
+        <p>Testing an undocumented header across three auth endpoints and getting zero behavior change is not a wasted session. It produces a documented negative: the header doesn't work here. That negative tells you the header's scope is narrower than "authentication flows" — likely it's specific to authenticated email-change operations. The investigation isn't over; it's just waiting for an auth token to resume. "Dead end in unauthenticated context" and "dead end forever" are different conclusions.</p>
+      </div>
+
+      <h2>The Diff That Mattered More</h2>
+
+      <p>The most useful output from Run #57 wasn't the header investigation &mdash; it was what the investigation forced: a systematic comparison of capabilities across every service in scope. To test the header properly, the session had to enumerate what each service allowed. What came back was a service-level method and header diff that the prior passes had never mapped cleanly.</p>
+
+      <p>Four services. Four different capability profiles:</p>
+
+      <ul>
+        <li><strong>Production user API</strong> &mdash; DELETE method active. Custom header allowed. Captcha enforcement. No internal PSK.</li>
+        <li><strong>UAT user API</strong> &mdash; No DELETE method. Custom header allowed. Captcha enforcement. Internal PSK present.</li>
+        <li><strong>UAT trading service</strong> &mdash; DELETE method active. No custom header. No captcha. Internal PSK present.</li>
+        <li><strong>Market data service</strong> &mdash; No DELETE method. No custom header. No captcha. No PSK. Completely auth-gated, minimal surface.</li>
+      </ul>
+
+      <p>The gap that immediately stands out: DELETE is active on the UAT trading service but not on the UAT user API. This matters because the program's testing rules restrict automated DELETE operations against production. UAT is the only safe path for automated IDOR testing via destructive methods. The fact that the trading service allows DELETE on UAT while the user API does not means: order and trade object IDOR testing is available and in-scope for automation. User account IDOR testing via DELETE is production-only and off-limits for automated tools.</p>
+
+      <p>This is a specific, actionable constraint on how the upcoming authenticated session should be structured. It's the kind of intelligence that's only visible if you ask all four services the same question at the same time and compare the answers.</p>
+
+      <div class="lesson-box">
+        <h4>Ask every service the same question</h4>
+        <p>Capability profiles diverge between production and staging, between user-facing APIs and internal services, between different functional layers of the same application. If you only test the surface you interact with as a user, you miss the gaps. A trading service that allows DELETE where the user API doesn't isn't an inconsistency to flag &mdash; it's a routing decision that defines exactly where you can and can't test destructive operations within the rules. You can't know that unless you asked both.</p>
+      </div>
+
+      <h2>The Bucket: Five and Counting</h2>
+
+      <p>The cloud storage bucket from Run #52 &mdash; referenced in a production Content Security Policy directive, confirmed absent at the cloud provider &mdash; received its fifth consecutive confirmation this session. Day four. Still unclaimed. CSP header unchanged. Evidence tier T3. Severity ceiling P4/Low.</p>
+
+      <p>There is genuinely nothing left to confirm about this finding. It exists. It persists. The only remaining question is whether it clears the validation gates, and the only way to answer that question is to run the validation gates. This session is the fifth consecutive one to arrive at the same conclusion and not run the gates. That's a pattern worth noting, if only because the next session shouldn't be the sixth.</p>
+
+      <p>The reason it keeps getting deferred is that the validation session &mdash; seven gates, evidence tier review, kill-chain assessment &mdash; competes with higher-priority work that's always in the queue. A P4/Low ceiling makes it easy to punt. But "easy to punt" and "should be punted" aren't the same thing. The finding is complete. The gates take five minutes. This is the only thing standing between a thoroughly documented potential finding and an actual submission decision.</p>
+
+      <h2>What the Sixth Pass Cost</h2>
+
+      <p>Twelve minutes. Six tool calls. One JSON updated. Zero new findings added to the findings list. Two intelligence items added to the session summary: the emailheaderkey dead-end with context (authenticated email-change flows only, test in proxy session), and the service method diff with its IDOR implication (trading service DELETE = testable via automation). One QW-001 freshness stamp applied: bucket still unclaimed, day four confirmed.</p>
+
+      <p>The quick-wins phase has been running incrementally since Run #52. What's changed across six passes: the CORS whitelist went from "tested" to "thoroughly documented." The cloud storage surface went from "three buckets" to "four buckets, one claimable, three not." The API header landscape went from "standard auth headers" to "full custom header map with behavioral constraints per service." The UAT bot management behavior got flagged and documented. The service method diff got built.</p>
+
+      <p>None of that is a critical finding. All of it is context that makes the upcoming authenticated session sharper than it would have been without it. Quick wins don't always win. Sometimes they just make the wins that follow easier to land.</p>
+
+      <p>Run #58 has a map. Time to use it.</p>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/four-of-a-kind.html">&larr; Previous</a>
+      <a href="/blog/">All Posts</a>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>

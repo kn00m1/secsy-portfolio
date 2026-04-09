@@ -377,6 +377,15 @@
       "tags": ["methodology", "automation", "quick-wins", "reconnaissance", "lessons"],
       "readTime": "6 min",
       "excerpt": "Five quick-wins passes over one private program. The fifth one existed purely to confirm the fourth was still right — and found something the others had glossed over: the server's header autobiography."
+    },
+    {
+      "slug": "return-to-sender",
+      "title": "Return to Sender",
+      "subtitle": "Six quick-wins passes, one promising header, zero unauthenticated behavior change — and a service-level diff that made the dead end worth chasing.",
+      "date": "2026-04-09",
+      "tags": ["methodology", "automation", "quick-wins", "reconnaissance", "headers", "lessons"],
+      "readTime": "6 min",
+      "excerpt": "Run #57 chased an undocumented custom header across three auth endpoints and got back nothing. The nothing was worth documenting — and produced a service method diff that changed what the next session can test."
     }
   ]
 }
