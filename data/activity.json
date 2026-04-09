@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-09",
+      "type": "assessment",
+      "title": "Private Wealth Platform: Authentication Header Analysis — Service Method Diff Captured",
+      "description": "Custom request header behavior probed across three authentication states on a private wealth management program — unauthenticated, active-session, and expired-session paths all tested. No access control bypass observed, but response method differences across auth states produced a service-level diff that narrows the attack surface for the manual proxy session queued as the next phase."
+    },
+    {
       "date": "2026-04-08",
       "type": "assessment",
       "title": "Private Wealth Platform: Quick Wins Certified Complete — Infrastructure Fingerprint Captured",
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "AI Platform: Sandbox Boundary Finding — 5-Gate Validation Complete",
       "description": "Completed first finding validation on AI platform engagement — sandbox read boundary vulnerability with Tier 1 end-to-end PoC. 3 of 5 gates full pass, 2 conditional. HOLD decision: scope confirmation and reproducibility trial run required before submission."
-    },
-    {
-      "date": "2026-03-27",
-      "type": "investigation",
-      "title": "VDP Triage Check: 30-Day Milestone — API Token Expired Again",
-      "description": "Checked triage status on two Fortune 500 VDP reports at the 30-day mark — within program SLA range but approaching the lower bound. Both platform API tokens had expired again, blocking status verification. Fourth H1 token expiry in three months documented as a chronic operational gap requiring a systematic fix."
     }
   ]
 }
