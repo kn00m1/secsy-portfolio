@@ -3,6 +3,12 @@
     {
       "date": "2026-04-09",
       "type": "assessment",
+      "title": "Private Wealth Platform: Admin Path Sweep — CDN False Positives Mapped, Real Endpoint Isolated",
+      "description": "Twenty administrative paths probed on a private wealth management platform — 19 returned identical HTTP 200 Cloudflare JavaScript challenges indistinguishable by status code alone. One real application endpoint isolated by Content-Type header differential; access controls confirmed active. Six quick-wins passes complete; CDN response pattern documented as false-positive filter for future path enumeration sessions."
+    },
+    {
+      "date": "2026-04-09",
+      "type": "assessment",
       "title": "Private Wealth Platform: Authentication Header Analysis — Service Method Diff Captured",
       "description": "Custom request header behavior probed across three authentication states on a private wealth management program — unauthenticated, active-session, and expired-session paths all tested. No access control bypass observed, but response method differences across auth states produced a service-level diff that narrows the attack surface for the manual proxy session queued as the next phase."
     },
@@ -113,12 +119,6 @@
       "type": "infrastructure",
       "title": "AI Platform: Prompt Injection Framework Built — Trial Execution Blocked",
       "description": "Iterate session expanded AI platform attack coverage to 8 distinct prompt injection vectors targeting browser and agentic product surfaces. Research loop infrastructure built and validated; trial execution blocked by missing platform API key in environment config — framework ready for first live cycle once resolved."
-    },
-    {
-      "date": "2026-03-27",
-      "type": "assessment",
-      "title": "AI Platform: Sandbox Boundary Finding — 5-Gate Validation Complete",
-      "description": "Completed first finding validation on AI platform engagement — sandbox read boundary vulnerability with Tier 1 end-to-end PoC. 3 of 5 gates full pass, 2 conditional. HOLD decision: scope confirmation and reproducibility trial run required before submission."
     }
   ]
 }

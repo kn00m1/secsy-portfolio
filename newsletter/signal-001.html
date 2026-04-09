@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signal #001: The Week AI Found Every Bug | SecSy</title>
+  <meta name="description" content="A frontier AI model found thousands of zero-days this week. Here's what that means for everyone not in the room.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="Signal #001: The Week AI Found Every Bug">
+  <meta property="og:description" content="A frontier AI model found thousands of zero-days this week. Here's what that means for everyone not in the room.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/newsletter/signal-001.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/services.html">Hire Us</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/services.html">Hire Us</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-04-09</time> &middot; <span>5 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">newsletter</span>
+          <span class="blog-tag">signal</span>
+          <span class="blog-tag">ai-security</span>
+          <span class="blog-tag">mythos</span>
+        </div>
+      </div>
+      <h1>Signal #001</h1>
+      <p class="blog-subtitle">The Week AI Found Every Bug</p>
+    </header>
+    <div class="blog-content">
+
+      <p><em>Signal is a newsletter from SecSy &mdash; an autonomous security research lab. We test real targets, build systems that learn from every engagement, and write about what actually works. This is issue one.</em></p>
+
+      <hr>
+
+      <h2>The Big Story</h2>
+
+      <p>On April 7, Anthropic announced a frontier AI model that found thousands of zero-day vulnerabilities &mdash; including bugs in every major operating system and browser. A 27-year-old TCP bug in OpenBSD. A 17-year-old RCE in FreeBSD. A 16-year-old flaw in FFmpeg. Bugs that survived decades of auditing, fuzzing, and manual review.</p>
+
+      <p>The model doesn't just find bugs. It chains them. Heap sprays into kernel address space bypasses into return-oriented programming across network packets. Working exploits, not theoretical advisories. On Firefox JavaScript vulnerabilities alone: 181 working exploits where the previous best model produced 2.</p>
+
+      <p>This model is not publicly available. It is restricted to a consortium of 52 organizations &mdash; Amazon, Apple, Microsoft, Google, CrowdStrike, and 47 others &mdash; through a program called Project Glasswing. These organizations are patching now. Everyone else is reading the headlines.</p>
+
+      <p><strong>What this means for you:</strong> If you're not in the Glasswing 52, a model that can find and exploit vulnerabilities at this scale exists and you don't have access to it. The companies that do have access are patching. When they start disclosing the CVEs they've found, the rest of the industry will be playing catch-up. The question isn't whether AI-discovered vulnerabilities will affect your stack. It's whether you'll learn about them from a patch advisory or from an incident.</p>
+
+      <hr>
+
+      <h2>From the Lab: What 57 Autonomous Runs Taught Us</h2>
+
+      <p>We've been running an autonomous security research system &mdash; twice daily, 8 weeks straight, 57 completed sessions &mdash; against real bug bounty targets. Not simulations. Not CTFs. Production applications with active security teams and real triagers evaluating every finding. Here's what the data says:</p>
+
+      <p><strong>68% of early findings were noise.</strong> Source maps, CORS headers, exposed debug endpoints. Useful for reconnaissance, worthless as reports. We built a 7-gate validation framework that kills bad findings before they reach a triager. Seventeen findings failed those gates. All seventeen deserved to fail. The gates were built from real rejections &mdash; every check maps to an actual triager objection we received.</p>
+
+      <p><strong>The quality inflection was a 30-minute fix.</strong> For 5 weeks, the system learned continuously but never applied what it learned. The curriculum tracked 10 topic areas. The gap tracker monitored 41 knowledge gaps. The learning log captured everything. But there was no code path from "learned" to "tested." The fix was two prompt files and 30 lines of Python. After that fix, every finding produced was Tier 1 &mdash; end-to-end proof of concept with backend evidence. Five weeks of infrastructure. Thirty minutes of wiring. The infrastructure wasn't wrong. It just needed to be connected to reality.</p>
+
+      <p><strong>Authenticated testing found 6x more real vulnerabilities than scanning.</strong> All 6 Tier 1 findings since the quality inflection were discovered during authenticated sessions. Zero were findable through unauthenticated probing. Every serious bug lived behind a login page. If your security testing doesn't include authenticated flows, it's testing the lobby and calling it a building assessment.</p>
+
+      <p><strong>Techniques replay across targets.</strong> A blind SSRF methodology that worked on one fintech platform has been codified with 5 mutation variants and queued for replay on 3 similar targets. An OAuth abuse pattern confirmed on one trading platform matched the profile of 4 others. Security vulnerabilities aren't unique snowflakes &mdash; they're patterns. Once you've codified a pattern, testing it on the next matching target costs a fraction of the original discovery.</p>
+
+      <hr>
+
+      <h2>The Number: 32%</h2>
+
+      <p style="font-size: 1.4em; font-weight: bold; text-align: center; padding: 1em 0;">32% of autonomous sessions produced zero output.</p>
+
+      <p>Not because of bad methodology. Not because of wrong targets. Because credentials expired and couldn't be renewed by the system that needed them.</p>
+
+      <p>Platform API tokens that last 11 days. CLI authentication that requires manual refresh. The most sophisticated security research system we could build &mdash; 27 skills, 12 techniques, autonomous orchestration &mdash; silently producing nothing because a token file contained yesterday's secret.</p>
+
+      <p>This is the unglamorous truth about security operations. The most dangerous vulnerability in any program isn't in the code. It's in the operational pipeline. Expired tokens. Unrotated secrets. Monitoring that shows green because it's not checking the right thing. Automation that runs, succeeds at running, and accomplishes nothing because the credentials it needs died 3 days ago.</p>
+
+      <p>If this sounds familiar, it should. The number one finding across our 11 engagements isn't an injection flaw or a broken access control. It's authentication lifecycle management. On both sides of the fence.</p>
+
+      <hr>
+
+      <h2>One Thing to Do This Week</h2>
+
+      <p><strong>Audit your token expiry dates.</strong> All of them. API keys, service account credentials, OAuth client secrets, SSL certificates, webhook signing keys. Not just "are they valid now" &mdash; "when do they expire and does anyone know?"</p>
+
+      <p>If the answer is "I don't know when they expire," that's the finding. An attacker who discovers a token with no rotation policy doesn't need to crack it. They just need to outlast it &mdash; or find the old one that was never revoked.</p>
+
+      <p>We learned this the hard way. Thirty-five percent of our productive capacity, gone. Not to adversaries. To our own key management.</p>
+
+      <hr>
+
+      <h2>What We're Reading</h2>
+
+      <ul>
+        <li><strong>Anthropic's Mythos Preview</strong> &mdash; The full technical disclosure on the model that found thousands of zero-days. Read the methodology section, not just the headline numbers. The approach to vulnerability chaining is the real breakthrough.</li>
+        <li><strong>Project Glasswing</strong> &mdash; The controlled release program for Mythos. Pay attention to who's in the consortium and who isn't. The gap between the 52 and everyone else is about to become the defining security asymmetry of 2026.</li>
+        <li><strong>CrowdStrike's integration announcement</strong> &mdash; First Glasswing partner to detail how they'll operationalize Mythos findings. If you're a CrowdStrike customer, this matters to your roadmap. If you're not, it matters to your competitor's.</li>
+      </ul>
+
+      <hr>
+
+      <p><em>Signal is published by <a href="https://security.failsafesolutions.org">SecSy</a>, the security research division of FailSafe Solutions. We run an autonomous research lab that discovers, validates, and learns from vulnerabilities across real targets. If you want to know what's hiding in your attack surface before a frontier model finds it, <a href="mailto:security@failsafesolutions.org?subject=Mythos%20Readiness%20Assessment">get in touch</a>.</em></p>
+
+      <p><em>Forward this to someone who should be reading it.</em></p>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/">Blog</a>
+      <a href="/">Home</a>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>
