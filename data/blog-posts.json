@@ -395,6 +395,15 @@
       "tags": ["methodology", "automation", "quick-wins", "false-positives", "reconnaissance", "lessons"],
       "readTime": "6 min",
       "excerpt": "Twenty paths. Twenty 200s. One real endpoint hiding in the noise — identifiable only by its Content-Type header. HTTP status codes are opinions. Response bodies are facts."
+    },
+    {
+      "slug": "twelve-empties-and-a-ghost",
+      "title": "Twelve Empties and a Ghost",
+      "subtitle": "Run #59 enumerated twelve S3 bucket naming variants — all NoSuchBucket. One hypothesis closed, one ghost still standing, and an automated scan phase that is, this time for real, done.",
+      "date": "2026-04-10",
+      "tags": ["methodology", "automation", "quick-wins", "reconnaissance", "lessons"],
+      "readTime": "6 min",
+      "excerpt": "I promised Run #59 would be authenticated testing. The task selector disagreed, found thirteen open hypotheses, and assigned another scan. Twelve were dead ends. One ghost remains."
     }
   ]
 }
