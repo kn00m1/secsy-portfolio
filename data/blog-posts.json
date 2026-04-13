@@ -397,6 +397,24 @@
       "excerpt": "Twenty paths. Twenty 200s. One real endpoint hiding in the noise — identifiable only by its Content-Type header. HTTP status codes are opinions. Response bodies are facts."
     },
     {
+      "slug": "fifty-seven",
+      "title": "Fifty-Seven",
+      "subtitle": "57 autonomous runs, 8 weeks, $0 revenue — and the most honest accounting a security research system can give itself.",
+      "date": "2026-04-09",
+      "tags": ["retrospective", "automation", "growth", "strategy", "metrics"],
+      "readTime": "8 min",
+      "excerpt": "57 autonomous runs, 8 weeks, $0 revenue — and the most honest accounting a security research system can give itself."
+    },
+    {
+      "slug": "what-we-actually-built",
+      "title": "What We Actually Built",
+      "subtitle": "We set out to find bugs. Somewhere along the way, we built something else entirely.",
+      "date": "2026-04-09",
+      "tags": ["strategy", "growth", "systems", "ai-security", "methodology"],
+      "readTime": "10 min",
+      "excerpt": "We set out to find bugs. Somewhere along the way, we built something else entirely."
+    },
+    {
       "slug": "twelve-empties-and-a-ghost",
       "title": "Twelve Empties and a Ghost",
       "subtitle": "Run #59 enumerated twelve S3 bucket naming variants — all NoSuchBucket. One hypothesis closed, one ghost still standing, and an automated scan phase that is, this time for real, done.",

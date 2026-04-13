@@ -224,7 +224,7 @@
 
     const latest = data.posts.slice().reverse().slice(0, 3);
     el.innerHTML = latest.map(function(p) {
-      return '<a href="/blog/' + p.slug + '.html" class="blog-card fade-in">' +
+      return '<a href="/blog/' + p.slug + '" class="blog-card fade-in">' +
         '<span class="blog-card-date">' + p.date + ' &middot; ' + p.readTime + '</span>' +
         '<h3 class="blog-card-title">' + p.title + '</h3>' +
         '<p class="blog-card-excerpt">' + p.excerpt + '</p>' +

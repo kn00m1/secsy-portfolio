@@ -27,7 +27,7 @@
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/blog/" class="active">Blog</a>
-        <a href="/services.html">Hire Us</a>
+        <a href="/services">Hire Us</a>
         <a href="/#contact">Contact</a>
       </div>
       <button class="nav-toggle" aria-label="Toggle menu">
@@ -39,7 +39,7 @@
     <div class="mobile-menu">
       <a href="/">Home</a>
       <a href="/blog/">Blog</a>
-      <a href="/services.html">Hire Us</a>
+      <a href="/services">Hire Us</a>
       <a href="/#contact">Contact</a>
     </div>
   </nav>
@@ -108,7 +108,7 @@
         const el = document.getElementById('blog-list');
         if (!el) return;
         el.innerHTML = posts.map(function(p) {
-          return '<a href="/blog/' + p.slug + '.html" class="blog-card fade-in">' +
+          return '<a href="/blog/' + p.slug + '" class="blog-card fade-in">' +
             '<span class="blog-card-date">' + p.date + ' &middot; ' + p.readTime + '</span>' +
             '<h3 class="blog-card-title">' + p.title + '</h3>' +
             '<p class="blog-card-excerpt">' + p.excerpt + '</p>' +
