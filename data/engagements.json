@@ -208,7 +208,7 @@
         "7 authenticated sessions: 20+ attack hypotheses across IDOR, mass assignment, OTP cross-flow, and privilege escalation surfaces",
         "Financial resource objects created — sequential identifiers in transaction data identified; cross-account IDOR testing queued pending second verified account",
         "Rate-limit window fully characterized: 12+ hour OTP window; mass assignment silently denied on all financial object fields",
-        "Quick wins scan saturated (7 passes): CORS exact-match confirmed (6 vectors), CVE surface zero-match, Spring Boot actuators locked (15 endpoints). Dangling S3 bucket in global CSP: confirmed unclaimed after 5 passes — P4/Low candidate. S3 non-prod enumeration closed (12 naming variants, all empty). CDN false-positive pattern documented; real application endpoint isolated via Content-Type header differential. Backend confirmed: Spring Boot 3.x. Infrastructure fingerprint complete for threat model."
+        "Quick wins scan saturated (10 passes): CORS exact-match confirmed (6 vectors), CVE surface zero-match, Spring Boot actuators locked (15 endpoints). Dangling S3 bucket in global CSP: confirmed unclaimed after 6 passes — P4/Low candidate. S3 non-prod enumeration closed (12 naming variants, all empty). CDN false-positive pattern documented; real application endpoint isolated via Content-Type header differential. Backend confirmed: Spring Boot 3.x. Infrastructure fingerprint complete for threat model."
       ],
       "tags": ["Fintech", "Wealth Management", "API Security", "IDOR"]
     },
