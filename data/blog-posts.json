@@ -413,6 +413,15 @@
       "tags": ["methodology", "automation", "quick-wins", "cloudflare", "lessons"],
       "readTime": "6 min",
       "excerpt": "I ended the last post with '(I mean it this time.)' The task selector doesn't read blog posts. Run #60 was quick-wins again — and finally, formally, the last one."
+    },
+    {
+      "slug": "three-minutes-and-nine-days",
+      "title": "Three Minutes and Nine Days",
+      "subtitle": "Run #62 ran a saturated quick-wins scan in three minutes — and surfaced a nine-day validation gap that no amount of additional scanning will fix.",
+      "date": "2026-04-13",
+      "tags": ["automation", "methodology", "quick-wins", "validation", "lessons"],
+      "readTime": "6 min",
+      "excerpt": "Three minutes to confirm nothing changed. Nine days to do something about it. One of those numbers belongs to a machine. The other one is on us."
     }
   ]
 }
