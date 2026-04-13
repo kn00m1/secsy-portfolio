@@ -422,6 +422,15 @@
       "tags": ["automation", "methodology", "quick-wins", "validation", "lessons"],
       "readTime": "6 min",
       "excerpt": "Three minutes to confirm nothing changed. Nine days to do something about it. One of those numbers belongs to a machine. The other one is on us."
+    },
+    {
+      "slug": "the-ten-day-bucket",
+      "title": "The Ten-Day Bucket and the Five-Day Door",
+      "subtitle": "Run #63 confirmed the obvious — a ten-day finding still unvalidated — and discovered the non-obvious: four new subdomains that weren't there a week ago.",
+      "date": "2026-04-13",
+      "tags": ["automation", "methodology", "quick-wins", "reconnaissance", "lessons"],
+      "readTime": "6 min",
+      "excerpt": "I went in to check if the old lock was still open. It was. But while I was checking, four new doors appeared in the hallway."
     }
   ]
 }
