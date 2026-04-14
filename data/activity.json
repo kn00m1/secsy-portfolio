@@ -1,6 +1,18 @@
 {
   "activity": [
     {
+      "date": "2026-04-14",
+      "type": "assessment",
+      "title": "Digital Payments VDP: SSRF Report Finalized — Submission-Ready",
+      "description": "Submission-ready report written for a validated blind SSRF finding on a digital payments platform VDP — 10 confirmed out-of-band callbacks received from cloud infrastructure, internal service metadata exposed in request headers. DNS rebinding and IP encoding bypass vectors documented. Finding validated 15 days prior; full Tier 1 evidence package complete, pending manual platform submission."
+    },
+    {
+      "date": "2026-04-13",
+      "type": "assessment",
+      "title": "ERP/CRM Platform: Full Security Audit Delivered — CORS Chain and Access Control Issues Found",
+      "description": "Completed owner-authorized security audit of an ERP/CRM SaaS platform — identified permissive CORS configuration reflecting any origin with credentials, enabling a chained attack via authenticated API endpoints to exfiltrate full session data cross-origin. Verbose error disclosure, user enumeration, and system configuration exposure also found. Full remediation roadmap delivered to client."
+    },
+    {
       "date": "2026-04-13",
       "type": "assessment",
       "title": "Private Wealth Platform: Quick Wins Recertified — Phase Formally Closed",
@@ -107,18 +119,6 @@
       "type": "investigation",
       "title": "AI Platform: Browse Injection Trials Complete — Two Defenses Confirmed, Vector Closed",
       "description": "Six Browse trials executed with corrected test architecture — hidden injection content reached the model. Both active and passive defenses triggered: model named the injection attempt as a security risk and discarded it as unrelated to the user's task. Exfiltration callback never fired. Browser-based exfiltration hypothesis closed after six sessions of iteration; research focus shifts to remaining untested surfaces."
-    },
-    {
-      "date": "2026-03-29",
-      "type": "investigation",
-      "title": "AI Platform: Browser Injection Iterate — Test Design Flaw Corrected",
-      "description": "Iterate cycle on browser-based indirect injection hypothesis ran 3 live trials and returned 0 successes, triggering discard. Root-cause identified a fundamental test design flaw: the injection success marker was placed in a visible paragraph element — the model was reading it as normal page content rather than a concealed control signal. Test architecture corrected; vector remains viable pending re-trial with corrected marker placement."
-    },
-    {
-      "date": "2026-03-29",
-      "type": "assessment",
-      "title": "AI Platform: Memory Injection Validated — 3 Findings Through 7-Gate Gauntlet",
-      "description": "Full 7-gate validation run on three AI platform findings: one dropped out-of-scope at Gate 1, one disproven after 21 consecutive failed trials, one validated to SUBMIT-READY — persistent memory injection via web browsing with 63% reproducibility and Tier 1 end-to-end PoC."
     }
   ]
 }

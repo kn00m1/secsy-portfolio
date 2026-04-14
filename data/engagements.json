@@ -142,6 +142,24 @@
       "tags": ["SaaS", "Cloud Storage", "API Security", "Access Control", "Consulting"]
     },
     {
+      "id": "consulting-d",
+      "name": "ERP/CRM Platform (Consulting D)",
+      "type": "Consulting",
+      "status": "Completed",
+      "date": "2026-04-13",
+      "description": "Owner-authorized security audit of an ERP/CRM SaaS platform serving as a business management suite for an SME client. Assessment covered CORS configuration, API security, authentication, error handling, user enumeration, and security headers across the full application surface.",
+      "findings": 7,
+      "severity": { "critical": 0, "high": 2, "medium": 3, "low": 2 },
+      "highlights": [
+        "HIGH: Permissive CORS reflecting any origin with credentials — enables cross-origin data theft from authenticated sessions via any malicious page",
+        "HIGH: Chained attack — CORS + credential-bearing API endpoint + user enumeration enables full authenticated session data exfiltration without user interaction",
+        "MED: Verbose Python stack traces in error responses — framework paths, module names, and server configuration exposed to all users",
+        "MED: User enumeration via password reset — account existence confirmable for all registered users",
+        "Full remediation roadmap delivered — CORS fix breaks the entire attack chain; all findings fixable with targeted configuration changes"
+      ],
+      "tags": ["SaaS", "ERP", "CORS", "API Security", "Consulting"]
+    },
+    {
       "id": "consulting-b",
       "name": "E-Commerce Store (Consulting B)",
       "type": "Consulting",
@@ -209,7 +227,7 @@
         "7 authenticated sessions: 20+ attack hypotheses across IDOR, mass assignment, OTP cross-flow, and privilege escalation surfaces",
         "Financial resource objects created — sequential identifiers in transaction data identified; cross-account IDOR testing queued pending second verified account",
         "Rate-limit window fully characterized: 12+ hour OTP window; mass assignment silently denied on all financial object fields",
-        "Quick wins scan saturated (11 passes): CORS exact-match confirmed (6 vectors), CVE surface zero-match, Spring Boot actuators locked (15 endpoints). Dangling S3 bucket in global CSP: confirmed unclaimed after 6 passes — P4/Low candidate. S3 non-prod enumeration closed (12 naming variants, all empty). CDN false-positive pattern documented; real application endpoint isolated via Content-Type header differential. Backend confirmed: Spring Boot 3.x. Infrastructure fingerprint complete for threat model."
+        "Quick wins scan phase formally closed (13 passes): CORS exact-match confirmed (6 vectors), CVE surface zero-match, Spring Boot actuators locked (15 endpoints). Dangling S3 bucket in global CSP: confirmed unclaimed across 10 days (8 consecutive confirmations) — P4/Low candidate. 3 new subdomains discovered in April recon refresh — scope confirmation pending. S3 non-prod enumeration closed (12 naming variants, all empty). CDN false-positive pattern documented; real endpoint isolated via Content-Type differential. Backend confirmed: Spring Boot 3.x."
       ],
       "tags": ["Fintech", "Wealth Management", "API Security", "IDOR"]
     },
@@ -219,13 +237,15 @@
       "type": "Bug Bounty",
       "status": "Active",
       "date": "2026-04-01",
-      "description": "Public bug bounty program for a European digital banking platform. Scope covers primary web application, REST API, and iOS/Android mobile applications. Engagement initialized — scope locked, recon pipeline queued.",
+      "description": "Public bug bounty program for a European digital banking platform. Scope covers primary web application, REST API, and iOS/Android mobile applications. Recon complete: 149 subdomains discovered, 51 live hosts, 96 historical API URLs. JS harvest complete across 25 files — 900+ raw endpoints extracted. Threat model built with 4 prioritized attack hypotheses. Testing queued pending authenticated account setup.",
       "findings": 0,
       "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
       "highlights": [
         "Public program: competitive per-finding bounties across web, API, and mobile scope",
-        "Scope covers primary web app, API, and both mobile platforms",
-        "Scope locked — recon pipeline queued: subdomain enumeration, HTTP probe, JS harvest"
+        "Recon complete: 149 subdomains, 51 live hosts, 96 historical API URLs — full attack surface mapped",
+        "JS harvest complete: 25 files analyzed, 900+ raw endpoints, OAuth client configurations extracted",
+        "Threat model built: 4 high-value attack hypotheses prioritized across OAuth flows, API authentication, and webview surfaces",
+        "Testing queued: authenticated account setup in progress — manual proxy session planned as first test phase"
       ],
       "tags": ["Banking", "Fintech", "API Security", "Mobile"]
     },
@@ -242,7 +262,8 @@
         "HIGH: Blind SSRF via webhook URL parameter — OOB callbacks confirmed from cloud infrastructure (10 deliveries)",
         "Internal service identity and observability platform metadata exposed via request headers",
         "DNS rebinding and IP encoding bypass vectors enumerated",
-        "Tier 1 evidence: end-to-end PoC with OOB callback log, payment flow, and curl commands"
+        "Tier 1 evidence: end-to-end PoC with OOB callback log, payment flow, and curl commands",
+        "Submission-ready VDP report written — full evidence package complete, awaiting manual platform submission"
       ],
       "tags": ["Fintech", "SSRF", "API Security", "Webhook"]
     },

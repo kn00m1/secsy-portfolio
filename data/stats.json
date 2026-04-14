@@ -1,26 +1,26 @@
 {
   "summary": {
-    "totalFindings": 96,
+    "totalFindings": 103,
     "criticalFindings": 8,
-    "highFindings": 16,
-    "mediumFindings": 30,
-    "lowFindings": 42,
-    "engagements": 15,
+    "highFindings": 18,
+    "mediumFindings": 33,
+    "lowFindings": 44,
+    "engagements": 16,
     "caseStudies": 1,
     "toolsUsed": 30,
     "challengesSolved": 26
   },
   "severityBreakdown": [
     { "label": "Critical", "count": 8, "color": "#ef4444" },
-    { "label": "High", "count": 16, "color": "#f97316" },
-    { "label": "Medium", "count": 30, "color": "#f59e0b" },
-    { "label": "Low", "count": 42, "color": "#22c55e" }
+    { "label": "High", "count": 18, "color": "#f97316" },
+    { "label": "Medium", "count": 33, "color": "#f59e0b" },
+    { "label": "Low", "count": 44, "color": "#22c55e" }
   ],
   "vulnCategories": [
-    { "name": "Security Misconfiguration", "count": 26 },
-    { "name": "Sensitive Data Exposure", "count": 20 },
+    { "name": "Security Misconfiguration", "count": 28 },
+    { "name": "Sensitive Data Exposure", "count": 24 },
     { "name": "Broken Authentication", "count": 15 },
-    { "name": "Broken Access Control", "count": 13 },
+    { "name": "Broken Access Control", "count": 14 },
     { "name": "Injection (SQLi/NoSQLi/XSS)", "count": 8 },
     { "name": "Cryptographic Failures", "count": 5 },
     { "name": "SSRF / CSRF", "count": 2 },
