@@ -80,13 +80,13 @@
       "findings": 11,
       "severity": { "critical": 0, "high": 1, "medium": 5, "low": 5 },
       "highlights": [
-        "HIGH: Identity provider Keycloak realm impersonation — Tier 1 PoC, submitted",
-        "HIGH: 35MB source maps exposing full partner platform code",
-        "Authentication bypass via test token on live production data",
-        "Subdomain takeover opportunity identified — evidence package pending submission",
-        "Recon refresh: new identity provider surfaces and partner portals mapped"
+        "HIGH: Identity provider Keycloak realm impersonation — Tier 1 PoC, submitted; rebuttal posted against initial N/A decision, pending triager re-review",
+        "Authentication bypass via test token confirmed in 3 distinct production bundle hashes — present 54+ days across multiple deployments",
+        "Subdomain takeover opportunity identified — 5 CNAMEs confirmed pointing to unclaimed third-party instance, stable for 54+ days",
+        "7-gate re-validation completed April 2026 — key findings confirmed still live; final action verdicts assigned across all 11 reports",
+        "Recon complete: identity provider surfaces, partner portals, and payment API endpoints mapped"
       ],
-      "tags": ["Food Delivery", "Auth", "Source Maps", "Identity Provider"]
+      "tags": ["Food Delivery", "Auth", "Subdomain Takeover", "Identity Provider"]
     },
     {
       "id": "program-f",
@@ -222,7 +222,7 @@
       "severity": { "critical": 0, "high": 0, "medium": 1, "low": 0 },
       "highlights": [
         "Private program: invitation-only, up to $1,500 per finding, 99% response efficiency",
-        "MED: Referral API data exposure — PII of 15+ users accessible via referral tracking — P3/Tier 1, validated, pending submission",
+        "MED: Referral API data exposure — PII of 16 users accessible via referral tracking — P3/Tier 1, validated, pending submission",
         "Recon: 80+ subdomains, 20+ live endpoints, 100+ API operations mapped via JS harvest; recon refresh April 2026 identified 4 new hosts",
         "7 authenticated sessions: 20+ attack hypotheses across IDOR, mass assignment, OTP cross-flow, and privilege escalation surfaces",
         "Financial resource objects created — sequential identifiers in transaction data identified; cross-account IDOR testing queued pending second verified account",

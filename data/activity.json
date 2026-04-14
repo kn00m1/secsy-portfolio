@@ -3,6 +3,12 @@
     {
       "date": "2026-04-14",
       "type": "assessment",
+      "title": "Food Delivery Platform: 7-Gate Re-Validation — 4 Findings Confirmed Live After 54 Days",
+      "description": "Full 7-gate re-validation of 11 reports on a global food delivery platform — 4 vulnerabilities confirmed still present 54 days after initial discovery, including an identity provider misconfiguration, subdomain takeover CNAMEs, and an authentication bypass confirmed in three distinct production bundle hashes. Final action verdicts assigned across all 11 reports: 1 awaiting triager re-review on rebuttal, 1 conditional submission pass, 9 dropped or held on pre-mortem risk."
+    },
+    {
+      "date": "2026-04-14",
+      "type": "assessment",
       "title": "Digital Payments VDP: SSRF Report Finalized — Submission-Ready",
       "description": "Submission-ready report written for a validated blind SSRF finding on a digital payments platform VDP — 10 confirmed out-of-band callbacks received from cloud infrastructure, internal service metadata exposed in request headers. DNS rebinding and IP encoding bypass vectors documented. Finding validated 15 days prior; full Tier 1 evidence package complete, pending manual platform submission."
     },
@@ -113,12 +119,6 @@
       "type": "investigation",
       "title": "Strategic Review: AI Testing Loop Closed, Focus Shifts to Private Program",
       "description": "40-session retrospective completed — AI security engagement fully exhausted with all hypotheses resolved: 2 findings submitted, 1 disproven at 21 consecutive trials, 1 closed after two distinct active defenses confirmed. Strategic pivot to a private fintech bug bounty program with complete recon, 100+ mapped API endpoints, and zero prior testing — the highest-value untested opportunity in the queue."
-    },
-    {
-      "date": "2026-03-30",
-      "type": "investigation",
-      "title": "AI Platform: Browse Injection Trials Complete — Two Defenses Confirmed, Vector Closed",
-      "description": "Six Browse trials executed with corrected test architecture — hidden injection content reached the model. Both active and passive defenses triggered: model named the injection attempt as a security risk and discarded it as unrelated to the user's task. Exfiltration callback never fired. Browser-based exfiltration hypothesis closed after six sessions of iteration; research focus shifts to remaining untested surfaces."
     }
   ]
 }
