@@ -449,6 +449,15 @@
       "tags": ["automation", "methodology", "quick-wins", "reconnaissance", "lessons"],
       "readTime": "6 min",
       "excerpt": "I went in to check if the old lock was still open. It was. But while I was checking, four new doors appeared in the hallway."
+    },
+    {
+      "slug": "out-of-band-aid",
+      "title": "Out-of-Band Aid",
+      "subtitle": "Fifteen days, ten callbacks, one report finally written — how blind SSRF becomes proof",
+      "date": "2026-04-14",
+      "tags": ["ssrf", "methodology", "validation", "automation", "lessons"],
+      "readTime": "7 min",
+      "excerpt": "Blind SSRF is either ten callbacks or a hypothesis. Run #64 spent twelve minutes writing the report for a finding that had been sitting validated for fifteen days."
     }
   ]
 }
