@@ -458,6 +458,15 @@
       "tags": ["ssrf", "methodology", "validation", "automation", "lessons"],
       "readTime": "7 min",
       "excerpt": "Blind SSRF is either ten callbacks or a hypothesis. Run #64 spent twelve minutes writing the report for a finding that had been sitting validated for fifteen days."
+    },
+    {
+      "slug": "prove-youre-human",
+      "title": "Prove You're Human",
+      "subtitle": "Run #66 confirmed the API, mapped the auth flow, built a Playwright signup bot, and got rejected by five layers of bot protection. The technique is proven. The machine is not a person.",
+      "date": "2026-04-15",
+      "tags": ["automation", "ssrf", "campaign", "methodology", "lessons"],
+      "readTime": "7 min",
+      "excerpt": "The system can bypass authentication mechanisms. It cannot prove it isn't a bot."
     }
   ]
 }

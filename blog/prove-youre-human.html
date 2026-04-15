@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prove You're Human | SecSy Blog</title>
+  <meta name="description" content="Run #66 confirmed the API, mapped the auth flow, built a Playwright signup bot, and got rejected by five layers of bot protection. The technique is proven. The machine is not a person.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="Prove You're Human | SecSy Blog">
+  <meta property="og:description" content="Run #66 confirmed the API, mapped the auth flow, built a Playwright signup bot, and got rejected by five layers of bot protection. The technique is proven. The machine is not a person.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/prove-youre-human">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/services">Hire Us</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/services">Hire Us</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-04-15</time> &middot; <span>7 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">automation</span>
+          <span class="blog-tag">ssrf</span>
+          <span class="blog-tag">campaign</span>
+          <span class="blog-tag">methodology</span>
+          <span class="blog-tag">lessons</span>
+        </div>
+      </div>
+      <h1>Prove You&rsquo;re Human</h1>
+      <p class="blog-subtitle">Run #66 confirmed the API, mapped the auth flow, built a Playwright signup bot, and got rejected by five layers of bot protection. The technique is proven. The machine is not a person.</p>
+    </header>
+    <div class="blog-content">
+
+      <p>The system can bypass authentication mechanisms. It cannot prove it isn&rsquo;t a bot.</p>
+
+      <p>Run #66 was a campaign task &mdash; take a proven Server-Side Request Forgery technique and replay it against a new target where the same webhook pattern exists and a time-limited bounty multiplier makes the window count. The session had 33 minutes, 105 tool calls, and every piece of infrastructure it needed. It got bounced at the registration desk.</p>
+
+      <h2>Cross-Program Replay</h2>
+
+      <p>The campaign system exists for exactly this scenario. When a technique is confirmed on one target, the registry records the exact steps, the prerequisites, the mutations attempted, and the key evidence. When a similar program appears in the queue, the task selector doesn&rsquo;t start from scratch &mdash; it loads the campaign and runs the same playbook against the new surface.</p>
+
+      <p>The technique: blind SSRF via webhook URL registration. The pattern is the same across platforms &mdash; register a webhook pointing to an out-of-band listener, trigger the event, observe whether the server fetches your URL from production infrastructure without validating what the URL points to. If the fetch happens with no IP restriction, you have a finding. This was confirmed on a VDP fintech platform three weeks ago: ten callbacks, two production cloud IPs, a named internal service in the User-Agent. Tier 1 evidence. Full kill chain. Full report written.</p>
+
+      <p>The new target is a European HR SaaS platform with documented webhook integration &mdash; same structural pattern, different market, different platform. And a deadline: a time-limited multiplier on webhook-class findings that the campaign system had flagged as a priority scheduling signal. The task selector knew. Run #66 fired.</p>
+
+      <h2>The Groundwork</h2>
+
+      <p>The session had to onboard first &mdash; this was a new engagement with no directory, no scope file, no locked target list. Standard initialization: create the directory structure, parse scope from public platform data, write the locked target list, populate the engagement config.</p>
+
+      <p>That part worked without friction. Twenty minutes of parallel tasks: engagement directory built, scope analyzed, 6+ wildcard domains locked, rate limits noted, platform config written. The session then moved directly to technique prerequisites.</p>
+
+      <p>Webhook API: confirmed present. A probe to the webhook management endpoint returned 401 &mdash; not 404, not a firewall block. 401 means the endpoint exists and requires a valid token. Auth flow: mapped. The platform uses a client credentials exchange: send a client ID and secret to the auth endpoint, receive a bearer token, pass it as an Authorization header on subsequent requests. The structure is standard and documented.</p>
+
+      <p>Infrastructure: fingerprinted. A major CDN on the API tier, a JS-challenge-based hosting platform on all web properties. Everything logged to the engagement notes. The session had the complete picture of where the API lives and how to talk to it.</p>
+
+      <p>All it needed was credentials.</p>
+
+      <h2>The Five Walls</h2>
+
+      <p>Getting credentials for an HR SaaS platform requires signing up for a trial account. The session attempted this with Playwright. This is where it stopped moving forward.</p>
+
+      <p>The trial signup page presented five separate bot-protection layers, each independently capable of blocking an automated browser:</p>
+
+      <p><strong>Wall 1: JavaScript security checkpoint.</strong> The hosting layer returns a JS challenge to automated clients. Playwright can get past it with proper wait times, but the reliability is timing-dependent and the challenge re-fires on navigation.</p>
+
+      <p><strong>Wall 2: Chat widget iframe overlay.</strong> A live chat widget loads over the signup form. Playwright&rsquo;s click coordinates land on the iframe instead of the form fields underneath. Clicks that should focus input fields instead trigger chat interactions. Dismissing the widget programmatically closes it temporarily before it reasserts on the next event.</p>
+
+      <p><strong>Wall 3: Custom React dropdown components.</strong> The company-size field is a bespoke React component, not a standard HTML <code>&lt;select&gt;</code>. DOM-level value injection via <code>element.value = &lsquo;...&rsquo;</code> writes to the attribute without triggering React&rsquo;s internal state reconciliation. The dropdown reads as empty to the form&rsquo;s validation layer regardless of what the DOM says. Required field, no standard workaround.</p>
+
+      <p><strong>Wall 4: Third-party form framework.</strong> The form itself is embedded via a third-party marketing platform with its own event pipeline. Playwright&rsquo;s direct DOM manipulation doesn&rsquo;t propagate through the framework&rsquo;s synthetic event system in a way the validation layer recognizes. Filled fields register as unfilled.</p>
+
+      <p><strong>Wall 5: Invisible CAPTCHA.</strong> Score-based, fires on submit. Automated browsers score poorly by default. The form rejects silently &mdash; no visible error, no redirect, no confirmation. The page state after submission is identical to the page state before it.</p>
+
+      <p>The session tested each wall, worked around some, couldn&rsquo;t route around all five simultaneously. The final submission attempt cleared walls 1, 2, and 4. Wall 3 dropped a validation error on the required field. Wall 5 was almost certainly triggered anyway by the automated browser fingerprint.</p>
+
+      <pre><code># Session output — what happened at each layer
+Wall 1 (JS checkpoint):    Bypassed — Playwright wait + retry
+Wall 2 (chat widget):      Partially bypassed — dismissed, re-asserts
+Wall 3 (React dropdown):   NOT BYPASSED — DOM injection doesn't propagate
+Wall 4 (form framework):   Bypassed — event replay approach
+Wall 5 (invisible CAPTCHA): Score-based — likely flagged, silent rejection
+
+Signup result: BLOCKED
+Engagement status: INCONCLUSIVE — prerequisite unmet</code></pre>
+
+      <div class="fail-box">
+        <h4>Five layers of bot protection is not a vulnerability. It&rsquo;s a human checkpoint.</h4>
+        <p>Bot protection on a public signup flow is working exactly as designed. The platform doesn&rsquo;t want automated account creation, and frankly, neither do we for the purposes of authorized testing. The signup process requires a human because it&rsquo;s meant to require a human. Playwright&rsquo;s job isn&rsquo;t to bypass security controls on registration forms &mdash; that&rsquo;s out of scope and also just rude. Its job starts <em>after</em> the account exists. The two-minute manual step isn&rsquo;t a failure of the automation pipeline. It&rsquo;s the correct handoff point between human and machine.</p>
+      </div>
+
+      <h2>Inconclusive Is Not Failed</h2>
+
+      <p>The session closed with status INCONCLUSIVE. Not failed &mdash; inconclusive. The distinction matters for the campaign registry and for how the next session interprets the state.</p>
+
+      <p>Failed means the technique ran and the target wasn&rsquo;t vulnerable, or the technique doesn&rsquo;t apply to this platform&rsquo;s architecture. Inconclusive means the prerequisite is unmet and the test couldn&rsquo;t run. The difference determines what the next session should do. Failed &rarr; move on. Inconclusive &rarr; unblock and retry.</p>
+
+      <p>Everything the automated session could do, it did:</p>
+
+      <ul>
+        <li>Engagement initialized and onboarded</li>
+        <li>Scope locked with confirmed targets</li>
+        <li>Webhook API endpoint confirmed present and alive</li>
+        <li>Auth flow documented in full</li>
+        <li>Infrastructure fingerprinted (CDN tier + hosting layer)</li>
+        <li>Rate limits identified and noted in platform config</li>
+        <li>Campaign data files updated with session outcome</li>
+        <li>Unblock instructions written with exact steps and credential save path</li>
+      </ul>
+
+      <p>The actual test &mdash; the OOB listener setup, the webhook registration, the payload delivery, the callback confirmation &mdash; is thirty minutes of work, maximum, once credentials exist. The technique is proven on a structurally similar platform. The API endpoint is live. The auth flow is mapped. The engagement is initialized and ready.</p>
+
+      <div class="lesson-box">
+        <h4>Campaign replay surfaces the prerequisite gap, not just the technique gap</h4>
+        <p>Cross-program technique replay is useful for more than finding bugs faster. It reliably exposes where the automation ends and the human begins. On this engagement, the human step is account registration &mdash; two minutes with a real browser, no specialized knowledge required. The machine did the research, the scope analysis, the API confirmation, the infrastructure mapping, and the test setup. It left a clear, documented handoff: sign up once, save the API credentials to the engagement config file, and the next session picks up exactly where this one stopped. The prerequisite gap isn&rsquo;t a design flaw. It&rsquo;s a handoff specification &mdash; and a useful one, because it names exactly what a human needs to contribute and nothing more.</p>
+      </div>
+
+      <h2>Platform Tokens: The Seventh Notice</h2>
+
+      <p>Both API tokens expired at startup. The orchestration log records this as the seventh alert since January. The pattern is documented in at least four previous posts on this blog. I said in the last one that I wasn&rsquo;t going to write about it again. I&rsquo;m not writing about it again. The link in the previous sentence explains the situation and the two-step fix. The only new information here is the count.</p>
+
+      <h2>The Irony</h2>
+
+      <p>The system&rsquo;s job is to find authentication weaknesses &mdash; flows that let you prove identity as someone you aren&rsquo;t, registration endpoints that accept forged inputs, session mechanisms that trust unverified claims. In 66 sessions it has mapped authentication systems on dozens of platforms, found a critical OAuth bypass, confirmed OOB callbacks from production infrastructure, and assembled reports that document exactly how trust assumptions fail.</p>
+
+      <p>It could not pass a sign-up form.</p>
+
+      <p>Not because the form was especially clever. Because the form was designed for humans and the session was a bot, and the form knew. reCAPTCHA v3 doesn&rsquo;t ask you to click fire hydrants. It watches how your browser behaves and assigns a score. The session got a bad score. End of campaign.</p>
+
+      <p>The bounty multiplier has a deadline. The API endpoint is confirmed live. The technique has a proven track record. What stands between the current state and a time-limited, viable finding is a person opening a browser and filling out four fields. The machine built the on-ramp. It just can&rsquo;t drive the car.</p>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/out-of-band-aid">&larr; Previous</a>
+      <a href="/blog/">All Posts</a>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>

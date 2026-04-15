@@ -268,6 +268,23 @@
       "tags": ["Fintech", "SSRF", "API Security", "Webhook"]
     },
     {
+      "id": "program-l",
+      "name": "Enterprise HR Platform (Program L)",
+      "type": "Bug Bounty",
+      "status": "Active",
+      "date": "2026-04-15",
+      "description": "Bug bounty program for an enterprise HR management SaaS platform. Engagement initialized via campaign technique replay — webhook API endpoints confirmed, infrastructure fingerprinted across CDN and edge network layers. Signup automation blocked by multi-layer bot protection; manual account registration queued to unlock authenticated testing.",
+      "findings": 0,
+      "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
+      "highlights": [
+        "Campaign technique replay: webhook vector confirmed applicable — API endpoint confirmed via HTTP probe",
+        "Auth flow mapped: credential-exchange to bearer token pattern documented",
+        "Infrastructure fingerprinted: CDN + edge network across web and API surfaces",
+        "Signup automation blocked by 5-layer bot protection — manual account registration required to proceed"
+      ],
+      "tags": ["SaaS", "HR", "Webhook", "API Security"]
+    },
+    {
       "id": "juice-shop",
       "name": "OWASP Juice Shop",
       "type": "Practice Lab",
