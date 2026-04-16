@@ -2,6 +2,12 @@
   "activity": [
     {
       "date": "2026-04-15",
+      "type": "assessment",
+      "title": "Food Delivery Platform: Pre-Submission Validation — Key Findings Confirmed at Day 55",
+      "description": "Pre-submission validation pass on a global food delivery platform — subdomain takeover CNAME records and authentication bypass vector confirmed still present and exploitable at 55 days post-discovery. Conditional submission pass assigned to subdomain takeover finding; evidence package complete and submission-ready."
+    },
+    {
+      "date": "2026-04-15",
       "type": "recon",
       "title": "Enterprise HR Platform: Campaign Initiated — Webhook API Confirmed, Bot Protection Documented",
       "description": "Campaign technique replay initiated against an enterprise HR SaaS bug bounty program — webhook API endpoint confirmed via HTTP probe, authentication flow mapped (credential-exchange to bearer token), and CDN/edge infrastructure fingerprinted. Five browser automation approaches attempted for account creation; blocked by multi-layer bot protection. Technique confirmed applicable — manual account registration required to unlock authenticated testing phase."
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "Private Wealth Platform: Rate-Limit Mapping — 40+ Endpoints Enumerated",
       "description": "Systematic API enumeration session on a private wealth management platform — 40+ endpoints tested across authentication, referral, and investment surfaces in under 20 minutes. Rate-limit window corrected from initial estimate to over 12 hours; cross-account IDOR testing queued pending secondary account registration."
-    },
-    {
-      "date": "2026-04-01",
-      "type": "assessment",
-      "title": "Private Wealth Platform: First Authenticated Session — Infrastructure Resolved",
-      "description": "Resolved mail server configuration blocking account verification on a private wealth management bug bounty program — first authenticated API test session completed. Initial threat model hypothesis eliminated via direct testing; authenticated API surface mapped across 20+ endpoints, IDOR and financial endpoint testing queued."
     }
   ]
 }
