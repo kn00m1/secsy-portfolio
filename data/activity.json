@@ -115,10 +115,10 @@
       "description": "Seven attack hypotheses systematically tested against a private wealth management platform — all seven denied by server-side controls. Rate-limit window independently confirmed via OTP verification, then re-triggered during the confirmation test itself. Remaining surface narrows to cross-account IDOR testing pending a second verified account."
     },
     {
-      "date": "2026-04-02",
+      "date": "2026-04-16",
       "type": "assessment",
-      "title": "Private Wealth Platform: Rate-Limit Mapping — 40+ Endpoints Enumerated",
-      "description": "Systematic API enumeration session on a private wealth management platform — 40+ endpoints tested across authentication, referral, and investment surfaces in under 20 minutes. Rate-limit window corrected from initial estimate to over 12 hours; cross-account IDOR testing queued pending secondary account registration."
+      "title": "Food Delivery Platform: 57-Day Validation — Findings Confirmed, Escalation Trigger Set",
+      "description": "Third consecutive validation pass on a global food delivery platform confirms key findings remain live 57 days after initial discovery — subdomain takeover CNAMEs and authentication bypass production bundle hash both unchanged. Identity provider rebuttal now 18 days without triager response (6x SLA); escalation to platform support flagged for 2026-04-20."
     }
   ]
 }
