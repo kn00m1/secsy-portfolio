@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-18",
+      "type": "assessment",
+      "title": "Food Delivery Platform: Keycloak Path Migration Discovered — Rebuttal Evidence Strengthened",
+      "description": "Re-validation session on a global food delivery platform discovered that the identity provider Keycloak realm path migrated post-report — confirms the platform performed active maintenance but failed to remediate the core vulnerability. New differential evidence strengthens the 21-day-pending rebuttal. Subdomain takeover independently confirmed live at 59 days unfixed; report submission-ready. Escalation window opens in two days."
+    },
+    {
       "date": "2026-04-15",
       "type": "assessment",
       "title": "Food Delivery Platform: Pre-Submission Validation — Key Findings Confirmed at Day 55",
@@ -107,12 +113,6 @@
       "type": "assessment",
       "title": "Hospitality SaaS Platform: Full Audit Delivered — Critical Data Exposure Found",
       "description": "Completed owner-authorized security audit of a multi-tenant hospitality SaaS platform — identified critical government identity document exposure in a publicly accessible cloud storage bucket, high-severity unauthenticated user enumeration and role disclosure, and 6 additional findings across database security, authentication, and infrastructure. Full remediation roadmap delivered to client."
-    },
-    {
-      "date": "2026-04-02",
-      "type": "assessment",
-      "title": "Private Wealth Platform: 7 Hypotheses Eliminated — Access Controls Confirmed",
-      "description": "Seven attack hypotheses systematically tested against a private wealth management platform — all seven denied by server-side controls. Rate-limit window independently confirmed via OTP verification, then re-triggered during the confirmation test itself. Remaining surface narrows to cross-account IDOR testing pending a second verified account."
     },
     {
       "date": "2026-04-16",
