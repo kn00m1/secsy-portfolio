@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-19",
+      "type": "assessment",
+      "title": "Food Delivery Platform: 60-Day Mark — Final Pre-Escalation Validation Pass",
+      "description": "Pre-escalation validation pass on a global food delivery platform confirms all key findings live at the 60-day mark — identity provider misconfiguration, subdomain takeover CNAME records, and authentication bypass vector all unchanged across multiple deployments. Platform support escalation contact window opens tomorrow; rebuttal has gone without triager response for 22 days, exceeding platform SLA by 6x."
+    },
+    {
       "date": "2026-04-18",
       "type": "assessment",
       "title": "Food Delivery Platform: Keycloak Path Migration Discovered — Rebuttal Evidence Strengthened",
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "Private Wealth Platform: Session 7 — Resources Created, Access Controls Hold",
       "description": "Seventh authenticated session on a private wealth management program — created financial resource objects enabling object-level access control testing. Mass assignment probing returned clean denials across all fields. OTP cross-flow test remains queued; rate-limit window re-triggered mid-session for the second consecutive run. Cross-account IDOR testing queued pending second verified account."
-    },
-    {
-      "date": "2026-04-02",
-      "type": "assessment",
-      "title": "Hospitality SaaS Platform: Full Audit Delivered — Critical Data Exposure Found",
-      "description": "Completed owner-authorized security audit of a multi-tenant hospitality SaaS platform — identified critical government identity document exposure in a publicly accessible cloud storage bucket, high-severity unauthenticated user enumeration and role disclosure, and 6 additional findings across database security, authentication, and infrastructure. Full remediation roadmap delivered to client."
     }
   ]
 }
