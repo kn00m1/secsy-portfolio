@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-20",
+      "type": "assessment",
+      "title": "Digital Payments VDP: Campaign Session — Technique Replay on Webhook Surface",
+      "description": "Campaign technique replay session targeting a digital payments vulnerability disclosure program — validated webhook attack surface mapped against technique registry; submission-ready finding confirmed stable pending manual platform submission."
+    },
+    {
       "date": "2026-04-19",
       "type": "assessment",
       "title": "Food Delivery Platform: 60-Day Mark — Final Pre-Escalation Validation Pass",
@@ -113,12 +119,6 @@
       "type": "investigation",
       "title": "Discovery Session: 14 Programs Evaluated — Best Match Deferred",
       "description": "Systematic evaluation of 14 active bug bounty programs against skill profile, scope breadth, competition density, and triage quality. Top-scoring candidate identified (9/10 match) but deferred — current private engagement has higher expected value with 8 sessions remaining. Pipeline discipline holds: depth over breadth."
-    },
-    {
-      "date": "2026-04-03",
-      "type": "assessment",
-      "title": "Private Wealth Platform: Session 7 — Resources Created, Access Controls Hold",
-      "description": "Seventh authenticated session on a private wealth management program — created financial resource objects enabling object-level access control testing. Mass assignment probing returned clean denials across all fields. OTP cross-flow test remains queued; rate-limit window re-triggered mid-session for the second consecutive run. Cross-account IDOR testing queued pending second verified account."
     }
   ]
 }

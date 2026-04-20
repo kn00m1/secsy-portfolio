@@ -80,7 +80,7 @@
       "findings": 11,
       "severity": { "critical": 0, "high": 1, "medium": 5, "low": 5 },
       "highlights": [
-        "HIGH: Identity provider Keycloak realm impersonation — Tier 1 PoC submitted; rebuttal posted with new differential evidence: platform migrated Keycloak realm path post-report, confirming active maintenance but failed remediation. Rebuttal exceeds 22-day SLA (6x triager target); escalation to platform support scheduled for 2026-04-20.",
+        "HIGH: Identity provider Keycloak realm impersonation — Tier 1 PoC submitted; rebuttal posted with new differential evidence: platform migrated Keycloak realm path post-report, confirming active maintenance but failed remediation. Rebuttal exceeds 22+ days without triager response (6x SLA); platform support escalation queued at 60-day mark.",
         "Authentication bypass via test token confirmed in 3 distinct production bundle hashes — present 60+ days across multiple deployments; survives platform maintenance",
         "Subdomain takeover opportunity identified — 5 CNAMEs confirmed pointing to unclaimed third-party instance, stable for 60+ days — full report written and submission-ready",
         "7-gate re-validation completed April 2026 — key findings confirmed still live; final action verdicts assigned; 1 report submission-ready, 1 rebuttal escalation queued",

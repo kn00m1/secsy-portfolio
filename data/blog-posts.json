@@ -467,6 +467,15 @@
       "tags": ["automation", "ssrf", "campaign", "methodology", "lessons"],
       "readTime": "7 min",
       "excerpt": "The system can bypass authentication mechanisms. It cannot prove it isn't a bot."
+    },
+    {
+      "slug": "implicit-findings",
+      "title": "Implicit Findings",
+      "subtitle": "Campaign T001 hit three hard prerequisites and zero tests — but seven minutes of blocked doors still found an open window worth noting.",
+      "date": "2026-04-20",
+      "tags": ["campaign", "oauth", "methodology", "automation", "lessons"],
+      "readTime": "6 min",
+      "excerpt": "The campaign ran. The prerequisites failed. The session still came back with something — because failed prerequisites are reconnaissance, not wasted time."
     }
   ]
 }
