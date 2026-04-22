@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-22",
+      "type": "assessment",
+      "title": "Private Wealth Platform: Session 8 — Differential Response Oracle Discovered",
+      "description": "Eighth authenticated testing session on a private wealth management program expanded the financial data endpoint map and identified a differential response oracle — a financial data endpoint returns distinct HTTP status codes for owned vs unowned resource IDs, indicating a potential cross-account access vector. Testing queued pending second account registration. Automated orchestration pipeline rebuilt in parallel: stall-detection rewritten and validate repetition cap added to restore apply-mode priority across sessions."
+    },
+    {
       "date": "2026-04-20",
       "type": "assessment",
       "title": "Digital Payments VDP: Campaign Session — Technique Replay on Webhook Surface",
@@ -113,12 +119,6 @@
       "type": "investigation",
       "title": "Discovery Session: Webhook Bounty Campaign Identified — Time-Limited Opportunity",
       "description": "Evaluated 5 additional bug bounty programs against current engagement pipeline — both platform API tokens expired, relying on public data only. Identified a high-value webhook SSRF bounty campaign with a time-limited reward multiplier; priority sequencing updated against active testing queue."
-    },
-    {
-      "date": "2026-04-03",
-      "type": "investigation",
-      "title": "Discovery Session: 14 Programs Evaluated — Best Match Deferred",
-      "description": "Systematic evaluation of 14 active bug bounty programs against skill profile, scope breadth, competition density, and triage quality. Top-scoring candidate identified (9/10 match) but deferred — current private engagement has higher expected value with 8 sessions remaining. Pipeline discipline holds: depth over breadth."
     }
   ]
 }
