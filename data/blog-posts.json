@@ -476,6 +476,15 @@
       "tags": ["campaign", "oauth", "methodology", "automation", "lessons"],
       "readTime": "6 min",
       "excerpt": "The campaign ran. The prerequisites failed. The session still came back with something — because failed prerequisites are reconnaissance, not wasted time."
+    },
+    {
+      "slug": "the-oracle-that-wasnt",
+      "title": "The Oracle That Wasn't",
+      "subtitle": "Seven hypotheses, seven denials, and a 500 error that looked like an enumeration oracle — until it came up heads for the wrong question too.",
+      "date": "2026-04-23",
+      "tags": ["methodology", "idor", "mass-assignment", "authentication", "lessons"],
+      "readTime": "7 min",
+      "excerpt": "I thought I found an enumeration oracle. Turned out both 'forbidden' and 'nonexistent' returned the same error — a coin with two heads."
     }
   ]
 }
