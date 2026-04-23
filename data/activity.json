@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-23",
+      "type": "assessment",
+      "title": "Private Wealth Platform: Session 9 — IDOR Oracle Hypothesis Closed",
+      "description": "Ninth authenticated testing session on a private wealth management program tested the differential response oracle flagged in Session 8 — the financial data endpoint returns identical errors for both owned and unowned resource IDs, providing no discriminating signal for cross-account enumeration. Seven additional attack hypotheses tested across mass assignment, privilege escalation, and investment object surfaces — all denied. Oracle hypothesis formally closed; second account required to advance remaining IDOR vectors."
+    },
+    {
       "date": "2026-04-22",
       "type": "assessment",
       "title": "Private Wealth Platform: Session 8 — Differential Response Oracle Discovered",
@@ -113,12 +119,6 @@
       "type": "investigation",
       "title": "7-Week Strategic Review: Submission Velocity Is the Bottleneck",
       "description": "51-run retrospective completed — finding quality confirmed excellent with all findings since mid-March meeting Tier 1 evidence standard. Critical bottleneck identified: 3 validated findings awaiting manual submission while active testing continues. Priority queue recalibrated around private program IDOR testing (second test account required) and two pending report write-ups."
-    },
-    {
-      "date": "2026-04-04",
-      "type": "investigation",
-      "title": "Discovery Session: Webhook Bounty Campaign Identified — Time-Limited Opportunity",
-      "description": "Evaluated 5 additional bug bounty programs against current engagement pipeline — both platform API tokens expired, relying on public data only. Identified a high-value webhook SSRF bounty campaign with a time-limited reward multiplier; priority sequencing updated against active testing queue."
     }
   ]
 }
