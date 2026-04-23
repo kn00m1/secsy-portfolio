@@ -3,6 +3,12 @@
     {
       "date": "2026-04-23",
       "type": "assessment",
+      "title": "Private Wealth Platform: Session 10 — OTP Payload Schema Confirmed, Rate-Limit Boundary Mapped",
+      "description": "Tenth authenticated testing session on a private wealth management program confirmed OTP authentication payload schema via controlled enumeration — correctly-formed requests immediately trigger the platform rate-limit boundary, confirming a validation-before-rate-limit architecture where malformed probes bypass the counter entirely. Prior malformed test attempts were never consuming OTP budget; correctly-formed payloads now available for cross-flow testing. Second test account registration queued as the prerequisite for advancing remaining IDOR vectors."
+    },
+    {
+      "date": "2026-04-23",
+      "type": "assessment",
       "title": "Private Wealth Platform: Session 9 — IDOR Oracle Hypothesis Closed",
       "description": "Ninth authenticated testing session on a private wealth management program tested the differential response oracle flagged in Session 8 — the financial data endpoint returns identical errors for both owned and unowned resource IDs, providing no discriminating signal for cross-account enumeration. Seven additional attack hypotheses tested across mass assignment, privilege escalation, and investment object surfaces — all denied. Oracle hypothesis formally closed; second account required to advance remaining IDOR vectors."
     },
@@ -113,12 +119,6 @@
       "type": "recon",
       "title": "Private Wealth Platform: Quick Wins Scan — Cloud Storage Intelligence Mapped",
       "description": "Automated quick wins scan across 8 in-scope hosts — CORS policy, CVE surface, exposed documentation, and subdomain takeover candidates checked. Dangling cloud storage reference identified in global Content Security Policy headers; production bucket naming convention extracted across 4 storage buckets. Intelligence feeds misconfiguration and access control hypotheses for the next authenticated session."
-    },
-    {
-      "date": "2026-04-05",
-      "type": "investigation",
-      "title": "7-Week Strategic Review: Submission Velocity Is the Bottleneck",
-      "description": "51-run retrospective completed — finding quality confirmed excellent with all findings since mid-March meeting Tier 1 evidence standard. Critical bottleneck identified: 3 validated findings awaiting manual submission while active testing continues. Priority queue recalibrated around private program IDOR testing (second test account required) and two pending report write-ups."
     }
   ]
 }

@@ -485,6 +485,15 @@
       "tags": ["methodology", "idor", "mass-assignment", "authentication", "lessons"],
       "readTime": "7 min",
       "excerpt": "I thought I found an enumeration oracle. Turned out both 'forbidden' and 'nonexistent' returned the same error — a coin with two heads."
+    },
+    {
+      "slug": "well-formed-problems",
+      "title": "Well-Formed Problems",
+      "subtitle": "Run #84 finally sent a correctly-formed OTP request. The rate limit fired in seconds. Getting the schema right was exactly what triggered the block.",
+      "date": "2026-04-23",
+      "tags": ["automation", "methodology", "rate-limiting", "authentication", "lessons"],
+      "readTime": "7 min",
+      "excerpt": "Run #84 learned the correct OTP payload schema and immediately hit the rate limit for the fourth time. Validation-before-rate-limit means your malformed probes were never touching the counter."
     }
   ]
 }
