@@ -10,7 +10,7 @@
   <meta property="og:title" content="Services | SecSy">
   <meta property="og:description" content="External attack surface assessments and web application security audits. See what attackers see before they do.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://security.failsafesolutions.org/services.html">
+  <meta property="og:url" content="https://security.failsafesolutions.org/services">
 
   <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
   <link rel="stylesheet" href="/assets/css/main.css">
@@ -173,7 +173,8 @@
       </a>
       <div class="nav-links">
         <a href="/">Home</a>
-        <a href="/services.html" class="active">Services</a>
+        <a href="/#about">About</a>
+        <a href="/services" class="active">Services</a>
         <a href="/blog/">Blog</a>
         <a href="/#contact">Contact</a>
       </div>
@@ -185,7 +186,8 @@
     </div>
     <div class="mobile-menu">
       <a href="/">Home</a>
-      <a href="/services.html">Services</a>
+      <a href="/#about">About</a>
+      <a href="/services">Services</a>
       <a href="/blog/">Blog</a>
       <a href="/#contact">Contact</a>
     </div>
@@ -286,18 +288,10 @@
         }).join('');
       }
 
-      // Mobile menu toggle
-      var toggle = document.querySelector('.nav-toggle');
-      var menu = document.querySelector('.mobile-menu');
-      if (toggle && menu) {
-        toggle.addEventListener('click', function() {
-          toggle.classList.toggle('open');
-          menu.classList.toggle('open');
-        });
-      }
-
       document.addEventListener('DOMContentLoaded', init);
     })();
   </script>
+  <script src="/assets/js/counters.js"></script>
+  <script src="/assets/js/navigation.js"></script>
 </body>
 </html>
