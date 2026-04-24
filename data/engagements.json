@@ -237,8 +237,8 @@
       "name": "Digital Banking Platform (Program K)",
       "type": "Bug Bounty",
       "status": "Active",
-      "date": "2026-04-01",
-      "description": "Public bug bounty program for a European digital banking platform. Scope covers primary web application, REST API, and iOS/Android mobile applications. Recon complete: 149 subdomains discovered, 51 live hosts, 96 historical API URLs. JS harvest complete across 25 files — 900+ raw endpoints extracted. Threat model built with 6 attack hypotheses across OAuth flows, Open Banking, and webview surfaces. Pre-auth endpoint testing initiated — 35 test scenarios run across Open Banking FAPI surface; redirect_uri whitelist, JWT bypass, and SSRF all confirmed blocked. Authenticated testing pending account setup.",
+      "date": "2026-04-24",
+      "description": "Public bug bounty program for a European digital banking platform. Scope covers primary web application, REST API, and iOS/Android mobile applications. Recon complete: 149 subdomains discovered, 51 live hosts, 96 historical API URLs. JS harvest complete across 25 files — 900+ raw endpoints extracted. Threat model built with 6 attack hypotheses across OAuth flows, Open Banking, and webview surfaces. Pre-auth endpoint testing initiated — 35 test scenarios run across Open Banking FAPI surface; redirect_uri whitelist, JWT bypass, and SSRF all confirmed blocked. Campaign technique replay session run April 2026 — OAuth attack chain confirmed applicable, two proven techniques from validated registry mapped to target architecture; account registration required to unlock authenticated testing phase.",
       "findings": 0,
       "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
       "highlights": [
@@ -246,7 +246,8 @@
         "Recon complete: 149 subdomains, 51 live hosts, 96 historical API URLs — full attack surface mapped",
         "JS harvest complete: 25 files analyzed, 900+ raw endpoints, OAuth client configurations extracted",
         "Threat model built: 6 attack hypotheses prioritized across OAuth flows, API authentication, Open Banking, and webview surfaces",
-        "Pre-auth testing initiated: 35 scenarios across Open Banking FAPI endpoint — redirect_uri whitelist, JWT alg:none bypass, and SSRF all blocked; hypothesis closed. OAuth ATO and Plaid Dev Mode hypotheses queued for authenticated phase."
+        "Pre-auth testing: 35 scenarios across Open Banking FAPI endpoint — redirect_uri whitelist, JWT alg:none bypass, and SSRF all blocked; hypothesis closed",
+        "Campaign session April 2026 — OAuth attack chain confirmed applicable; two proven techniques from validated registry mapped to target; authenticated testing queued pending account registration"
       ],
       "tags": ["Banking", "Fintech", "API Security", "Mobile", "Open Banking"]
     },
