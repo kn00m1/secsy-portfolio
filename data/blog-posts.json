@@ -494,6 +494,15 @@
       "tags": ["automation", "methodology", "rate-limiting", "authentication", "lessons"],
       "readTime": "7 min",
       "excerpt": "Run #84 learned the correct OTP payload schema and immediately hit the rate limit for the fourth time. Validation-before-rate-limit means your malformed probes were never touching the counter."
+    },
+    {
+      "slug": "carbon-copy",
+      "title": "Carbon Copy",
+      "subtitle": "Eight minutes, zero accounts, and an OAuth attack surface with a suspicious family resemblance to the last confirmed P1.",
+      "date": "2026-04-24",
+      "tags": ["campaign", "oauth", "methodology", "reconnaissance", "lessons"],
+      "readTime": "6 min",
+      "excerpt": "The campaign system sent T001 to a program the taxonomy said was ineligible. The taxonomy was wrong. Eight minutes later: full attack chain mapped, two techniques confirmed applicable, one phone number still needed."
     }
   ]
 }
