@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-24",
+      "type": "assessment",
+      "title": "Private Wealth Platform: Session 11 — Financial Surface Expanded, Rate-Limit Boundary Persists",
+      "description": "Eleventh authenticated testing session on a private wealth management program continued hypothesis-driven testing across financial planning and investment surfaces — additional endpoint coverage mapped and attack surface expanded. Rate-limit boundary remained active on OTP-adjacent vectors throughout; second account registration remains the blocking prerequisite for the remaining cross-account IDOR hypotheses."
+    },
+    {
       "date": "2026-04-23",
       "type": "assessment",
       "title": "Private Wealth Platform: Session 10 — OTP Payload Schema Confirmed, Rate-Limit Boundary Mapped",
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "Private Wealth Platform: CORS Audit — 6 Vectors Clean, S3 Candidate Flagged",
       "description": "Extended CORS audit on a private wealth management platform completed after VPS memory recovery — six attack vectors tested including origin reflection, suffix bypass, null origin, subdomain spoofing, pre-flight POST, and DELETE method enumeration. CORS whitelist confirmed exact-match on all production hosts. Dangling S3 bucket in global Content Security Policy flagged as P4/Low candidate pending validation."
-    },
-    {
-      "date": "2026-04-05",
-      "type": "recon",
-      "title": "Private Wealth Platform: Quick Wins Scan — Cloud Storage Intelligence Mapped",
-      "description": "Automated quick wins scan across 8 in-scope hosts — CORS policy, CVE surface, exposed documentation, and subdomain takeover candidates checked. Dangling cloud storage reference identified in global Content Security Policy headers; production bucket naming convention extracted across 4 storage buckets. Intelligence feeds misconfiguration and access control hypotheses for the next authenticated session."
     }
   ]
 }
