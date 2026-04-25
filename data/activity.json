@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-25",
+      "type": "assessment",
+      "title": "Private Wealth Platform: Session 12 — Five Hypotheses Closed, Transaction Endpoint Discovered",
+      "description": "Twelfth authenticated testing session on a private wealth management program closed five attack hypotheses across MFA challenge flow, TOTP bypass vectors, GraphQL surface, mass assignment, and cross-user portfolio allocation — a new financial transaction endpoint discovered showing differential ownership behavior. Rate-limit boundary re-triggered during authentication surface exploration. Second test account registration remains the prerequisite for the remaining cross-account IDOR vectors."
+    },
+    {
       "date": "2026-04-24",
       "type": "recon",
       "title": "Digital Banking Platform: Campaign Session — OAuth Attack Chain Confirmed Applicable",
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "Private Wealth Platform: Quick Wins Certified Complete — Infrastructure Fingerprint Captured",
       "description": "Fifth quick wins pass on a private wealth management program confirmed all prior findings accurate — dangling cloud storage reference in global CSP remains unclaimed and attacker-claimable. Server response headers parsed across all 8 in-scope hosts — web framework and runtime signals captured for threat model. Quick wins phase formally closed; cross-account IDOR testing and manual proxy session queued as next phases."
-    },
-    {
-      "date": "2026-04-08",
-      "type": "assessment",
-      "title": "Private Wealth Platform: Content Discovery — CDN False Positives Mapped",
-      "description": "Content discovery phase of quick wins audit completed — CDN JavaScript challenges returning HTTP 200 without application content caused systematic false positives across all path probes. CDN interception pattern documented; methodology updated to filter challenge responses from enumeration output. Surface characterization confirmed complete; manual proxy session queued as next phase."
     }
   ]
 }
