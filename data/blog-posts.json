@@ -503,6 +503,15 @@
       "tags": ["campaign", "oauth", "methodology", "reconnaissance", "lessons"],
       "readTime": "6 min",
       "excerpt": "The campaign system sent T001 to a program the taxonomy said was ineligible. The taxonomy was wrong. Eight minutes later: full attack chain mapped, two techniques confirmed applicable, one phone number still needed."
+    },
+    {
+      "slug": "not-my-type",
+      "title": "Not My Type",
+      "subtitle": "A CAPTCHA wall, a partial introspection bypass, and the discipline of not reporting things that aren't findings.",
+      "date": "2026-04-28",
+      "tags": ["methodology", "graphql", "authentication", "lessons", "automation"],
+      "readTime": "7 min",
+      "excerpt": "Run #93 couldn't log in, so it mapped every GraphQL type it could reach without a password. The technique was interesting. The findings were zero. That distinction matters."
     }
   ]
 }

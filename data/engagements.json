@@ -198,16 +198,16 @@
       "id": "program-h",
       "name": "Crypto/Fintech Wallet (Program H)",
       "type": "Bug Bounty",
-      "status": "On Hold",
+      "status": "Active",
       "date": "2026-03-28",
-      "description": "Bug bounty engagement targeting a crypto/fintech wallet platform. Scope spans GraphQL and REST APIs, enterprise portal, and 35+ web targets. JS harvest complete — 150+ GraphQL operations mapped. Engagement paused: program temporarily suspended by the platform. Queued for resume when program reopens.",
+      "description": "Bug bounty engagement targeting a crypto/fintech wallet platform. Scope spans GraphQL and REST APIs, enterprise portal, and 35+ web targets. JS harvest complete — 150+ GraphQL operations mapped. Program suspended March 2026; suspension lifted April 2026 — engagement resumed. Quick wins pass confirmed attack surface intact. Unauthenticated GraphQL surface probed via partial introspection bypass — reachable type map extracted pre-auth. OAuth app creation endpoint and JSON OAuth cookie surface confirmed. Manual account registration required to unlock authenticated testing phase.",
       "findings": 0,
       "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
       "highlights": [
-        "150+ GraphQL operations extracted via JS harvest — schema mapped pre-pause",
-        "Priority surfaces identified: OAuth flows, GraphQL mutation fuzzing, wallet IDOR, enterprise portal privilege boundaries",
-        "Recon and threat model complete — ready to resume immediately on program reopen",
-        "Paused: program suspended by platform — monitoring for reactivation"
+        "150+ GraphQL operations extracted via JS harvest — schema mapped; attack surface confirmed intact after program reopen",
+        "Priority surfaces identified: OAuth custom app flows, GraphQL mutation fuzzing, wallet IDOR, enterprise portal privilege boundaries",
+        "Partial introspection bypass: unauthenticated GraphQL type map extracted — reachable schema surface documented without credentials",
+        "Quick wins pass complete — infrastructure fingerprinted, no low-hanging fruit; manual account registration required to advance to authenticated testing"
       ],
       "tags": ["Crypto", "Fintech", "OAuth", "GraphQL", "API Security"]
     },
@@ -215,7 +215,7 @@
       "id": "program-i",
       "name": "Digital Wealth Manager (Program I)",
       "type": "Bug Bounty",
-      "status": "Active",
+      "status": "Paused",
       "date": "2026-03-30",
       "description": "Private bug bounty program for a digital wealth management platform. Recon complete: 80+ subdomains, 20+ live hosts, 100+ API operations mapped via JS harvest. Recon refreshed April 2026 — 4 new hosts identified. Twelve authenticated sessions completed across authentication, referral, investment, and financial planning surfaces. Rate-limit window fully characterized — 12+ hour OTP window. 35+ attack hypotheses tested across IDOR, mass assignment, OTP cross-flow, and privilege escalation vectors — server-side access controls confirmed throughout. Financial resource objects created; sequential identifiers observed in financial transaction data. Sessions 8–12: differential response oracle identified (Session 8), closed (Session 9) — endpoint returns identical errors for owned and unowned resource IDs; OTP payload schema confirmed in Session 10 — correctly-formed requests immediately trigger rate-limit boundary, confirming validation-before-rate-limit architecture; Session 11 expanded financial surface coverage; Session 12 (2026-04-25) closed five attack hypotheses across MFA challenge flow, TOTP bypass, GraphQL surface, mass assignment, and cross-user portfolio allocation — new financial transaction endpoint discovered with differential ownership behavior. One finding validated: referral API data exposure (P3/Medium, Tier 1 evidence, pending submission). Quick-wins scan saturated: CORS exact-match whitelist confirmed (6 attack vectors), CVE surface zero-match, Spring Boot actuators locked (15 endpoints), dangling S3 bucket in global CSP confirmed unclaimed. S3 non-prod bucket enumeration exhausted (12 naming variants, all empty). Backend stack confirmed: Spring Boot 3.x. Infrastructure fingerprint complete.",
       "findings": 1,

@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-28",
+      "type": "assessment",
+      "title": "Crypto/Fintech Platform: Program Reactivated — GraphQL Surface Mapped via Partial Introspection",
+      "description": "Resumed testing on a previously suspended crypto/fintech bug bounty platform following program reopen — unauthenticated GraphQL surface probed via partial introspection bypass, extracting reachable type map without credentials. CAPTCHA wall blocked authenticated access; manual account registration remains the prerequisite for advancing OAuth flow and cross-account IDOR testing on the 150+ operation schema already mapped."
+    },
+    {
       "date": "2026-04-25",
       "type": "assessment",
       "title": "Private Wealth Platform: Session 12 — Five Hypotheses Closed, Transaction Endpoint Discovered",
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "Private Wealth Platform: Authentication Header Analysis — Service Method Diff Captured",
       "description": "Custom request header behavior probed across three authentication states on a private wealth management program — unauthenticated, active-session, and expired-session paths all tested. No access control bypass observed, but response method differences across auth states produced a service-level diff that narrows the attack surface for the manual proxy session queued as the next phase."
-    },
-    {
-      "date": "2026-04-08",
-      "type": "assessment",
-      "title": "Private Wealth Platform: Quick Wins Certified Complete — Infrastructure Fingerprint Captured",
-      "description": "Fifth quick wins pass on a private wealth management program confirmed all prior findings accurate — dangling cloud storage reference in global CSP remains unclaimed and attacker-claimable. Server response headers parsed across all 8 in-scope hosts — web framework and runtime signals captured for threat model. Quick wins phase formally closed; cross-account IDOR testing and manual proxy session queued as next phases."
     }
   ]
 }
