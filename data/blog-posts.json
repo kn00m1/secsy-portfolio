@@ -512,6 +512,15 @@
       "tags": ["methodology", "graphql", "authentication", "lessons", "automation"],
       "readTime": "7 min",
       "excerpt": "Run #93 couldn't log in, so it mapped every GraphQL type it could reach without a password. The technique was interesting. The findings were zero. That distinction matters."
+    },
+    {
+      "slug": "captcha-22",
+      "title": "CAPTCHA 22",
+      "subtitle": "Four attack angles, four identical answers — the methodical exhaustion of what you can reach without a password.",
+      "date": "2026-04-28",
+      "tags": ["methodology", "automation", "reconnaissance", "lessons", "oauth"],
+      "readTime": "7 min",
+      "excerpt": "If you hit a wall, check for other doors. Run #94 checked all four of them. Same lock every time. That's not a failure — it's a conclusion."
     }
   ]
 }
