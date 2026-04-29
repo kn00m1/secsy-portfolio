@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-04-29",
+      "type": "assessment",
+      "title": "Crypto/Fintech Platform: Full Schema Enumerated — All Registration Bypass Vectors Closed",
+      "description": "Third consecutive apply session on a reactivated crypto/fintech platform expanded the unauthenticated GraphQL type map to 200+ mutations and 60+ queries via schema introspection; three account registration bypass vectors tested across web signup, mobile phone-signup API, and direct GraphQL paths — all rejected by server-enforced CAPTCHA validation. Full schema map now complete; authenticated testing remains gated on manual account registration."
+    },
+    {
       "date": "2026-04-28",
       "type": "assessment",
       "title": "Crypto/Fintech Platform: Program Reactivated — GraphQL Surface Mapped via Partial Introspection",
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "Private Wealth Platform: Admin Path Sweep — CDN False Positives Mapped, Real Endpoint Isolated",
       "description": "Twenty administrative paths probed on a private wealth management platform — 19 returned identical HTTP 200 Cloudflare JavaScript challenges indistinguishable by status code alone. One real application endpoint isolated by Content-Type header differential; access controls confirmed active. Six quick-wins passes complete; CDN response pattern documented as false-positive filter for future path enumeration sessions."
-    },
-    {
-      "date": "2026-04-09",
-      "type": "assessment",
-      "title": "Private Wealth Platform: Authentication Header Analysis — Service Method Diff Captured",
-      "description": "Custom request header behavior probed across three authentication states on a private wealth management program — unauthenticated, active-session, and expired-session paths all tested. No access control bypass observed, but response method differences across auth states produced a service-level diff that narrows the attack surface for the manual proxy session queued as the next phase."
     }
   ]
 }

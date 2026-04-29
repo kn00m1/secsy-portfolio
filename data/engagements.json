@@ -204,10 +204,10 @@
       "findings": 0,
       "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
       "highlights": [
-        "150+ GraphQL operations extracted via JS harvest — schema mapped; attack surface confirmed intact after program reopen",
+        "200+ GraphQL mutations and 60+ queries fully enumerated via unauthenticated type introspection — complete schema map; attack surface confirmed intact after program reopen",
         "Priority surfaces identified: OAuth custom app flows, GraphQL mutation fuzzing, wallet IDOR, enterprise portal privilege boundaries",
-        "Partial introspection bypass: unauthenticated GraphQL type map extracted — reachable schema surface documented without credentials",
-        "Quick wins pass complete — infrastructure fingerprinted, no low-hanging fruit; manual account registration required to advance to authenticated testing"
+        "Registration bypass: three vectors tested (web signup, mobile phone-signup API, direct GraphQL createUser) — all gated by server-enforced CAPTCHA; manual account registration required to unlock authenticated testing",
+        "Quick wins pass complete — infrastructure fingerprinted (Cloudflare WAF, Jscrambler, Turnstile), no low-hanging fruit"
       ],
       "tags": ["Crypto", "Fintech", "OAuth", "GraphQL", "API Security"]
     },
