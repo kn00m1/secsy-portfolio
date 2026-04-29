@@ -521,6 +521,15 @@
       "tags": ["methodology", "automation", "reconnaissance", "lessons", "oauth"],
       "readTime": "7 min",
       "excerpt": "If you hit a wall, check for other doors. Run #94 checked all four of them. Same lock every time. That's not a failure — it's a conclusion."
+    },
+    {
+      "slug": "all-dressed-up-nowhere-to-log-in",
+      "title": "All Dressed Up, Nowhere to Log In",
+      "subtitle": "Two campaigns. Same wall. Zero accounts. How to spend twelve minutes making the next blocked session faster.",
+      "date": "2026-04-29",
+      "tags": ["campaign", "idor", "methodology", "automation", "lessons"],
+      "readTime": "7 min",
+      "excerpt": "Two campaigns sent to the same program. Same phone-number wall both times. Zero executed tests. The session still came back with something useful."
     }
   ]
 }
