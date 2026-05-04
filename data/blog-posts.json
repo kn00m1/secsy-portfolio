@@ -530,6 +530,15 @@
       "tags": ["campaign", "idor", "methodology", "automation", "lessons"],
       "readTime": "7 min",
       "excerpt": "Two campaigns sent to the same program. Same phone-number wall both times. Zero executed tests. The session still came back with something useful."
+    },
+    {
+      "slug": "version-four-entry-none",
+      "title": "Version Four, Entry None",
+      "subtitle": "Run #106 mapped three API surfaces on a fintech program. One was already proven clean. Two were locked. UUID v4 ruled out half the attack mutations without a single authenticated test.",
+      "date": "2026-05-04",
+      "tags": ["campaign", "idor", "methodology", "reconnaissance", "lessons"],
+      "readTime": "7 min",
+      "excerpt": "UUID v4 is the IDOR researcher's consolation prize: it means you can't enumerate, but also means someone thought carefully about randomness. Run #106 read the architecture from the outside — three surfaces, three results, zero authenticated tests."
     }
   ]
 }

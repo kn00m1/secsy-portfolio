@@ -1,124 +1,124 @@
 {
   "activity": [
     {
+      "date": "2026-05-04",
+      "type": "assessment",
+      "title": "Digital Payments VDP: IDOR Campaign \u2014 Resource Architecture Mapped Pre-Auth",
+      "description": "Campaign technique replay session on a digital payments VDP \u2014 three API resource surfaces probed via unauthenticated enumeration; resource identifier architecture confirmed across endpoints, ruling out sequential enumeration mutation vectors. Authenticated testing required to advance cross-account access hypotheses."
+    },
+    {
       "date": "2026-04-29",
       "type": "assessment",
-      "title": "Crypto/Fintech Platform: Full Schema Enumerated — All Registration Bypass Vectors Closed",
-      "description": "Third consecutive apply session on a reactivated crypto/fintech platform expanded the unauthenticated GraphQL type map to 200+ mutations and 60+ queries via schema introspection; three account registration bypass vectors tested across web signup, mobile phone-signup API, and direct GraphQL paths — all rejected by server-enforced CAPTCHA validation. Full schema map now complete; authenticated testing remains gated on manual account registration."
+      "title": "Crypto/Fintech Platform: Full Schema Enumerated \u2014 All Registration Bypass Vectors Closed",
+      "description": "Third consecutive apply session on a reactivated crypto/fintech platform expanded the unauthenticated GraphQL type map to 200+ mutations and 60+ queries via schema introspection; three account registration bypass vectors tested across web signup, mobile phone-signup API, and direct GraphQL paths \u2014 all rejected by server-enforced CAPTCHA validation. Full schema map now complete; authenticated testing remains gated on manual account registration."
     },
     {
       "date": "2026-04-28",
       "type": "assessment",
-      "title": "Crypto/Fintech Platform: Program Reactivated — GraphQL Surface Mapped via Partial Introspection",
-      "description": "Resumed testing on a previously suspended crypto/fintech bug bounty platform following program reopen — unauthenticated GraphQL surface probed via partial introspection bypass, extracting reachable type map without credentials. CAPTCHA wall blocked authenticated access; manual account registration remains the prerequisite for advancing OAuth flow and cross-account IDOR testing on the 150+ operation schema already mapped."
+      "title": "Crypto/Fintech Platform: Program Reactivated \u2014 GraphQL Surface Mapped via Partial Introspection",
+      "description": "Resumed testing on a previously suspended crypto/fintech bug bounty platform following program reopen \u2014 unauthenticated GraphQL surface probed via partial introspection bypass, extracting reachable type map without credentials. CAPTCHA wall blocked authenticated access; manual account registration remains the prerequisite for advancing OAuth flow and cross-account IDOR testing on the 150+ operation schema already mapped."
     },
     {
       "date": "2026-04-25",
       "type": "assessment",
-      "title": "Private Wealth Platform: Session 12 — Five Hypotheses Closed, Transaction Endpoint Discovered",
-      "description": "Twelfth authenticated testing session on a private wealth management program closed five attack hypotheses across MFA challenge flow, TOTP bypass vectors, GraphQL surface, mass assignment, and cross-user portfolio allocation — a new financial transaction endpoint discovered showing differential ownership behavior. Rate-limit boundary re-triggered during authentication surface exploration. Second test account registration remains the prerequisite for the remaining cross-account IDOR vectors."
+      "title": "Private Wealth Platform: Session 12 \u2014 Five Hypotheses Closed, Transaction Endpoint Discovered",
+      "description": "Twelfth authenticated testing session on a private wealth management program closed five attack hypotheses across MFA challenge flow, TOTP bypass vectors, GraphQL surface, mass assignment, and cross-user portfolio allocation \u2014 a new financial transaction endpoint discovered showing differential ownership behavior. Rate-limit boundary re-triggered during authentication surface exploration. Second test account registration remains the prerequisite for the remaining cross-account IDOR vectors."
     },
     {
       "date": "2026-04-24",
       "type": "recon",
-      "title": "Digital Banking Platform: Campaign Session — OAuth Attack Chain Confirmed Applicable",
-      "description": "Campaign technique replay session on a public digital banking platform confirmed OAuth attack surface applicability — two proven techniques from the validated registry mapped to the target architecture in under ten minutes. Pre-authentication attack chain documented; manual account registration required to advance to the authenticated testing phase."
+      "title": "Digital Banking Platform: Campaign Session \u2014 OAuth Attack Chain Confirmed Applicable",
+      "description": "Campaign technique replay session on a public digital banking platform confirmed OAuth attack surface applicability \u2014 two proven techniques from the validated registry mapped to the target architecture in under ten minutes. Pre-authentication attack chain documented; manual account registration required to advance to the authenticated testing phase."
     },
     {
       "date": "2026-04-24",
       "type": "assessment",
-      "title": "Private Wealth Platform: Session 11 — Financial Surface Expanded, Rate-Limit Boundary Persists",
-      "description": "Eleventh authenticated testing session on a private wealth management program continued hypothesis-driven testing across financial planning and investment surfaces — additional endpoint coverage mapped and attack surface expanded. Rate-limit boundary remained active on OTP-adjacent vectors throughout; second account registration remains the blocking prerequisite for the remaining cross-account IDOR hypotheses."
+      "title": "Private Wealth Platform: Session 11 \u2014 Financial Surface Expanded, Rate-Limit Boundary Persists",
+      "description": "Eleventh authenticated testing session on a private wealth management program continued hypothesis-driven testing across financial planning and investment surfaces \u2014 additional endpoint coverage mapped and attack surface expanded. Rate-limit boundary remained active on OTP-adjacent vectors throughout; second account registration remains the blocking prerequisite for the remaining cross-account IDOR hypotheses."
     },
     {
       "date": "2026-04-23",
       "type": "assessment",
-      "title": "Private Wealth Platform: Session 10 — OTP Payload Schema Confirmed, Rate-Limit Boundary Mapped",
-      "description": "Tenth authenticated testing session on a private wealth management program confirmed OTP authentication payload schema via controlled enumeration — correctly-formed requests immediately trigger the platform rate-limit boundary, confirming a validation-before-rate-limit architecture where malformed probes bypass the counter entirely. Prior malformed test attempts were never consuming OTP budget; correctly-formed payloads now available for cross-flow testing. Second test account registration queued as the prerequisite for advancing remaining IDOR vectors."
+      "title": "Private Wealth Platform: Session 10 \u2014 OTP Payload Schema Confirmed, Rate-Limit Boundary Mapped",
+      "description": "Tenth authenticated testing session on a private wealth management program confirmed OTP authentication payload schema via controlled enumeration \u2014 correctly-formed requests immediately trigger the platform rate-limit boundary, confirming a validation-before-rate-limit architecture where malformed probes bypass the counter entirely. Prior malformed test attempts were never consuming OTP budget; correctly-formed payloads now available for cross-flow testing. Second test account registration queued as the prerequisite for advancing remaining IDOR vectors."
     },
     {
       "date": "2026-04-23",
       "type": "assessment",
-      "title": "Private Wealth Platform: Session 9 — IDOR Oracle Hypothesis Closed",
-      "description": "Ninth authenticated testing session on a private wealth management program tested the differential response oracle flagged in Session 8 — the financial data endpoint returns identical errors for both owned and unowned resource IDs, providing no discriminating signal for cross-account enumeration. Seven additional attack hypotheses tested across mass assignment, privilege escalation, and investment object surfaces — all denied. Oracle hypothesis formally closed; second account required to advance remaining IDOR vectors."
+      "title": "Private Wealth Platform: Session 9 \u2014 IDOR Oracle Hypothesis Closed",
+      "description": "Ninth authenticated testing session on a private wealth management program tested the differential response oracle flagged in Session 8 \u2014 the financial data endpoint returns identical errors for both owned and unowned resource IDs, providing no discriminating signal for cross-account enumeration. Seven additional attack hypotheses tested across mass assignment, privilege escalation, and investment object surfaces \u2014 all denied. Oracle hypothesis formally closed; second account required to advance remaining IDOR vectors."
     },
     {
       "date": "2026-04-22",
       "type": "assessment",
-      "title": "Private Wealth Platform: Session 8 — Differential Response Oracle Discovered",
-      "description": "Eighth authenticated testing session on a private wealth management program expanded the financial data endpoint map and identified a differential response oracle — a financial data endpoint returns distinct HTTP status codes for owned vs unowned resource IDs, indicating a potential cross-account access vector. Testing queued pending second account registration. Automated orchestration pipeline rebuilt in parallel: stall-detection rewritten and validate repetition cap added to restore apply-mode priority across sessions."
+      "title": "Private Wealth Platform: Session 8 \u2014 Differential Response Oracle Discovered",
+      "description": "Eighth authenticated testing session on a private wealth management program expanded the financial data endpoint map and identified a differential response oracle \u2014 a financial data endpoint returns distinct HTTP status codes for owned vs unowned resource IDs, indicating a potential cross-account access vector. Testing queued pending second account registration. Automated orchestration pipeline rebuilt in parallel: stall-detection rewritten and validate repetition cap added to restore apply-mode priority across sessions."
     },
     {
       "date": "2026-04-20",
       "type": "assessment",
-      "title": "Digital Payments VDP: Campaign Session — Technique Replay on Webhook Surface",
-      "description": "Campaign technique replay session targeting a digital payments vulnerability disclosure program — validated webhook attack surface mapped against technique registry; submission-ready finding confirmed stable pending manual platform submission."
+      "title": "Digital Payments VDP: Campaign Session \u2014 Technique Replay on Webhook Surface",
+      "description": "Campaign technique replay session targeting a digital payments vulnerability disclosure program \u2014 validated webhook attack surface mapped against technique registry; submission-ready finding confirmed stable pending manual platform submission."
     },
     {
       "date": "2026-04-19",
       "type": "assessment",
-      "title": "Food Delivery Platform: 60-Day Mark — Final Pre-Escalation Validation Pass",
-      "description": "Pre-escalation validation pass on a global food delivery platform confirms all key findings live at the 60-day mark — identity provider misconfiguration, subdomain takeover CNAME records, and authentication bypass vector all unchanged across multiple deployments. Platform support escalation contact window opens tomorrow; rebuttal has gone without triager response for 22 days, exceeding platform SLA by 6x."
+      "title": "Food Delivery Platform: 60-Day Mark \u2014 Final Pre-Escalation Validation Pass",
+      "description": "Pre-escalation validation pass on a global food delivery platform confirms all key findings live at the 60-day mark \u2014 identity provider misconfiguration, subdomain takeover CNAME records, and authentication bypass vector all unchanged across multiple deployments. Platform support escalation contact window opens tomorrow; rebuttal has gone without triager response for 22 days, exceeding platform SLA by 6x."
     },
     {
       "date": "2026-04-18",
       "type": "assessment",
-      "title": "Food Delivery Platform: Keycloak Path Migration Discovered — Rebuttal Evidence Strengthened",
-      "description": "Re-validation session on a global food delivery platform discovered that the identity provider Keycloak realm path migrated post-report — confirms the platform performed active maintenance but failed to remediate the core vulnerability. New differential evidence strengthens the 21-day-pending rebuttal. Subdomain takeover independently confirmed live at 59 days unfixed; report submission-ready. Escalation window opens in two days."
+      "title": "Food Delivery Platform: Keycloak Path Migration Discovered \u2014 Rebuttal Evidence Strengthened",
+      "description": "Re-validation session on a global food delivery platform discovered that the identity provider Keycloak realm path migrated post-report \u2014 confirms the platform performed active maintenance but failed to remediate the core vulnerability. New differential evidence strengthens the 21-day-pending rebuttal. Subdomain takeover independently confirmed live at 59 days unfixed; report submission-ready. Escalation window opens in two days."
     },
     {
       "date": "2026-04-16",
       "type": "assessment",
-      "title": "Food Delivery Platform: 57-Day Validation — Findings Confirmed, Escalation Trigger Set",
-      "description": "Third consecutive validation pass on a global food delivery platform confirms key findings remain live 57 days after initial discovery — subdomain takeover CNAMEs and authentication bypass production bundle hash both unchanged. Identity provider rebuttal now 18 days without triager response (6x SLA); escalation to platform support flagged for 2026-04-20."
+      "title": "Food Delivery Platform: 57-Day Validation \u2014 Findings Confirmed, Escalation Trigger Set",
+      "description": "Third consecutive validation pass on a global food delivery platform confirms key findings remain live 57 days after initial discovery \u2014 subdomain takeover CNAMEs and authentication bypass production bundle hash both unchanged. Identity provider rebuttal now 18 days without triager response (6x SLA); escalation to platform support flagged for 2026-04-20."
     },
     {
       "date": "2026-04-15",
       "type": "assessment",
-      "title": "Food Delivery Platform: Pre-Submission Validation — Key Findings Confirmed at Day 55",
-      "description": "Pre-submission validation pass on a global food delivery platform — subdomain takeover CNAME records and authentication bypass vector confirmed still present and exploitable at 55 days post-discovery. Conditional submission pass assigned to subdomain takeover finding; evidence package complete and submission-ready."
+      "title": "Food Delivery Platform: Pre-Submission Validation \u2014 Key Findings Confirmed at Day 55",
+      "description": "Pre-submission validation pass on a global food delivery platform \u2014 subdomain takeover CNAME records and authentication bypass vector confirmed still present and exploitable at 55 days post-discovery. Conditional submission pass assigned to subdomain takeover finding; evidence package complete and submission-ready."
     },
     {
       "date": "2026-04-15",
       "type": "recon",
-      "title": "Enterprise HR Platform: Campaign Initiated — Webhook API Confirmed, Bot Protection Documented",
-      "description": "Campaign technique replay initiated against an enterprise HR SaaS bug bounty program — webhook API endpoint confirmed via HTTP probe, authentication flow mapped (credential-exchange to bearer token), and CDN/edge infrastructure fingerprinted. Five browser automation approaches attempted for account creation; blocked by multi-layer bot protection. Technique confirmed applicable — manual account registration required to unlock authenticated testing phase."
+      "title": "Enterprise HR Platform: Campaign Initiated \u2014 Webhook API Confirmed, Bot Protection Documented",
+      "description": "Campaign technique replay initiated against an enterprise HR SaaS bug bounty program \u2014 webhook API endpoint confirmed via HTTP probe, authentication flow mapped (credential-exchange to bearer token), and CDN/edge infrastructure fingerprinted. Five browser automation approaches attempted for account creation; blocked by multi-layer bot protection. Technique confirmed applicable \u2014 manual account registration required to unlock authenticated testing phase."
     },
     {
       "date": "2026-04-14",
       "type": "assessment",
-      "title": "Food Delivery Platform: 7-Gate Re-Validation — 4 Findings Confirmed Live After 54 Days",
-      "description": "Full 7-gate re-validation of 11 reports on a global food delivery platform — 4 vulnerabilities confirmed still present 54 days after initial discovery, including an identity provider misconfiguration, subdomain takeover CNAMEs, and an authentication bypass confirmed in three distinct production bundle hashes. Final action verdicts assigned across all 11 reports: 1 awaiting triager re-review on rebuttal, 1 conditional submission pass, 9 dropped or held on pre-mortem risk."
+      "title": "Food Delivery Platform: 7-Gate Re-Validation \u2014 4 Findings Confirmed Live After 54 Days",
+      "description": "Full 7-gate re-validation of 11 reports on a global food delivery platform \u2014 4 vulnerabilities confirmed still present 54 days after initial discovery, including an identity provider misconfiguration, subdomain takeover CNAMEs, and an authentication bypass confirmed in three distinct production bundle hashes. Final action verdicts assigned across all 11 reports: 1 awaiting triager re-review on rebuttal, 1 conditional submission pass, 9 dropped or held on pre-mortem risk."
     },
     {
       "date": "2026-04-14",
       "type": "assessment",
-      "title": "Digital Payments VDP: SSRF Report Finalized — Submission-Ready",
-      "description": "Submission-ready report written for a validated blind SSRF finding on a digital payments platform VDP — 10 confirmed out-of-band callbacks received from cloud infrastructure, internal service metadata exposed in request headers. DNS rebinding and IP encoding bypass vectors documented. Finding validated 15 days prior; full Tier 1 evidence package complete, pending manual platform submission."
+      "title": "Digital Payments VDP: SSRF Report Finalized \u2014 Submission-Ready",
+      "description": "Submission-ready report written for a validated blind SSRF finding on a digital payments platform VDP \u2014 10 confirmed out-of-band callbacks received from cloud infrastructure, internal service metadata exposed in request headers. DNS rebinding and IP encoding bypass vectors documented. Finding validated 15 days prior; full Tier 1 evidence package complete, pending manual platform submission."
     },
     {
       "date": "2026-04-13",
       "type": "assessment",
-      "title": "ERP/CRM Platform: Full Security Audit Delivered — CORS Chain and Access Control Issues Found",
-      "description": "Completed owner-authorized security audit of an ERP/CRM SaaS platform — identified permissive CORS configuration reflecting any origin with credentials, enabling a chained attack via authenticated API endpoints to exfiltrate full session data cross-origin. Verbose error disclosure, user enumeration, and system configuration exposure also found. Full remediation roadmap delivered to client."
+      "title": "ERP/CRM Platform: Full Security Audit Delivered \u2014 CORS Chain and Access Control Issues Found",
+      "description": "Completed owner-authorized security audit of an ERP/CRM SaaS platform \u2014 identified permissive CORS configuration reflecting any origin with credentials, enabling a chained attack via authenticated API endpoints to exfiltrate full session data cross-origin. Verbose error disclosure, user enumeration, and system configuration exposure also found. Full remediation roadmap delivered to client."
     },
     {
       "date": "2026-04-13",
       "type": "assessment",
-      "title": "Private Wealth Platform: Quick Wins Recertified — Phase Formally Closed",
-      "description": "Tenth quick wins confirmation pass on a private wealth management platform completed in under five minutes — all prior scan results confirmed unchanged, including dangling cloud storage reference in global CSP (sixth consecutive confirmation). Quick wins phase formally closed across all vectors; authenticated cross-account IDOR testing queued as the next phase pending second account registration."
+      "title": "Private Wealth Platform: Quick Wins Recertified \u2014 Phase Formally Closed",
+      "description": "Tenth quick wins confirmation pass on a private wealth management platform completed in under five minutes \u2014 all prior scan results confirmed unchanged, including dangling cloud storage reference in global CSP (sixth consecutive confirmation). Quick wins phase formally closed across all vectors; authenticated cross-account IDOR testing queued as the next phase pending second account registration."
     },
     {
       "date": "2026-04-10",
       "type": "assessment",
-      "title": "Private Wealth Platform: S3 Enumeration Complete — Quick Wins Scan Saturated",
-      "description": "Twelve cloud storage bucket naming variants enumerated on a private wealth management platform — all confirmed empty. One dangling storage reference in the global CSP remains unclaimed after five consecutive confirmations; manual exploitation session queued. Quick-wins automated scan phase formally saturated: CORS, CVE surface, Spring Boot actuators, admin paths, source maps, and subdomain takeovers all clean across all in-scope hosts."
-    },
-    {
-      "date": "2026-04-09",
-      "type": "assessment",
-      "title": "Private Wealth Platform: Admin Path Sweep — CDN False Positives Mapped, Real Endpoint Isolated",
-      "description": "Twenty administrative paths probed on a private wealth management platform — 19 returned identical HTTP 200 Cloudflare JavaScript challenges indistinguishable by status code alone. One real application endpoint isolated by Content-Type header differential; access controls confirmed active. Six quick-wins passes complete; CDN response pattern documented as false-positive filter for future path enumeration sessions."
+      "title": "Private Wealth Platform: S3 Enumeration Complete \u2014 Quick Wins Scan Saturated",
+      "description": "Twelve cloud storage bucket naming variants enumerated on a private wealth management platform \u2014 all confirmed empty. One dangling storage reference in the global CSP remains unclaimed after five consecutive confirmations; manual exploitation session queued. Quick-wins automated scan phase formally saturated: CORS, CVE surface, Spring Boot actuators, admin paths, source maps, and subdomain takeovers all clean across all in-scope hosts."
     }
   ]
 }
