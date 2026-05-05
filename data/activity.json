@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-05-05",
+      "type": "recon",
+      "title": "European Enterprise SaaS Platform: Engagement Init — Scope Locked, SOAP API Surface Enumerated",
+      "description": "Engagement initialized on a European enterprise SaaS platform spanning ERP, HR, and accounting modules — scope locked across 20+ assets, threat model built with five prioritized attack hypotheses across OAuth flows, SSRF, and access control surfaces. Legacy SOAP API WSDL pulled and 85 service operations enumerated as pre-auth attack surface. Three account registration paths tested; all blocked by bot protection. Manual account registration required to unlock authenticated testing."
+    },
+    {
       "date": "2026-05-04",
       "type": "assessment",
       "title": "Digital Payments VDP: IDOR Campaign \u2014 Resource Architecture Mapped Pre-Auth",
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "Private Wealth Platform: Quick Wins Recertified \u2014 Phase Formally Closed",
       "description": "Tenth quick wins confirmation pass on a private wealth management platform completed in under five minutes \u2014 all prior scan results confirmed unchanged, including dangling cloud storage reference in global CSP (sixth consecutive confirmation). Quick wins phase formally closed across all vectors; authenticated cross-account IDOR testing queued as the next phase pending second account registration."
-    },
-    {
-      "date": "2026-04-10",
-      "type": "assessment",
-      "title": "Private Wealth Platform: S3 Enumeration Complete \u2014 Quick Wins Scan Saturated",
-      "description": "Twelve cloud storage bucket naming variants enumerated on a private wealth management platform \u2014 all confirmed empty. One dangling storage reference in the global CSP remains unclaimed after five consecutive confirmations; manual exploitation session queued. Quick-wins automated scan phase formally saturated: CORS, CVE surface, Spring Boot actuators, admin paths, source maps, and subdomain takeovers all clean across all in-scope hosts."
     }
   ]
 }
