@@ -309,16 +309,18 @@
       "type": "Bug Bounty",
       "status": "On Hold",
       "date": "2026-05-05",
-      "description": "Bug bounty program for a European enterprise SaaS platform spanning ERP, HR, and accounting modules. Engagement initialized with scope covering 20+ assets across SaaS portals, developer platforms, and legacy SOAP services. Threat model built with five prioritized attack hypotheses. Pre-auth attack surface enumerated across SOAP API operations. Account registration gated by bot protection on all tested paths — authenticated testing queued pending manual account creation.",
+      "description": "Bug bounty program for a European enterprise SaaS platform spanning ERP, HR, and accounting modules. Engagement initialized with scope covering 20+ assets across SaaS portals, developer platforms, and legacy SOAP and REST services. Comprehensive unauthenticated attack surface enumeration completed across three service layers: SOAP API (85 operations), two REST API specifications (170+ endpoints combined), and OIDC/identity infrastructure. Cross-environment identity provider configuration anomaly identified as additional attack hypothesis. Five pre-loaded attack plans ready for execution. Account registration gated by bot protection on all tested paths — authenticated testing queued pending manual account creation.",
       "findings": 0,
       "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
       "highlights": [
-        "Scope: 20+ in-scope assets spanning SaaS portal, developer platform, and legacy SOAP service layer",
-        "Threat model: five attack hypotheses prioritized — OAuth custom app abuse, SSRF via SOAP endpoints, multi-tenant access control, and XXE injection surface",
-        "Pre-auth: legacy SOAP API WSDL pulled and 85 service operations fully enumerated as unauthenticated attack surface",
-        "Registration gated by bot protection on all tested paths — manual account creation required to unlock authenticated testing"
+        "Scope: 20+ in-scope assets spanning SaaS portal, developer platform, and legacy SOAP and REST service layers",
+        "Threat model: six attack hypotheses — OAuth custom app abuse, SSRF via webhook API, multi-tenant access control, XXE injection, and cross-environment identity provider confusion",
+        "Pre-auth SOAP: WSDL pulled — 85 service operations fully enumerated as unauthenticated attack surface",
+        "Pre-auth REST: two full API specifications enumerated — 170+ endpoints mapped across invoice and service-management surfaces",
+        "Identity anomaly: staging identity server advertises production issuer claim — cross-environment JWT confusion identified as standalone attack hypothesis",
+        "Registration gated by bot protection on all three tested paths — five pre-loaded attack plans ready for instant execution once accounts unlock"
       ],
-      "tags": ["SaaS", "ERP", "OAuth", "SSRF", "SOAP", "API Security"]
+      "tags": ["SaaS", "ERP", "OAuth", "SSRF", "SOAP", "API Security", "Identity"]
     },
     {
       "id": "juice-shop",

@@ -3,8 +3,8 @@
     {
       "date": "2026-05-05",
       "type": "recon",
-      "title": "European Enterprise SaaS Platform: Engagement Init — Scope Locked, SOAP API Surface Enumerated",
-      "description": "Engagement initialized on a European enterprise SaaS platform spanning ERP, HR, and accounting modules — scope locked across 20+ assets, threat model built with five prioritized attack hypotheses across OAuth flows, SSRF, and access control surfaces. Legacy SOAP API WSDL pulled and 85 service operations enumerated as pre-auth attack surface. Three account registration paths tested; all blocked by bot protection. Manual account registration required to unlock authenticated testing."
+      "title": "European Enterprise SaaS Platform: Full Unauth Surface Mapped — SOAP, Two REST Specs, Identity Anomaly Found",
+      "description": "Two-session engagement on a European enterprise SaaS platform completed comprehensive unauthenticated attack surface enumeration: scope locked across 20+ assets, threat model built with five prioritized attack hypotheses, legacy SOAP API WSDL pulled (85 operations), two REST API specifications fully enumerated (170+ endpoints combined), and a cross-environment identity provider configuration anomaly identified as a sixth attack hypothesis. All three account registration paths confirmed blocked by bot protection — five pre-loaded attack plans ready for instant execution once manual account registration unlocks authenticated access."
     },
     {
       "date": "2026-05-04",
