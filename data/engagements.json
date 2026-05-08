@@ -323,6 +323,24 @@
       "tags": ["SaaS", "ERP", "OAuth", "SSRF", "SOAP", "API Security", "Identity"]
     },
     {
+      "id": "program-o",
+      "name": "Enterprise CRM Platform (Program O)",
+      "type": "Bug Bounty",
+      "status": "Active",
+      "date": "2026-05-08",
+      "description": "Public bug bounty program for a major enterprise CRM platform. Recon complete: 600+ subdomains enumerated across main, API, and regional instances. Friction verified passable with no blocking CAPTCHA. Threat model built with 7 attack hypotheses across CORS misconfiguration, GraphQL BOLA, OAuth account linking, payment API access, and an active five-figure bounty challenge requiring cross-portal data access. Permissive CORS configuration identified pre-authentication on public API host with internal headers exposed. Account registration queued to unlock all authenticated testing phases.",
+      "findings": 0,
+      "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
+      "highlights": [
+        "Recon complete: 600+ subdomains enumerated across main, API, and regional hosts — attack surface friction verified passable, no CAPTCHA blocker",
+        "Pre-auth: permissive CORS reflecting arbitrary origins with credentials on a public API host — internal permission-bypass and billing headers exposed in allow-headers response",
+        "Threat model: 7 attack hypotheses — CORS chaining, GraphQL introspection, OAuth flow abuse, payment API access, and active five-figure bounty challenge",
+        "Active bounty challenge in scope: cross-portal data access vulnerability — five-figure first-valid reward",
+        "GraphQL CRM endpoint and OAuth verification endpoints discovered in JS bundle; payment processing hosts identified across NA and EU regions"
+      ],
+      "tags": ["CRM", "SaaS", "CORS", "GraphQL", "OAuth", "API Security"]
+    },
+    {
       "id": "juice-shop",
       "name": "OWASP Juice Shop",
       "type": "Practice Lab",

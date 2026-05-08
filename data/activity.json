@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-05-08",
+      "type": "recon",
+      "title": "Enterprise CRM Platform: Recon Complete — Permissive CORS Identified, Active Bounty Challenge In Scope",
+      "description": "Full recon pipeline completed on a major enterprise CRM bug bounty program — 600+ subdomains enumerated across main, API, and regional hosts; attack surface friction verified passable with no blocking CAPTCHA. Pre-authentication analysis identified a permissive CORS configuration reflecting arbitrary origins with credentials on a public API host, with internal permission-bypass headers exposed in the allow-headers response. Threat model seeded with seven ranked attack hypotheses including GraphQL BOLA, OAuth account linking, and a five-figure active bounty challenge requiring cross-portal data access — account registration queued to unlock all authenticated testing phases."
+    },
+    {
       "date": "2026-05-05",
       "type": "recon",
       "title": "European Enterprise SaaS Platform: Full Unauth Surface Mapped — SOAP, Two REST Specs, Identity Anomaly Found",
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "ERP/CRM Platform: Full Security Audit Delivered \u2014 CORS Chain and Access Control Issues Found",
       "description": "Completed owner-authorized security audit of an ERP/CRM SaaS platform \u2014 identified permissive CORS configuration reflecting any origin with credentials, enabling a chained attack via authenticated API endpoints to exfiltrate full session data cross-origin. Verbose error disclosure, user enumeration, and system configuration exposure also found. Full remediation roadmap delivered to client."
-    },
-    {
-      "date": "2026-04-13",
-      "type": "assessment",
-      "title": "Private Wealth Platform: Quick Wins Recertified \u2014 Phase Formally Closed",
-      "description": "Tenth quick wins confirmation pass on a private wealth management platform completed in under five minutes \u2014 all prior scan results confirmed unchanged, including dangling cloud storage reference in global CSP (sixth consecutive confirmation). Quick wins phase formally closed across all vectors; authenticated cross-account IDOR testing queued as the next phase pending second account registration."
     }
   ]
 }
