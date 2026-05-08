@@ -2,6 +2,12 @@
   "activity": [
     {
       "date": "2026-05-08",
+      "type": "assessment",
+      "title": "Enterprise CRM Platform: Apply Session — Registration Gated, reCAPTCHA on Signup Step 2",
+      "description": "Authenticated testing session on a major enterprise CRM bug bounty program encountered a reCAPTCHA challenge on the second signup step — a friction layer not visible from the landing page. Prior recon friction check was incomplete (step 1 only). One pre-authentication attack hypothesis tested and denied; a CORS misconfiguration candidate from the prior recon session could not be reproduced from a clean request context. Auto-apply disabled; manual account registration queued to unlock the authenticated testing phase including an active five-figure bounty challenge."
+    },
+    {
+      "date": "2026-05-08",
       "type": "recon",
       "title": "Enterprise CRM Platform: Recon Complete — Permissive CORS Identified, Active Bounty Challenge In Scope",
       "description": "Full recon pipeline completed on a major enterprise CRM bug bounty program — 600+ subdomains enumerated across main, API, and regional hosts; attack surface friction verified passable with no blocking CAPTCHA. Pre-authentication analysis identified a permissive CORS configuration reflecting arbitrary origins with credentials on a public API host, with internal permission-bypass headers exposed in the allow-headers response. Threat model seeded with seven ranked attack hypotheses including GraphQL BOLA, OAuth account linking, and a five-figure active bounty challenge requiring cross-portal data access — account registration queued to unlock all authenticated testing phases."
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "Digital Payments VDP: SSRF Report Finalized \u2014 Submission-Ready",
       "description": "Submission-ready report written for a validated blind SSRF finding on a digital payments platform VDP \u2014 10 confirmed out-of-band callbacks received from cloud infrastructure, internal service metadata exposed in request headers. DNS rebinding and IP encoding bypass vectors documented. Finding validated 15 days prior; full Tier 1 evidence package complete, pending manual platform submission."
-    },
-    {
-      "date": "2026-04-13",
-      "type": "assessment",
-      "title": "ERP/CRM Platform: Full Security Audit Delivered \u2014 CORS Chain and Access Control Issues Found",
-      "description": "Completed owner-authorized security audit of an ERP/CRM SaaS platform \u2014 identified permissive CORS configuration reflecting any origin with credentials, enabling a chained attack via authenticated API endpoints to exfiltrate full session data cross-origin. Verbose error disclosure, user enumeration, and system configuration exposure also found. Full remediation roadmap delivered to client."
     }
   ]
 }
