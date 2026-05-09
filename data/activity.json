@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-05-09",
+      "type": "recon",
+      "title": "Crypto Exchange Platform: Recon Complete — Broker API and OAuth Surface Mapped",
+      "description": "Full recon pipeline completed on a major crypto exchange bug bounty program — 150+ subdomains enumerated, 40+ live hosts confirmed, 35,000+ historical URLs processed; broker API surface, OAuth resource server, and affiliate portal infrastructure mapped pre-authentication. Testnet environment confirmed live as a no-real-funds PoC testing surface; threat model seeded with three ranked attack hypotheses including a broker OAuth account takeover chain, affiliate portal access control testing, and production/testnet configuration drift."
+    },
+    {
       "date": "2026-05-08",
       "type": "assessment",
       "title": "Enterprise CRM Platform: Apply Session — Registration Gated, reCAPTCHA on Signup Step 2",
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "Food Delivery Platform: 7-Gate Re-Validation \u2014 4 Findings Confirmed Live After 54 Days",
       "description": "Full 7-gate re-validation of 11 reports on a global food delivery platform \u2014 4 vulnerabilities confirmed still present 54 days after initial discovery, including an identity provider misconfiguration, subdomain takeover CNAMEs, and an authentication bypass confirmed in three distinct production bundle hashes. Final action verdicts assigned across all 11 reports: 1 awaiting triager re-review on rebuttal, 1 conditional submission pass, 9 dropped or held on pre-mortem risk."
-    },
-    {
-      "date": "2026-04-14",
-      "type": "assessment",
-      "title": "Digital Payments VDP: SSRF Report Finalized \u2014 Submission-Ready",
-      "description": "Submission-ready report written for a validated blind SSRF finding on a digital payments platform VDP \u2014 10 confirmed out-of-band callbacks received from cloud infrastructure, internal service metadata exposed in request headers. DNS rebinding and IP encoding bypass vectors documented. Finding validated 15 days prior; full Tier 1 evidence package complete, pending manual platform submission."
     }
   ]
 }
