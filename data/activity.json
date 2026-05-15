@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-05-15",
+      "type": "recon",
+      "title": "Enterprise SaaS Platform: Recon Complete — Multi-Tenant OAuth, Webhook Infrastructure, Staging Service Exposed",
+      "description": "Full recon pipeline completed on a major enterprise SaaS bug bounty program — 38,000+ subdomains enumerated across multi-tenant infrastructure, 63 live hosts confirmed, and an extensive historical URL archive processed. Shared SSO OAuth client identified across all tenant instances with permissive redirect_uri validation; webhook delivery infrastructure mapped across multiple regional nodes as a primary SSRF attack surface; staging API service discovered without WAF protection, serving health status and partial endpoint map unauthenticated. Three ranked attack hypotheses loaded: webhook SSRF via automation rule configuration, OAuth redirect bypass, and cross-environment token reuse against the staging service. Account registration queued to unlock all authenticated testing phases."
+    },
+    {
       "date": "2026-05-09",
       "type": "recon",
       "title": "Crypto Exchange Platform: Recon Complete — Broker API and OAuth Surface Mapped",
@@ -113,12 +119,6 @@
       "type": "recon",
       "title": "Enterprise HR Platform: Campaign Initiated \u2014 Webhook API Confirmed, Bot Protection Documented",
       "description": "Campaign technique replay initiated against an enterprise HR SaaS bug bounty program \u2014 webhook API endpoint confirmed via HTTP probe, authentication flow mapped (credential-exchange to bearer token), and CDN/edge infrastructure fingerprinted. Five browser automation approaches attempted for account creation; blocked by multi-layer bot protection. Technique confirmed applicable \u2014 manual account registration required to unlock authenticated testing phase."
-    },
-    {
-      "date": "2026-04-14",
-      "type": "assessment",
-      "title": "Food Delivery Platform: 7-Gate Re-Validation \u2014 4 Findings Confirmed Live After 54 Days",
-      "description": "Full 7-gate re-validation of 11 reports on a global food delivery platform \u2014 4 vulnerabilities confirmed still present 54 days after initial discovery, including an identity provider misconfiguration, subdomain takeover CNAMEs, and an authentication bypass confirmed in three distinct production bundle hashes. Final action verdicts assigned across all 11 reports: 1 awaiting triager re-review on rebuttal, 1 conditional submission pass, 9 dropped or held on pre-mortem risk."
     }
   ]
 }

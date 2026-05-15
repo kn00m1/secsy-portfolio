@@ -255,7 +255,7 @@
       "id": "program-j",
       "name": "Digital Payments Platform (Program J)",
       "type": "VDP",
-      "status": "Active",
+      "status": "On Hold",
       "date": "2026-03-29",
       "description": "Vulnerability disclosure program for a major digital payments platform. Blind SSRF discovered via merchant API webhook URL validation — out-of-band DNS and HTTP callbacks confirmed from platform cloud infrastructure. 10 OOB callbacks received, internal service name and observability metadata exposed. Full 7-gate validation passed at P2/High. Report written, submission pending.",
       "findings": 1,
@@ -358,6 +358,24 @@
         "Threat model: three ranked attack hypotheses — broker OAuth account takeover chain, affiliate portal IDOR, production/testnet configuration drift"
       ],
       "tags": ["Crypto", "Fintech", "OAuth", "API Security", "Broker"]
+    },
+    {
+      "id": "program-q",
+      "name": "Enterprise SaaS Platform (Program Q)",
+      "type": "Bug Bounty",
+      "status": "Active",
+      "date": "2026-05-15",
+      "description": "Bug bounty program for a major multi-product enterprise SaaS platform. Recon complete: 38,000+ subdomains enumerated across multi-tenant infrastructure, 63 live hosts probed, and historical URL archive processed. Shared SSO OAuth client identified across all tenant instances with permissive redirect_uri validation allowing custom callback domains. Webhook delivery infrastructure mapped across multiple regional nodes — automation-triggered webhook SSRF identified as a primary attack hypothesis. Staging API service discovered without WAF protection, serving health and partial API endpoint map unauthenticated — cross-environment token reuse vector loaded. Three ranked attack hypotheses ready for authenticated execution pending account registration.",
+      "findings": 0,
+      "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
+      "highlights": [
+        "Recon complete: 38,000+ subdomains across multi-tenant infrastructure, 63 live hosts confirmed",
+        "Shared SSO OAuth client across all tenant instances — permissive redirect_uri allows custom callback domains; OAuth redirect bypass loaded as attack hypothesis",
+        "Webhook delivery infrastructure: multiple regional nodes mapped — webhook SSRF via automation rule configuration loaded as primary attack hypothesis",
+        "Staging API service without WAF discovered — health and partial API surface accessible unauthenticated; cross-environment token reuse hypothesis loaded",
+        "Three ranked attack hypotheses ready for instant execution once account registration unlocks authenticated testing"
+      ],
+      "tags": ["SaaS", "CRM", "OAuth", "SSRF", "Webhook", "API Security", "Multi-tenant"]
     },
     {
       "id": "juice-shop",
