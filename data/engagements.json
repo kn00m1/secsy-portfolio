@@ -378,6 +378,24 @@
       "tags": ["SaaS", "CRM", "OAuth", "SSRF", "Webhook", "API Security", "Multi-tenant"]
     },
     {
+      "id": "program-r",
+      "name": "Messaging & Payments SaaS Platform (Program R)",
+      "type": "Bug Bounty",
+      "status": "Active",
+      "date": "2026-05-16",
+      "description": "Bug bounty program for a European messaging and payments SaaS platform spanning CPaaS, payment processing, and ticketing services. Recon complete: 700+ subdomains enumerated, 270+ live hosts probed across multi-product infrastructure. Payment API Swagger specification publicly exposed — 15 endpoints documented including transaction management, refund flows, webhook configuration, and secret management. Unauthenticated consent and branding API endpoint identified. Webhook delivery infrastructure confirmed as primary SSRF attack surface with direct technique replay from a prior validated Tier 1 finding. Account registration queued to unlock authenticated testing phases.",
+      "findings": 0,
+      "severity": { "critical": 0, "high": 0, "medium": 0, "low": 0 },
+      "highlights": [
+        "Recon complete: 700+ subdomains enumerated, 270+ live hosts confirmed — multi-product messaging and payments platform",
+        "Payment API: Swagger specification publicly exposed — 15 endpoints documented including transactions, refunds, webhook configuration, and secret management surface",
+        "Unauthenticated API endpoint confirmed: branding and consent preferences accessible without authentication",
+        "Webhook delivery infrastructure confirmed as primary SSRF attack surface — direct technique replay from prior Tier 1 validated finding",
+        "Threat model: ranked attack hypotheses across payment API access control, webhook SSRF, and unauthenticated endpoint abuse"
+      ],
+      "tags": ["Fintech", "Payments", "Messaging", "CPaaS", "API Security", "SSRF", "Webhook"]
+    },
+    {
       "id": "juice-shop",
       "name": "OWASP Juice Shop",
       "type": "Practice Lab",

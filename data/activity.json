@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-05-16",
+      "type": "recon",
+      "title": "Messaging & Payments SaaS Platform: Recon Complete — Payment API Spec Exposed, Webhook SSRF Surface Confirmed",
+      "description": "Full recon pipeline completed on a European messaging and payments SaaS bug bounty program — 700+ subdomains enumerated, 270+ live hosts confirmed across CPaaS, payment processing, and ticketing infrastructure. Payment API Swagger specification discovered publicly exposed on a dedicated payment subdomain, documenting 15 endpoints including transaction management, refund flows, webhook configuration, and secret management surfaces. Unauthenticated branding and consent API endpoint identified as enumerable pre-authentication. Webhook delivery infrastructure confirmed as primary SSRF attack surface — direct technique replay from a prior Tier 1 validated finding. Threat model seeded with ranked attack hypotheses targeting payment API access control, webhook SSRF, and unauthenticated endpoint abuse — account registration queued to unlock authenticated testing phases."
+    },
+    {
       "date": "2026-05-15",
       "type": "recon",
       "title": "Enterprise SaaS Platform: Recon Complete — Multi-Tenant OAuth, Webhook Infrastructure, Staging Service Exposed",
@@ -113,12 +119,6 @@
       "type": "assessment",
       "title": "Food Delivery Platform: Pre-Submission Validation \u2014 Key Findings Confirmed at Day 55",
       "description": "Pre-submission validation pass on a global food delivery platform \u2014 subdomain takeover CNAME records and authentication bypass vector confirmed still present and exploitable at 55 days post-discovery. Conditional submission pass assigned to subdomain takeover finding; evidence package complete and submission-ready."
-    },
-    {
-      "date": "2026-04-15",
-      "type": "recon",
-      "title": "Enterprise HR Platform: Campaign Initiated \u2014 Webhook API Confirmed, Bot Protection Documented",
-      "description": "Campaign technique replay initiated against an enterprise HR SaaS bug bounty program \u2014 webhook API endpoint confirmed via HTTP probe, authentication flow mapped (credential-exchange to bearer token), and CDN/edge infrastructure fingerprinted. Five browser automation approaches attempted for account creation; blocked by multi-layer bot protection. Technique confirmed applicable \u2014 manual account registration required to unlock authenticated testing phase."
     }
   ]
 }
